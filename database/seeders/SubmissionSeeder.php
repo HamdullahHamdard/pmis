@@ -23,6 +23,7 @@ class SubmissionSeeder extends Seeder
                 "employee_id" => "1",
                 "item_id" => "1",
                 "total" => "1",
+                "department_id" => 1,
                 "details" => "This is is si s",
                 "province_id" => 1,
                 "is_returned" => true,
@@ -32,6 +33,7 @@ class SubmissionSeeder extends Seeder
                 "employee_id" => "1",
                 "item_id" => "1",
                 "total" => "5",
+                "department_id" => 2,
                 "province_id" => 1,
                 "details" => "کارمندانی که این جنس را تسلیم شده اند، کارمندانی که این جنس را تسلیم شده اند، کارمندانی که این جنس را تسلیم شده اند، کارمندانی که این جنس را تسلیم شده اند",
 

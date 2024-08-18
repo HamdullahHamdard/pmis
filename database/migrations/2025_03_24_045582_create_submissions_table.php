@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Department;
 use App\Models\Employee;
 use App\Models\Item;
 use App\Models\Province;
@@ -19,6 +20,7 @@ return new class extends Migration
             $table->foreignIdFor(Employee::class);
             $table->foreignIdFor(Item::class);
             $table->foreignIdFor(Province::class);
+            $table->foreignIdFor(Department::class);
             $table->string("total");
             $table->string("details")->nullable();
             $table->boolean("is_returned")->default(value: false);

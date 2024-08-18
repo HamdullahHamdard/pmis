@@ -15,7 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('trusted');
             $table->string('price');
+            $table->unsignedBigInteger("purchaseYear_id");
+            $table->unsignedBigInteger("purchaseMonth_id");
+            $table->unsignedBigInteger("purchaseDay_id");
 
+            $table->foreign("purchaseDay_id")->references("id")->on("days")->onDelete("cascade");
+            $table->foreign("purchaseMonth_id")->references("id")->on("months")->onDelete("cascade");
+            $table->foreign("purchaseYear_id")->references("id")->on("years")->onDelete("cascade");
+            $table->timestamps();
             $table->timestamps();
         });
     }

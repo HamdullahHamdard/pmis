@@ -20,6 +20,7 @@ class Submission extends Model
         "employee_id",
         "item_id",
         "total",
+        "department_id",
         "details",
         "province_id",
         "is_returned",

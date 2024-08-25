@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('form8s', function (Blueprint $table) {
             $table->id();
+            $table->string('form8_number');
             $table->string('trusted');
             $table->string('price');
             $table->unsignedBigInteger("purchaseYear_id");
@@ -22,7 +23,6 @@ return new class extends Migration
             $table->foreign("purchaseDay_id")->references("id")->on("days")->onDelete("cascade");
             $table->foreign("purchaseMonth_id")->references("id")->on("months")->onDelete("cascade");
             $table->foreign("purchaseYear_id")->references("id")->on("years")->onDelete("cascade");
-            $table->timestamps();
             $table->timestamps();
         });
     }

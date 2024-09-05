@@ -50,10 +50,10 @@
                         {{ __('فورم توزیع') }}
                     </x-nav-link>
                 </div>
-                <div class="hidden space-x-4 sm:flex">
+                <div class="hidden space-x-4 sm:mr-6 sm:flex">
                     <x-nav-link :href="route('form8s.index')" :active="request()->routeIs('form8s.index')">
-                        <i data-feather="file-text" class="w-5 ml-2"></i>
-                        {{ __('فورم 8') }}
+                        <i data-feather="settings" class="w-5 ml-2"></i>
+                        {{ __('فورم ۸') }}
                     </x-nav-link>
                 </div>
                 {{-- @endcan --}}

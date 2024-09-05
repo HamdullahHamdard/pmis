@@ -585,6 +585,7 @@ Route::middleware("auth")->group(function () {
     Route::group(['middleware' => ['auth']], function() {
         Route::resource('form9s', Form9Controller::class);
         Route::resource('form5s', Form5Controller::class);
+        Route::resource('form8s', Form8Controller::class);
 
 
     });

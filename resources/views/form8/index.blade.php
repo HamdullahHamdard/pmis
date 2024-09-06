@@ -19,7 +19,7 @@
                         {{ __("فورم های ثبت شده") }}
                     </div>
                     {{-- @can('create-forms') --}}
-                        <a href={{ url('/forms/form8/create') }} type="button" class="p-3 text-center text-gray-100 bg-green-600 rounded-md hover:bg-green-700">
+                        <a href={{ route('form8s.create') }} type="button" class="p-3 text-center text-gray-100 bg-green-600 rounded-md hover:bg-green-700">
                             <i data-feather="plus"></i>
                         </a>
                     {{-- @endcan --}}

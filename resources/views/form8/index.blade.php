@@ -1,30 +1,30 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
                 {{ __('فورم ۸ - اعاده تحویلخانه') }}
             </h2>
 
-            <a href={{ route('forms') }} class="text-gray-600 flex dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+            <a href={{ route('form8s.index') }} class="flex text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
                 برگشت <i data-feather="corner-up-left" class="w-5 mr-1"></i>
             </a>
         </div>
     </x-slot>
 
     <div class="py-4">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg py-4 px-6 mb-4">
-                <div class="flex justify-between px-4 sm:px-6 py-4 sm:py-8">
-                    <div class="text-gray-900 dark:text-gray-100 text-2xl">
+        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div class="px-6 py-4 mb-4 overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
+                <div class="flex justify-between px-4 py-4 sm:px-6 sm:py-8">
+                    <div class="text-2xl text-gray-900 dark:text-gray-100">
                         {{ __("فورم های ثبت شده") }}
                     </div>
                     {{-- @can('create-forms') --}}
-                        <a href={{ url('/forms/form8/create') }} type="button" class="text-gray-100 bg-green-600 hover:bg-green-700 p-3 rounded-md text-center">
+                        <a href={{ url('/forms/form8/create') }} type="button" class="p-3 text-center text-gray-100 bg-green-600 rounded-md hover:bg-green-700">
                             <i data-feather="plus"></i>
                         </a>
                     {{-- @endcan --}}
                 </div>
-                <div class="relative overflow-x-auto sm:rounded-lg p-6">
+                <div class="relative p-6 overflow-x-auto sm:rounded-lg">
                     <table class="w-full text-sm text-right text-gray-500 dark:text-gray-400">
                         <thead class="text-lg text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
@@ -63,20 +63,20 @@
                                 <td class="px-6 py-4 text-lg font-medium">
                                     {{-- {{ $item->item_stock_number }} --}}
                                 </td>
-                                {{-- <td class="py-4 flex justify-end"> --}}
+                                {{-- <td class="flex justify-end py-4"> --}}
                                     {{-- @can('view-items') --}}
-                                        {{-- <a href="#" class="font-medium text-gray-200 bg-blue-600  flex items-center justify-center rounded-md p-2 text-center  hover:bg-blue-700">
+                                        {{-- <a href="#" class="flex items-center justify-center p-2 font-medium text-center text-gray-200 bg-blue-600 rounded-md hover:bg-blue-700">
                                             <i data-feather="eye"></i>
                                         </a> --}}
                                     {{-- @endcan --}}
                                     {{-- @can('edit-items') --}}
-                                        {{-- <a href="#" class="font-medium text-gray-200 bg-blue-600  flex items-center justify-center rounded-md p-2 text-center mr-2  hover:bg-blue-700">
+                                        {{-- <a href="#" class="flex items-center justify-center p-2 mr-2 font-medium text-center text-gray-200 bg-blue-600 rounded-md hover:bg-blue-700">
                                             <i data-feather="edit"></i>
                                         </a> --}}
                                     {{-- @endcan --}}
 
                                     {{-- @can('delete-items') --}}
-                                        {{-- <a onclick="return confirm('Are you sure to delete this record?')" href="#" class="text-gray-200 bg-red-500 p-2 flex items-center justify-center rounded-md text-center mr-2  hover:bg-red-700">
+                                        {{-- <a onclick="return confirm('Are you sure to delete this record?')" href="#" class="flex items-center justify-center p-2 mr-2 text-center text-gray-200 bg-red-500 rounded-md hover:bg-red-700">
                                             <i data-feather="trash-2"></i>
                                         </a> --}}
                                     {{-- @endcan --}}

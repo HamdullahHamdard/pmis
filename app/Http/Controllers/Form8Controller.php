@@ -16,7 +16,8 @@ class Form8Controller extends Controller
      */
     public function index()
     {
-        return view('form8.index');
+        $form8s = Form8::paginate(10);
+        return view('form8.index', compact('form8s'));
     }
 
     /**

@@ -20,9 +20,29 @@
                 <form method="POST" class="w-full mx-auto" action="{{ url('forms/form8/store') }}" enctype='multipart/form-data'
                     id="app-form">
                     @csrf
+                    <div class="mt-3">
+                        <div class="flex items-center justify-start text-center">
+                            <x-input-label for="total" :value="__('تعداد')" />
+                            <span class="text-xl text-red-500">*</span>
+                        </div>
+                        <x-text-input min="0" id="total" class="block w-full mt-1" type="number" name="total" :value="old('total')" required autofocus autocomplete="total" />
+                        <x-input-error :messages="$errors->get('total')" class="mt-2" />
+                    </div>
 
-
-
+                    <!-- Unit -->
+                    <div class="mt-4">
+                        <div class="flex items-center justify-start text-center">
+                            <x-input-label for="category" :value="__('واحد')" />
+                            <span class="text-xl text-red-500">*</span>
+                        </div>
+                        <select
+                            class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
+                            name="unit">
+                            @foreach ($units as $unit)
+                                <option value="{{ $unit->id }}" class="py-2">{{ $unit->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <!-- Submit Button -->
                     <div class="flex items-center justify-end mt-8">
                         <x-primary-button>

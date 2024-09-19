@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Form8;
 use App\Http\Requests\StoreForm8Request;
 use App\Http\Requests\UpdateForm8Request;
+use App\Models\Form5;
 use App\Models\Unit;
 
 class Form8Controller extends Controller
@@ -28,7 +29,8 @@ class Form8Controller extends Controller
     public function create()
     {
         $units = Unit::all();
-        return view('form8.create', compact('units'));
+        $form5s = Form5::all();
+        return view('form8.create', compact('units', 'form5s'));
     }
 
     /**

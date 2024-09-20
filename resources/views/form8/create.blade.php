@@ -43,6 +43,19 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="mt-4">
+                        <div class="flex items-center justify-start text-center">
+                            <x-input-label for="category" :value="__('واحد')" />
+                            <span class="text-xl text-red-500">*</span>
+                        </div>
+                        <select
+                            class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
+                            name="unit">
+                            @foreach ($form5s as $form5)
+                                <option value="{{ $form5->id }}" class="py-2">{{ $form5->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <!-- Submit Button -->
                     <div class="flex items-center justify-end mt-8">
                         <x-primary-button>

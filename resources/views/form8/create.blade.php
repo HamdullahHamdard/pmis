@@ -51,18 +51,19 @@
                  <form method="POST" class="w-full mx-auto" action="{{ url('forms/form8/store') }}"
                     enctype='multipart/form-data' id="app-form">
                     @csrf
-                    <select multiple id="form5-select"
-                            class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
+                    @if ($selectedForm5)
+    <select multiple id="form5-select"
+        class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
 
-                            @foreach ($selectedForm5 as $form5)
-                                @foreach ($form5->submissions as $submission)
-                                    <option value="{{ $submission->id }}">
-                                        {{ $submission->item->name }}
-                                    </option>
-                                @endforeach
-                            @endforeach
+        @foreach ($selectedForm5->submissions as $submission)
+            <option value="{{ $submission->id }}">
+                {{ $submission->item->name ?? 'No Item Name' }}
+            </option>
+        @endforeach
 
-                        </select>
+    </select>
+@endif
+
 
                     <div class="flex items-center justify-end mt-8">
                         <x-primary-button>

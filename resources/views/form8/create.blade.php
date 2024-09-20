@@ -42,11 +42,11 @@
                         <p><strong>د فورم ۹ شمیره:</strong> <span id="form9s-id"></span></p>
                         <select multiple id="form5-select"
                             class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
-                            <option value="">Select a Form5</option>
+
                             @foreach ($form5s as $form5)
                                 @foreach ($form5->submissions as $submission)
                                     <option value="{{ $submission->id }}">
-                                        {{ $submission->item_id }}
+                                        {{ $submission->item->name }}
                                     </option>
                                 @endforeach
                             @endforeach

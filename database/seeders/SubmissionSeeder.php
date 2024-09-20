@@ -31,7 +31,7 @@ class SubmissionSeeder extends Seeder
             ],
             1 => [
                 "employee_id" => "1",
-                "item_id" => "1",
+                "item_id" => "2",
                 "total" => "5",
                 "department_id" => 2,
                 "province_id" => 1,

@@ -20,41 +20,24 @@
                 <form method="POST" class="w-full mx-auto" action="{{ url('forms/form8/store') }}" enctype='multipart/form-data'
                     id="app-form">
                     @csrf
-                    <div class="mt-3">
-                        <div class="flex items-center justify-start text-center">
-                            <x-input-label for="total" :value="__('تعداد')" />
-                            <span class="text-xl text-red-500">*</span>
-                        </div>
-                        <x-text-input min="0" id="total" class="block w-full mt-1" type="number" name="total" :value="old('total')" required autofocus autocomplete="total" />
-                        <x-input-error :messages="$errors->get('total')" class="mt-2" />
-                    </div>
 
-                    <!-- Unit -->
-                    <div class="mt-4">
-                        <div class="flex items-center justify-start text-center">
-                            <x-input-label for="category" :value="__('واحد')" />
-                            <span class="text-xl text-red-500">*</span>
-                        </div>
-                        <select
-                            class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
-                            name="unit">
-                            @foreach ($units as $unit)
-                                <option value="{{ $unit->id }}" class="py-2">{{ $unit->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mt-4">
-                        <div class="flex items-center justify-start text-center">
-                            <x-input-label for="category" :value="__('واحد')" />
-                            <span class="text-xl text-red-500">*</span>
-                        </div>
-                        <select
-                            class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
-                            name="unit">
-                            @foreach ($form5s as $form5)
-                                <option value="{{ $form5->id }}" class="py-2">{{ $form5->name }}</option>
-                            @endforeach
-                        </select>
+                    <select id="form5-select"
+                        class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
+                        @foreach ($form5s as $form5)
+                            <option value="{{ $form5->id }}"
+                                    data-distribution-date="{{ $form5->distribution_date }}"
+                                    data-details="{{ $form5->details }}"
+                                    data-form9s-id="{{ $form5->form9s_id }}">
+                                {{ $form5->id }} {{ $form5->form9s->employee->name }}
+                            </option>
+                        @endforeach
+                    </select>
+
+                    <!-- Display Selected Form5 Details -->
+                    <div class="p-4 mt-4 border border-gray-300 rounded-md">
+                        <p><strong>Distribution Date:</strong> <span id="distribution-date"></span></p>
+                        <p><strong>Details:</strong> <span id="details"></span></p>
+                        <p><strong>Form9s ID:</strong> <span id="form9s-id"></span></p>
                     </div>
                     <!-- Submit Button -->
                     <div class="flex items-center justify-end mt-8">
@@ -66,4 +49,13 @@
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById('form5-select').addEventListener('change', function () {
+            let selectedOption = this.options[this.selectedIndex];
+
+            document.getElementById('distribution-date').textContent = selectedOption.getAttribute('data-distribution-date');
+            document.getElementById('details').textContent = selectedOption.getAttribute('data-details');
+            document.getElementById('form9s-id').textContent = selectedOption.getAttribute('data-form9s-id');
+        });
+    </script>
 </x-app-layout>

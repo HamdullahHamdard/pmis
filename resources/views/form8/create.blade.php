@@ -87,7 +87,7 @@
                         @endif
 
                         <div class="flex items-center justify-end mt-8">
-                            <button type="button" id="next-button" class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            <button type="button" id="next-button" class="inline-flex items-center justify-center w-full px-4 py-2 font-bold tracking-wide text-center text-white transition duration-150 ease-in-out bg-gray-800 border border-transparent rounded-md dark:bg-gray-200 text-md dark:text-gray-800 hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
                                 {{ __('بعدی') }}
                             </button>
                         </div>
@@ -100,11 +100,12 @@
                         <!-- Selected items will be populated here via JavaScript -->
                     </div>
 
-                    <div class="flex items-center justify-between mt-8">
-                        <button type="button" id="back-button" class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-gray-700 uppercase transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                    <div class="flex items-center justify-around mt-8">
+                        <button type="button" id="back-button" class="inline-flex items-center justify-center w-full px-4 py-2 ml-2 font-bold tracking-wide text-center text-white transition duration-150 ease-in-out bg-gray-800 border border-transparent rounded-md dark:bg-gray-200 text-md dark:text-gray-800 hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
                             {{ __('برگشت') }}
                         </button>
-                        <x-primary-button id="submit-button" form="main-form">
+
+                        <x-primary-button id="submit-button" class="mr-2" form="main-form">
                             {{ __('ثبت کردن فورم') }}
                         </x-primary-button>
                     </div>
@@ -189,7 +190,7 @@
                                 </label>
                                 <input type="number" name="new_prices[${submissionId}]" required
                                     class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
-                                    placeholder="قیمت جدید را وارد کنید">
+                                    placeholder="شخص جدید را وارد کنید">
                             </div>
                         </div>
                     `;

@@ -41,7 +41,10 @@ class Submission extends Model
     {
         return $this->belongsTo(Item::class);
     }
-
+    public function form5s()
+    {
+        return $this->belongsToMany(Form5::class);
+    }
     // Submission relation with Province
     public function province()
     {

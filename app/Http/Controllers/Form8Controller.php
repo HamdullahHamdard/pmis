@@ -46,7 +46,7 @@ class Form8Controller extends Controller
         if ($form5_id) {
             $selectedForm5 = Form5::with('submissions')->find($form5_id);
 
-            // dd($selectedForm5);
+            dd($selectedForm5);
 
             if (!$selectedForm5) {
                 return redirect()->back()->with('error', 'No records found for the selected Form5.');

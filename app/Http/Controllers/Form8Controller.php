@@ -7,6 +7,7 @@ use App\Http\Requests\StoreForm8Request;
 use App\Http\Requests\UpdateForm8Request;
 use App\Models\Form5;
 use App\Models\Unit;
+use Illuminate\Http\Request;
 
 class Form8Controller extends Controller
 {
@@ -20,17 +21,39 @@ class Form8Controller extends Controller
         $form8s = Form8::paginate(10);
         return view('form8.index', compact('form8s'));
     }
-
+    public function getForm5Details($id)
+    {
+        $form5 = Form5::find($id);
+        return response()->json([
+            'distribution_date' => $form5->distribution_date,
+            'details' => $form5->details,
+            'submissions' => $form5->submissions,
+            'form9s_id' => $form5->form9s_id,
+        ]);
+    }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        $units = Unit::all();
+        $form5_id = $request->input('form5_id'); // match the select name
         $form5s = Form5::all();
-        return view('form8.create', compact('units', 'form5s'));
+
+        $selectedForm5 = null;
+
+        if ($form5_id) {
+            $selectedForm5 = Form5::with('submissions')->find($form5_id);
+
+            // dd($selectedForm5);
+
+            if (!$selectedForm5) {
+                return redirect()->back()->with('error', 'No records found for the selected Form5.');
+            }
+        }
+
+        return view('form8.create', compact('form5s', 'selectedForm5'));
     }
 
     /**

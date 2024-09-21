@@ -65,6 +65,7 @@ class Form8Controller extends Controller
     public function store(StoreForm8Request $request)
     {
         //
+        dd($request);
     }
 
     /**

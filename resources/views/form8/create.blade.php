@@ -64,7 +64,7 @@
                     </select>
                     </form>
 
-                    <form method="POST" class="w-full mx-auto my-2" id="main-form" action="{{ url('forms/form8/store') }}"
+                    <form method="POST" class="w-full mx-auto my-2" id="main-form" action="{{ route('form8s.store') }}"
                         enctype='multipart/form-data'>
                         @csrf
                         <input type="hidden" name="form5_id" value="{{ $selectedForm5->id ?? '' }}">
@@ -188,7 +188,7 @@
                                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                     شخص مسئول
                                 </label>
-                                <input type="number" name="new_prices[${submissionId}]" required
+                                <input type="text" name="new_prices[${submissionId}]" required
                                     class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
                                     placeholder="شخص جدید را وارد کنید">
                             </div>

@@ -2,18 +2,14 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
-use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class Year extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, LogsActivity;
+    use HasFactory, LogsActivity;
 
     /**
      * The attributes that are mass assignable.
@@ -22,40 +18,12 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
-        'password',
-        'province_id',
     ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
-    // User relation with Province
-    public function province()
-    {
-        return $this->belongsTo(Province::class);
-    }
 
     // Activity Log Options
     public function getActivitylogOptions(): LogOptions
     {
-        return LogOptions::defaults()->useLogName('استفاده کننده سیستم')
-        ->setDescriptionForEvent(fn(string $eventName) => "User has been {$eventName}");
+        return LogOptions::defaults()->useLogName('سال هجری شمسی')
+        ->setDescriptionForEvent(fn(string $eventName) => "HS year has been {$eventName}");
     }
 }

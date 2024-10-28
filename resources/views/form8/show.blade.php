@@ -80,7 +80,7 @@
                     <div class="overflow-hidden">
                         <div class="overflow-x-auto">
                             <table class="w-full text-right">
-                                <thead class="bg-gray-50 dark:bg-gray-700">
+                                <thead class=" bg-gray-50 dark:bg-gray-700">
                                     <tr >
                                         <th scope="col" class="px-6 py-4 text-sm font-medium text-gray-500 dark:text-gray-400">شماره</th>
                                         <th scope="col" class="px-6 py-4 text-sm font-medium text-gray-500 dark:text-gray-400">کارمند</th>

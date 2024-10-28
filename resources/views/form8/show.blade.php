@@ -20,21 +20,21 @@
 
                 <!-- Form8 Header Information -->
                 <div class="p-6 md:p-8">
-                    <div class="flex flex-col items-start gap-6 md:flex-row md:gap-10 md:items-center">
-                        <div class="flex flex-col">
-                            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">شماره فورم ۸</span>
+                    <div class="flex flex-col items-center justify-around gap-6 md:flex-row md:gap-10 md:items-center">
+                        <div class="flex flex-row items-center">
+                            <span class="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400">شماره فورم ۸: </span>
                             <span class="text-xl font-bold text-gray-900 dark:text-white">{{ $form8->form8_number }}</span>
                         </div>
 
-                        <div class="flex flex-col">
-                            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">تاریخ ثبت</span>
+                        <div class="flex flex-row items-center">
+                            <span class="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400">تاریخ ثبت: </span>
                             <span class="text-xl font-bold text-gray-900 dark:text-white">
                                 {{ $form8->day->name }} / {{ $form8->month->name }} / {{ $form8->year->name }}
                             </span>
                         </div>
 
-                        <div class="flex flex-col">
-                            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">معتمد مسئول</span>
+                        <div class="flex flex-row items-center">
+                            <span class="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400">معتمد مسئول: </span>
                             <span class="text-xl font-bold text-gray-900 dark:text-white">{{ $form8->trusted }}</span>
                         </div>
                     </div>
@@ -77,16 +77,16 @@
                         اقلام اعاده شده
                     </h2>
 
-                    <div class="overflow-hidden border border-gray-200 rounded-xl dark:border-gray-700">
+                    <div class="overflow-hidden">
                         <div class="overflow-x-auto">
                             <table class="w-full text-right">
-                                <thead class="bg-gray-50 dark:bg-gray-750">
-                                    <tr>
-                                        <th scope="col" class="px-6 py-4 text-sm font-medium text-gray-500 bg-white dark:bg-gray-800 dark:text-gray-400">شماره</th>
-                                        <th scope="col" class="px-6 py-4 text-sm font-medium text-gray-500 bg-white dark:bg-gray-800 dark:text-gray-400">کارمند</th>
-                                        <th scope="col" class="px-6 py-4 text-sm font-medium text-gray-500 bg-white dark:bg-gray-800 dark:text-gray-400">نام جنس</th>
-                                        <th scope="col" class="px-6 py-4 text-sm font-medium text-gray-500 bg-white dark:bg-gray-800 dark:text-gray-400">مقدار اعاده شده</th>
-                                        <th scope="col" class="px-6 py-4 text-sm font-medium text-gray-500 bg-white dark:bg-gray-800 dark:text-gray-400">قیمت فی واحد</th>
+                                <thead class="bg-gray-50 dark:bg-gray-700">
+                                    <tr >
+                                        <th scope="col" class="px-6 py-4 text-sm font-medium text-gray-500 dark:text-gray-400">شماره</th>
+                                        <th scope="col" class="px-6 py-4 text-sm font-medium text-gray-500 dark:text-gray-400">کارمند</th>
+                                        <th scope="col" class="px-6 py-4 text-sm font-medium text-gray-500 dark:text-gray-400">نام جنس</th>
+                                        <th scope="col" class="px-6 py-4 text-sm font-medium text-gray-500 dark:text-gray-400">مقدار اعاده شده</th>
+                                        <th scope="col" class="px-6 py-4 text-sm font-medium text-gray-500 dark:text-gray-400">قیمت فی واحد</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -125,7 +125,7 @@
                 </div>
 
                 <!-- Action Buttons -->
-                <div class="flex flex-col justify-end gap-4 p-6 border-t border-gray-200 sm:flex-row md:p-8 bg-gray-50 dark:bg-gray-700 dark:border-gray-700">
+                <div class="flex flex-col justify-end gap-4 p-6 border-t border-gray-200 sm:flex-row md:p-8 bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
                     <a href="{{ route('form8s.index') }}" class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-650 transition-colors">
                         <i data-feather="list" class="w-4 h-4 ml-2"></i>
                         برگشت به لیست
@@ -144,18 +144,19 @@
                     </h2>
 
                     <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-                        <div class="flex flex-col">
-                            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">تاریخ آخرین بروزرسانی</span>
+                        <div class="flex flex-row items-center">
+                            <span class="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400">تاریخ آخرین بروزرسانی: </span>
                             <span class="text-lg font-semibold text-gray-900 dark:text-white">
                                 {{ now()->format('Y/m/d') }}
                             </span>
                         </div>
 
-                        <div class="flex flex-col">
-                            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">وضعیت پردازش</span>
+                        <div class="flex flex-row items-center">
+                            <span class="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400">وضعیت پردازش: </span>
                             <span class="inline-flex items-center mt-1">
-                                <span class="inline-block w-2 h-2 ml-2 bg-green-500 rounded-full"></span>
+
                                 <span class="text-lg font-semibold text-gray-900 dark:text-white">تکمیل شده</span>
+                                <span class="inline-block w-2 h-2 mr-2 bg-green-500 rounded-full"></span>
                             </span>
                         </div>
                     </div>
@@ -164,74 +165,4 @@
         </div>
     </div>
 
-    <!-- Print Styles -->
-    <style>
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            .max-w-7xl {
-                max-width: 100% !important;
-                padding: 0 !important;
-            }
-            [data-feather] {
-                display: none !important;
-            }
-            .bg-gradient-to-r, .bg-gray-50, .bg-white, .dark\:bg-gray-800, .dark\:bg-gray-750 {
-                background: white !important;
-                color: black !important;
-            }
-            .text-gray-900, .text-gray-500, .text-gray-400, .dark\:text-white, .dark\:text-gray-400 {
-                color: black !important;
-            }
-            .border, .border-t, .border-gray-200, .dark\:border-gray-700 {
-                border-color: #ddd !important;
-            }
-            .shadow-lg, .shadow-sm {
-                box-shadow: none !important;
-            }
-            .rounded-xl, .rounded-lg {
-                border-radius: 0 !important;
-            }
-            .container, .mx-auto, .max-w-7xl, .px-4, .sm\:px-6, .lg\:px-8, .p-6, .md\:p-8, .py-6 {
-                padding: 0 !important;
-                margin: 0 !important;
-                max-width: 100% !important;
-            }
-            .print-section, .print-section * {
-                visibility: visible;
-            }
-            .print-section {
-                position: absolute;
-                left: 0;
-                top: 0;
-            }
-            .no-print {
-                display: none !important;
-            }
-        }
-    </style>
-
-    @push('scripts')
-    <script>
-        // Initialize Feather icons
-        document.addEventListener('DOMContentLoaded', function() {
-            if (typeof feather !== 'undefined') {
-                feather.replace();
-            }
-
-            // Add print class to main content for better print styling
-            const mainContent = document.querySelector('.max-w-7xl > div:first-child');
-            if (mainContent) {
-                mainContent.classList.add('print-section');
-            }
-
-            // Add no-print class to elements that shouldn't be printed
-            const noPrintElements = document.querySelectorAll('.bg-gray-50.dark\\:bg-gray-750.border-t');
-            noPrintElements.forEach(el => {
-                el.classList.add('no-print');
-            });
-        });
-    </script>
-    @endpush
 </x-app-layout>

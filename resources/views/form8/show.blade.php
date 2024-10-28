@@ -17,17 +17,17 @@
                 <!-- Form8 Header Information -->
                 <div class="p-6 border-b border-gray-200 dark:border-gray-700">
                     <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
-                        <div class="flex flex-col">
+                        <div class="flex flex-row items-center">
                             <span class="text-sm font-medium text-gray-500 dark:text-gray-400">شماره فورم ۸:</span>
                             <span class="text-lg font-semibold text-gray-900 dark:text-white">{{ $form8->form8_number }}</span>
                         </div>
-                        <div class="flex flex-col">
+                        <div class="flex flex-row items-center">
                             <span class="text-sm font-medium text-gray-500 dark:text-gray-400">تاریخ:</span>
                             <span class="text-lg font-semibold text-gray-900 dark:text-white">
                                 {{ $form8->day->name }} / {{ $form8->month->name }} / {{ $form8->year->name }}
                             </span>
                         </div>
-                        <div class="flex flex-col">
+                        <div class="flex flex-row items-center">
                             <span class="text-sm font-medium text-gray-500 dark:text-gray-400">معتمد:</span>
                             <span class="text-lg font-semibold text-gray-900 dark:text-white">{{ $form8->trusted }}</span>
                         </div>
@@ -38,12 +38,12 @@
                 <div class="p-6 border-b border-gray-200 dark:border-gray-700">
                     <h3 class="mb-4 text-xl font-semibold text-gray-800 dark:text-gray-200">معلومات فورم ۵ مرتبط</h3>
                     <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-                        <div class="flex flex-col">
+                        <div class="flex flex-row items-center">
                             <span class="text-sm font-medium text-gray-500 dark:text-gray-400">شماره فورم ۵:</span>
                             <span class="text-lg font-semibold text-gray-900 dark:text-white">{{ $form8->form5_id }}</span>
                         </div>
                         @if($form8->form5)
-                            <div class="flex flex-col">
+                            <div class="flex flex-row items-center">
                                 <span class="text-sm font-medium text-gray-500 dark:text-gray-400">تاریخ فورم ۵:</span>
                                 <span class="text-lg font-semibold text-gray-900 dark:text-white">
                                     {{ $form8->form5->distribution_date }}
@@ -63,11 +63,8 @@
                                 <tr>
                                     <th scope="col" class="px-6 py-3">شماره</th>
                                     <th scope="col" class="px-6 py-3">نام جنس</th>
-                                    <th scope="col" class="px-6 py-3">واحد</th>
-                                    <th scope="col" class="px-6 py-3">مقدار اصلی</th>
                                     <th scope="col" class="px-6 py-3">مقدار اعاده شده</th>
                                     <th scope="col" class="px-6 py-3">قیمت فی واحد</th>
-                                    <th scope="col" class="px-6 py-3">قیمت مجموعی</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -78,28 +75,14 @@
                                             <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                                 {{ optional($submission->item)->name }}
                                             </td>
-                                            <td class="px-6 py-4">
-                                                {{ optional($submission->unit)->name }}
-                                            </td>
-                                            <td class="px-6 py-4">
+                                            {{-- <td class="px-6 py-4">
                                                 {{ $submission->original_total ?? $submission->total }}
+                                            </td> --}}
+                                            <td class="px-6 py-4">
+                                                {{  $submission->item->total - $submission->total }}
                                             </td>
                                             <td class="px-6 py-4">
-                                                {{ $submission->is_returned ?
-                                                    ($submission->original_total ?? $submission->total) :
-                                                    ($submission->original_total - $submission->total) }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                {{ optional($submission->item)->purchase_price }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                @php
-                                                    $returnedQuantity = $submission->is_returned ?
-                                                        ($submission->original_total ?? $submission->total) :
-                                                        ($submission->original_total - $submission->total);
-                                                    $totalPrice = $returnedQuantity * optional($submission->item)->purchase_price;
-                                                @endphp
-                                                {{ number_format($totalPrice, 2) }}
+                                                {{ optional($submission->item)->purchase_price }} افغانی
                                             </td>
                                         </tr>
                                     @endforeach
@@ -134,24 +117,7 @@
                     </div>
                 </div>
 
-                <!-- Signatures Section -->
-                <div class="p-6 border-t border-gray-200 dark:border-gray-700">
-                    <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
-                        <div class="flex flex-col items-center p-4 border border-gray-200 rounded-lg dark:border-gray-700">
-                            <span class="mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">تهیه کننده</span>
-                            <div class="w-32 h-16 border-b-2 border-gray-300 dark:border-gray-600"></div>
-                        </div>
-                        <div class="flex flex-col items-center p-4 border border-gray-200 rounded-lg dark:border-gray-700">
-                            <span class="mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">معتمد</span>
-                            <div class="w-32 h-16 border-b-2 border-gray-300 dark:border-gray-600"></div>
-                            <span class="mt-2 text-sm font-medium text-gray-900 dark:text-white">{{ $form8->trusted }}</span>
-                        </div>
-                        <div class="flex flex-col items-center p-4 border border-gray-200 rounded-lg dark:border-gray-700">
-                            <span class="mb-2 text-sm font-medium text-gray-500 dark:text-gray-400">آمر</span>
-                            <div class="w-32 h-16 border-b-2 border-gray-300 dark:border-gray-600"></div>
-                        </div>
-                    </div>
-                </div>
+
 
                 <!-- Action Buttons -->
                 <div class="flex justify-end gap-4 p-6 border-t border-gray-200 dark:border-gray-700">

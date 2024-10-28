@@ -1,52 +1,67 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between">
-            <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                {{ __('فورم ۸ - اعاده تحویلخانه، نمبر:') }} {{ $form8->id }}
-            </h2>
+        <div class="flex flex-col items-center justify-between gap-4 sm:flex-row">
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
+                {{ __('فورم ۸ - اعاده تحویلخانه') }}
+            </h1>
 
-            <a href={{ route('form8s.index') }} class="flex text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
-                برگشت <i data-feather="corner-up-left" class="w-5 mr-1"></i>
+            <a href={{ route('form8s.index') }} class="flex items-center gap-2 text-gray-600 transition-colors dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400">
+                <span>برگشت به لیست</span>
+                <i data-feather="arrow-right" class="w-4 h-4"></i>
             </a>
         </div>
     </x-slot>
 
-    <div class="py-4">
-        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
+    <div class="py-6">
+        <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div class="overflow-hidden bg-white shadow-lg dark:bg-gray-800 rounded-xl">
+                <!-- Status Badge -->
+                <div class="p-1 bg-gradient-to-r from-primary-500 to-primary-600"></div>
+
                 <!-- Form8 Header Information -->
-                <div class="p-6 border-b border-gray-200 dark:border-gray-700">
-                    <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
-                        <div class="flex flex-row items-center">
-                            <span class="ml-4 text-sm font-medium text-gray-500 dark:text-gray-400">شماره فورم ۸: </span>
-                            <span class="text-lg font-semibold text-gray-900 dark:text-white">{{ $form8->form8_number }}</span>
+                <div class="p-6 md:p-8">
+                    <div class="flex flex-col items-start gap-6 md:flex-row md:gap-10 md:items-center">
+                        <div class="flex flex-col">
+                            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">شماره فورم ۸</span>
+                            <span class="text-xl font-bold text-gray-900 dark:text-white">{{ $form8->form8_number }}</span>
                         </div>
-                        <div class="flex flex-row items-center">
-                            <span class="ml-4 text-sm font-medium text-gray-500 dark:text-gray-400">تاریخ: </span>
-                            <span class="text-lg font-semibold text-gray-900 dark:text-white">
+
+                        <div class="flex flex-col">
+                            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">تاریخ ثبت</span>
+                            <span class="text-xl font-bold text-gray-900 dark:text-white">
                                 {{ $form8->day->name }} / {{ $form8->month->name }} / {{ $form8->year->name }}
                             </span>
                         </div>
-                        <div class="flex flex-row items-center">
-                            <span class="ml-4 text-sm font-medium text-gray-500 dark:text-gray-400">معتمد: </span>
-                            <span class="text-lg font-semibold text-gray-900 dark:text-white">{{ $form8->trusted }}</span>
+
+                        <div class="flex flex-col">
+                            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">معتمد مسئول</span>
+                            <span class="text-xl font-bold text-gray-900 dark:text-white">{{ $form8->trusted }}</span>
                         </div>
                     </div>
                 </div>
 
+                <div class="border-t border-gray-200 dark:border-gray-700"></div>
+
                 <!-- Form5 Related Information -->
-                <div class="p-6 border-b border-gray-200 dark:border-gray-700">
-                    <h3 class="mb-4 text-xl font-semibold text-gray-800 dark:text-gray-200">معلومات فورم ۵ مرتبط</h3>
-                    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                <div class="p-6 md:p-8">
+                    <h2 class="flex items-center gap-2 mb-6 text-xl font-bold text-gray-900 dark:text-white">
+                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900 text-primary-600 dark:text-primary-300">
+                            <i data-feather="link" class="w-4 h-4"></i>
+                        </span>
+                        معلومات فورم ۵ مرتبط
+                    </h2>
+
+                    <div class="grid grid-cols-1 gap-6 p-4 rounded-lg md:grid-cols-2 dark:bg-gray-700 bg-gray-50 dark:bg-gray-750">
                         <div class="flex flex-row items-center">
-                            <span class="ml-4 text-sm font-medium text-gray-500 dark:text-gray-400"> شماره فورم ۵: </span>
-                            <span class="text-lg font-semibold text-gray-900 dark:text-white"> {{ $form8->form5_id }} </span>
+                            <span class="items-center ml-2 text-sm font-medium text-gray-500 dark:text-gray-400">شماره فورم ۵: </span>
+                            <span class="text-lg font-semibold text-gray-900 dark:text-white">{{ $form8->form5_id }}</span>
                         </div>
+
                         @if($form8->form5)
                             <div class="flex flex-row items-center">
-                                <span class="ml-4 text-sm font-medium text-gray-500 dark:text-gray-400"> تاریخ فورم ۵: </span>
+                                <span class="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400">تاریخ فورم ۵: </span>
                                 <span class="text-lg font-semibold text-gray-900 dark:text-white">
-                                     {{ $form8->form5->distribution_date }}
+                                    {{ $form8->form5->distribution_date }}
                                 </span>
                             </div>
                         @endif
@@ -54,61 +69,148 @@
                 </div>
 
                 <!-- Returned Items -->
-                <div class="p-6">
-                    <h3 class="mb-4 text-xl font-semibold text-gray-800 dark:text-gray-200">اقلام اعاده شده</h3>
+                <div class="p-6 md:p-8">
+                    <h2 class="flex items-center gap-2 mb-6 text-xl font-bold text-gray-900 dark:text-white">
+                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900 text-primary-600 dark:text-primary-300">
+                            <i data-feather="package" class="w-4 h-4"></i>
+                        </span>
+                        اقلام اعاده شده
+                    </h2>
 
-                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table class="w-full text-sm text-right text-gray-500 dark:text-gray-400">
-                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3">شماره</th>
-                                    <th scope="col" class="px-6 py-3">نام جنس</th>
-                                    <th scope="col" class="px-6 py-3">مقدار اعاده شده</th>
-                                    <th scope="col" class="px-6 py-3">قیمت فی واحد</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if($form8->form5 && $form8->form5->submissions)
-                                    @foreach($form8->form5->submissions as $index => $submission)
-                                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
-                                            <td class="px-6 py-4">{{ $index + 1 }}</td>
-                                            <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                                {{ optional($submission->item)->name }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                {{  $submission->item->total - $submission->total }}
-                                            </td>
-                                            <td class="px-6 py-4">
-                                                {{ optional($submission->item)->purchase_price }} افغانی
+                    <div class="overflow-hidden border border-gray-200 rounded-xl dark:border-gray-700">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-right">
+                                <thead class="bg-gray-50 dark:bg-gray-750">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-4 text-sm font-medium text-gray-500 bg-white dark:bg-gray-800 dark:text-gray-400">شماره</th>
+                                        <th scope="col" class="px-6 py-4 text-sm font-medium text-gray-500 bg-white dark:bg-gray-800 dark:text-gray-400">کارمند</th>
+                                        <th scope="col" class="px-6 py-4 text-sm font-medium text-gray-500 bg-white dark:bg-gray-800 dark:text-gray-400">نام جنس</th>
+                                        <th scope="col" class="px-6 py-4 text-sm font-medium text-gray-500 bg-white dark:bg-gray-800 dark:text-gray-400">مقدار اعاده شده</th>
+                                        <th scope="col" class="px-6 py-4 text-sm font-medium text-gray-500 bg-white dark:bg-gray-800 dark:text-gray-400">قیمت فی واحد</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                    @if($form8->form5 && $form8->form5->submissions)
+                                        @foreach($form8->form5->submissions as $index => $submission)
+                                            <tr class="transition-colors bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
+                                                <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $index + 1 }}</td>
+                                                <td class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">
+                                                    {{ $submission->employee->name }}
+                                                </td>
+                                                <td class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">
+                                                    {{ optional($submission->item)->name }}
+                                                </td>
+                                                <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
+                                                    {{  $submission->item->total - $submission->total }}
+                                                </td>
+                                                <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
+                                                    <span class="font-medium">{{ number_format(optional($submission->item)->purchase_price) }}</span> افغانی
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr class="bg-white dark:bg-gray-800">
+                                            <td colspan="5" class="px-6 py-8 text-center text-gray-500 dark:text-gray-400">
+                                                <div class="flex flex-col items-center justify-center gap-2">
+                                                    <i data-feather="inbox" class="w-8 h-8 text-gray-400 dark:text-gray-500"></i>
+                                                    <p>هیچ موردی یافت نشد</p>
+                                                </div>
                                             </td>
                                         </tr>
-                                    @endforeach
-                                @else
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                        <td colspan="7" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
-                                            هیچ موردی یافت نشد
-                                        </td>
-                                    </tr>
-                                @endif
-                            </tbody>
-                        </table>
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
-
-
                 <!-- Action Buttons -->
-                <div class="flex justify-end gap-4 p-6 border-t border-gray-200 dark:border-gray-700">
-                    <a href="{{ route('form8s.index') }}" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-600">
+                <div class="flex flex-col justify-end gap-4 p-6 border-t border-gray-200 sm:flex-row md:p-8 bg-gray-50 dark:bg-gray-700 dark:border-gray-700">
+                    <a href="{{ route('form8s.index') }}" class="inline-flex items-center justify-center px-5 py-2.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-50 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-650 transition-colors">
+                        <i data-feather="list" class="w-4 h-4 ml-2"></i>
                         برگشت به لیست
                     </a>
-                    <a href="#" onclick="window.print()" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                        <i data-feather="printer" class="inline w-4 h-4 mr-1"></i> چاپ
-                    </a>
+                </div>
+            </div>
+
+            <!-- Additional Information Card -->
+            <div class="mt-6 overflow-hidden bg-white shadow-lg dark:bg-gray-800 rounded-xl">
+                <div class="p-6 md:p-8">
+                    <h2 class="flex items-center gap-2 mb-6 text-xl font-bold text-gray-900 dark:text-white">
+                        <span class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-900 text-primary-600 dark:text-primary-300">
+                            <i data-feather="info" class="w-4 h-4"></i>
+                        </span>
+                        معلومات تکمیلی
+                    </h2>
+
+                    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                        <div class="flex flex-col">
+                            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">تاریخ آخرین بروزرسانی</span>
+                            <span class="text-lg font-semibold text-gray-900 dark:text-white">
+                                {{ now()->format('Y/m/d') }}
+                            </span>
+                        </div>
+
+                        <div class="flex flex-col">
+                            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">وضعیت پردازش</span>
+                            <span class="inline-flex items-center mt-1">
+                                <span class="inline-block w-2 h-2 ml-2 bg-green-500 rounded-full"></span>
+                                <span class="text-lg font-semibold text-gray-900 dark:text-white">تکمیل شده</span>
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Print Styles -->
+    <style>
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .max-w-7xl {
+                max-width: 100% !important;
+                padding: 0 !important;
+            }
+            [data-feather] {
+                display: none !important;
+            }
+            .bg-gradient-to-r, .bg-gray-50, .bg-white, .dark\:bg-gray-800, .dark\:bg-gray-750 {
+                background: white !important;
+                color: black !important;
+            }
+            .text-gray-900, .text-gray-500, .text-gray-400, .dark\:text-white, .dark\:text-gray-400 {
+                color: black !important;
+            }
+            .border, .border-t, .border-gray-200, .dark\:border-gray-700 {
+                border-color: #ddd !important;
+            }
+            .shadow-lg, .shadow-sm {
+                box-shadow: none !important;
+            }
+            .rounded-xl, .rounded-lg {
+                border-radius: 0 !important;
+            }
+            .container, .mx-auto, .max-w-7xl, .px-4, .sm\:px-6, .lg\:px-8, .p-6, .md\:p-8, .py-6 {
+                padding: 0 !important;
+                margin: 0 !important;
+                max-width: 100% !important;
+            }
+            .print-section, .print-section * {
+                visibility: visible;
+            }
+            .print-section {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
 
     @push('scripts')
     <script>
@@ -117,6 +219,18 @@
             if (typeof feather !== 'undefined') {
                 feather.replace();
             }
+
+            // Add print class to main content for better print styling
+            const mainContent = document.querySelector('.max-w-7xl > div:first-child');
+            if (mainContent) {
+                mainContent.classList.add('print-section');
+            }
+
+            // Add no-print class to elements that shouldn't be printed
+            const noPrintElements = document.querySelectorAll('.bg-gray-50.dark\\:bg-gray-750.border-t');
+            noPrintElements.forEach(el => {
+                el.classList.add('no-print');
+            });
         });
     </script>
     @endpush

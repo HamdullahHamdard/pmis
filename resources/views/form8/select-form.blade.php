@@ -47,8 +47,8 @@
                     </div>
                 </div>
 
-                <div class="flex items-start gap-3 p-4 mb-6 text-sm text-red-800 border border-red-200 shadow-sm rounded-xl bg-red-50 dark:bg-red-600 dark:border-red-500 dark:text-white" role="alert">
-                    <svg class="w-5 h-5 mt-0.5 text-red-500 dark:text-white shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div class="flex items-center gap-3 p-4 mb-6 text-sm text-red-800 border border-red-200 shadow-sm dark:bg-opacity-20 rounded-xl bg-red-50 dark:bg-red-600 dark:border-red-500 dark:text-white" role="alert">
+                    <svg class="w-8 h-8 mt-0.5 text-red-500 dark:text-white shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M12 5a7 7 0 100 14 7 7 0 000-14z" />
                     </svg>
                     <span class="font-medium leading-6">

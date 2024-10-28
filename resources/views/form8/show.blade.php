@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex justify-between">
             <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                {{ __('فورم ۸ - اعاده تحویلخانه') }} #{{ $form8->id }}
+                {{ __('فورم ۸ - اعاده تحویلخانه، نمبر:') }} {{ $form8->id }}
             </h2>
 
             <a href={{ route('form8s.index') }} class="flex text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
@@ -18,17 +18,17 @@
                 <div class="p-6 border-b border-gray-200 dark:border-gray-700">
                     <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
                         <div class="flex flex-row items-center">
-                            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">شماره فورم ۸:</span>
+                            <span class="ml-4 text-sm font-medium text-gray-500 dark:text-gray-400">شماره فورم ۸: </span>
                             <span class="text-lg font-semibold text-gray-900 dark:text-white">{{ $form8->form8_number }}</span>
                         </div>
                         <div class="flex flex-row items-center">
-                            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">تاریخ:</span>
+                            <span class="ml-4 text-sm font-medium text-gray-500 dark:text-gray-400">تاریخ: </span>
                             <span class="text-lg font-semibold text-gray-900 dark:text-white">
                                 {{ $form8->day->name }} / {{ $form8->month->name }} / {{ $form8->year->name }}
                             </span>
                         </div>
                         <div class="flex flex-row items-center">
-                            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">معتمد:</span>
+                            <span class="ml-4 text-sm font-medium text-gray-500 dark:text-gray-400">معتمد: </span>
                             <span class="text-lg font-semibold text-gray-900 dark:text-white">{{ $form8->trusted }}</span>
                         </div>
                     </div>
@@ -39,14 +39,14 @@
                     <h3 class="mb-4 text-xl font-semibold text-gray-800 dark:text-gray-200">معلومات فورم ۵ مرتبط</h3>
                     <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                         <div class="flex flex-row items-center">
-                            <span class="text-sm font-medium text-gray-500 dark:text-gray-400">شماره فورم ۵:</span>
-                            <span class="text-lg font-semibold text-gray-900 dark:text-white">{{ $form8->form5_id }}</span>
+                            <span class="ml-4 text-sm font-medium text-gray-500 dark:text-gray-400"> شماره فورم ۵: </span>
+                            <span class="text-lg font-semibold text-gray-900 dark:text-white"> {{ $form8->form5_id }} </span>
                         </div>
                         @if($form8->form5)
                             <div class="flex flex-row items-center">
-                                <span class="text-sm font-medium text-gray-500 dark:text-gray-400">تاریخ فورم ۵:</span>
+                                <span class="ml-4 text-sm font-medium text-gray-500 dark:text-gray-400"> تاریخ فورم ۵: </span>
                                 <span class="text-lg font-semibold text-gray-900 dark:text-white">
-                                    {{ $form8->form5->distribution_date }}
+                                     {{ $form8->form5->distribution_date }}
                                 </span>
                             </div>
                         @endif
@@ -75,9 +75,6 @@
                                             <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                                 {{ optional($submission->item)->name }}
                                             </td>
-                                            {{-- <td class="px-6 py-4">
-                                                {{ $submission->original_total ?? $submission->total }}
-                                            </td> --}}
                                             <td class="px-6 py-4">
                                                 {{  $submission->item->total - $submission->total }}
                                             </td>
@@ -94,25 +91,6 @@
                                     </tr>
                                 @endif
                             </tbody>
-                            <tfoot>
-                                <tr class="font-semibold text-gray-900 dark:text-white">
-                                    <th scope="row" colspan="6" class="px-6 py-3 text-base text-left">مجموع کل</th>
-                                    <td class="px-6 py-3">
-                                        @php
-                                            $grandTotal = 0;
-                                            if($form8->form5 && $form8->form5->submissions) {
-                                                foreach($form8->form5->submissions as $submission) {
-                                                    $returnedQuantity = $submission->is_returned ?
-                                                        ($submission->original_total ?? $submission->total) :
-                                                        ($submission->original_total - $submission->total);
-                                                    $grandTotal += $returnedQuantity * optional($submission->item)->purchase_price;
-                                                }
-                                            }
-                                        @endphp
-                                        {{ number_format($grandTotal, 2) }}
-                                    </td>
-                                </tr>
-                            </tfoot>
                         </table>
                     </div>
                 </div>

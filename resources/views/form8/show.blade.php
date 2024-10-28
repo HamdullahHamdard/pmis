@@ -42,16 +42,16 @@
                             <span class="text-sm font-medium text-gray-500 dark:text-gray-400">شماره فورم ۵:</span>
                             <span class="text-lg font-semibold text-gray-900 dark:text-white">{{ $form8->form5_id }}</span>
                         </div>
-                        @if($form8->form5)
+                        {{-- @if(optional($form8->form5)) --}}
                             <div class="flex flex-col">
                                 <span class="text-sm font-medium text-gray-500 dark:text-gray-400">تاریخ فورم ۵:</span>
                                 <span class="text-lg font-semibold text-gray-900 dark:text-white">
-                                    {{ optional($form8->form5->day)->name }} /
-                                    {{ optional($form8->form5->month)->name }} /
-                                    {{ optional($form8->form5->year)->name }}
+                                    {{$form8->day->name }} /
+                                    {{ $form8->month->name }} /
+                                    {{ $form8->year->name }}
                                 </span>
                             </div>
-                        @endif
+                        {{-- @endif --}}
                     </div>
                 </div>
 

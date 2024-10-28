@@ -245,10 +245,11 @@ class Form8Controller extends Controller
      * @param  \App\Models\Form8  $form8
      * @return \Illuminate\Http\Response
      */
-    public function show(Form8 $form8)
+    public function show( $id)
     {
         // Load related data
-        $form8->load([
+        $form8 = Form8::find($id);
+        $form8->with([
             'year',
             'month',
             'day',

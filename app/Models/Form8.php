@@ -14,6 +14,7 @@ class Form8 extends Model
         'form8_number',
         'trusted',
         'form5_id',
+        'province_id',
         'purchaseYear_id',
         'purchaseMonth_id',
         'purchaseDay_id',

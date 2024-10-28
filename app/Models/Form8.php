@@ -23,8 +23,9 @@ class Form8 extends Model
     // Form relation with form5
     public function form5()
     {
-        return $this->hasOne(Form5::class);
+        return $this->belongsTo(Form5::class, 'form5_id');
     }
+
 
     public function day()
     {

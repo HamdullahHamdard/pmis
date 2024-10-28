@@ -47,6 +47,9 @@
                     </div>
                 </div>
 
+                <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
+                    دغه برخه په ډیر دقت سره ډکه کړی، ځګه دا برخه بیا ځل د تغیر وړ نه ده.
+                </div>
                 <!-- Form selection -->
                 <div class="mb-6">
                     <form method="POST" action="{{ route('form8s.select-form') }}">

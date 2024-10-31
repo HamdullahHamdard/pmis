@@ -1,5 +1,9 @@
 <?php
 
+use App\Models\Department;
+use App\Models\Province;
+use App\Models\Usable;
+use App\Models\UsableType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,6 +17,11 @@ return new class extends Migration
     {
         Schema::create('usable_submissions', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Province::class);
+            $table->foreignIdFor(Department::class);
+            $table->foreignIdFor(Usable::class);
+            $table->foreignIdFor(UsableType::class);
+            $table->string("total");
             $table->timestamps();
         });
     }

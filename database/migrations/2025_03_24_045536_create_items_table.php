@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string("name");
             $table->integer("total");
             $table->string("details");
+            $table->string('m7number')->nullable();
             $table->integer("in_stock");
             $table->string("purchase_price");
             $table->string("item_stock_number");

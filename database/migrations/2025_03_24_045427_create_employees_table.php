@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\EmployeeShift;
+use App\Models\EmployeeType;
+use App\Models\Province;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,7 +16,13 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Province::class);
+            $table->foreignIdFor(EmployeeShift::class);
+            $table->foreignIdFor(EmployeeType::class);
             $table->string("name");
+            $table->string("employment_id");
+            $table->string("position");
+            $table->string("contact");
             $table->timestamps();
         });
     }

@@ -29,6 +29,11 @@ return new class extends Migration
             $table->string("purchase_price");
             $table->string("item_stock_number");
             $table->string("images");
+            $table->unsignedInteger("purchaseYear_id")->nullable();
+
+            $table->foreign("purchaseYear_id")
+                ->references("id")
+                ->on("years");
             $table->timestamps();
         });
     }

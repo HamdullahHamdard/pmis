@@ -10,6 +10,8 @@ class Form9ItemController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -18,6 +20,8 @@ class Form9ItemController extends Controller
 
     /**
      * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -26,6 +30,9 @@ class Form9ItemController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @param  \App\Http\Requests\StoreForm9ItemRequest  $request
+     * @return \Illuminate\Http\Response
      */
     public function store(StoreForm9ItemRequest $request)
     {
@@ -34,6 +41,9 @@ class Form9ItemController extends Controller
 
     /**
      * Display the specified resource.
+     *
+     * @param  \App\Models\Form9Item  $form9Item
+     * @return \Illuminate\Http\Response
      */
     public function show(Form9Item $form9Item)
     {
@@ -42,6 +52,9 @@ class Form9ItemController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Form9Item  $form9Item
+     * @return \Illuminate\Http\Response
      */
     public function edit(Form9Item $form9Item)
     {
@@ -50,6 +63,10 @@ class Form9ItemController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param  \App\Http\Requests\UpdateForm9ItemRequest  $request
+     * @param  \App\Models\Form9Item  $form9Item
+     * @return \Illuminate\Http\Response
      */
     public function update(UpdateForm9ItemRequest $request, Form9Item $form9Item)
     {
@@ -58,6 +75,9 @@ class Form9ItemController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Form9Item  $form9Item
+     * @return \Illuminate\Http\Response
      */
     public function destroy(Form9Item $form9Item)
     {

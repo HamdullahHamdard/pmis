@@ -14,7 +14,6 @@ class ProvinceController extends Controller
     public function index()
     {
         //
-        return view("reports.index");
     }
 
     /**

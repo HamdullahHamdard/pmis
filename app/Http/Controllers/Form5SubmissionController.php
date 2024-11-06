@@ -140,10 +140,6 @@ class Form5SubmissionController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateFormItemsRequest  $request
-     * @param  \App\Models\FormItems  $formItems
-     * @return \Illuminate\Http\Response
      */
     public function update(UpdateForm5SubmissionRequest $request, $id, $form5_id)
     {
@@ -182,12 +178,6 @@ class Form5SubmissionController extends Controller
     }
 
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\FormItems  $formItems
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

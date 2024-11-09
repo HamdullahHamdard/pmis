@@ -63,21 +63,10 @@
                                 <th scope="row" class="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $form8->trusted }}
                                 </th>
-                                {{-- <th scope="row" class="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                                    @foreach ($categories as $category)
-                                        @php
-                                            $showItemCategory = "";
-                                            if($item->category_id == $category->id) {
-                                                $showItemCategory = $category->name;
-                                            }
 
-                                        @endphp
-                                            {{ $showItemCategory}}
-                                    @endforeach
-                                </th> --}}
-                                {{-- <td class="px-6 py-4 text-lg font-medium">
-                                    {{ $item->item_stock_number }}
-                                </td> --}}
+                                <td class="px-6 py-4 text-lg font-medium">
+                                    {{ $form8->day->name }} / {{ $form8->month->name }} / {{ $form8->year->name }}
+                                </td>
                                 <td class="flex justify-end py-4">
                                     @can('view-items')
                                         <a href="#" class="flex items-center justify-center p-2 font-medium text-center text-gray-200 bg-blue-600 rounded-md hover:bg-blue-700">

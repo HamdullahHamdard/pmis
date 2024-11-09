@@ -18,6 +18,14 @@ class Form8 extends Model
         'purchaseMonth_id',
         'purchaseDay_id',
     ];
+
+
+    // Form relation with form5
+    public function form5()
+    {
+        return $this->hasOne(Form5::class);
+    }
+
     // Form relation with Year
     public function year()
     {

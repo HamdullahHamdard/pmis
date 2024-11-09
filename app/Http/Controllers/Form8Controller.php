@@ -162,7 +162,7 @@ class Form8Controller extends Controller
                 ->with('error', 'هیچ موردی انتخاب نشده است');
         }
 
-        return view('form8.add-details', compact('years','months','days','selectedForm5', 'selectedSubmissions'));
+        return view('form8.add-details', compact('years', 'months', 'days', 'selectedForm5', 'selectedSubmissions'));
     }
 
     /**
@@ -192,8 +192,7 @@ class Form8Controller extends Controller
             // Find the submission
             $submission = Submission::find($id);
             $total = $request->new_quantity[$id];
-            if($submission->total < $total)
-            {
+            if ($submission->total < $total) {
                 Alert::error("داخل شوی مقدار مو د توزیع تر مقدار زیات دی");
                 return redirect()->back();
             }
@@ -215,10 +214,11 @@ class Form8Controller extends Controller
                 }
 
                 // Mark submission as returned
-                if($submission->total == $total){
+                if ($submission->total == $total) {
                     $submission->total = $submission->total - $total;
                     $submission->is_returned = true;
-                }if($submission->total > $total){
+                }
+                if ($submission->total > $total) {
                     $submission->total = $submission->total - $total;
                     $submission->is_returned = false;
                 }
@@ -231,9 +231,9 @@ class Form8Controller extends Controller
             'form5_id' => $request->form5_id,
             'form8_number' => $request->form8_number,
             "trusted" => $request->trusted,
-            'purchaseYear_id' =>$request->purchaseYear,
-            'purchaseMonth_id' =>$request->purchaseMonth,
-            'purchaseDay_id' =>$request->purchaseDay,
+            'purchaseYear_id' => $request->purchaseYear,
+            'purchaseMonth_id' => $request->purchaseMonth,
+            'purchaseDay_id' => $request->purchaseDay,
         ]);
 
         return redirect()->route('form8s.index')->with('success', 'فورم با موفقیت ثبت شد');
@@ -246,26 +246,26 @@ class Form8Controller extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Form8 $form8)
-{
-    // Load related data
-    $form8->load([
-        'year',
-        'month',
-        'day',
-        'form5',
-        'form5.submissions' => function($query) use ($form8) {
-            $query->where('form5_id', $form8->form5_id)
-                  ->where(function($q) {
-                      $q->where('is_returned', true)
-                        ->orWhereRaw('total < original_total');
-                  });
-        },
-        'form5.submissions.item',
-        'form5.submissions.unit'
-    ]);
+    {
+        // Load related data
+        $form8->load([
+            'year',
+            'month',
+            'day',
+            'form5',
+            'form5.submissions' => function ($query) use ($form8) {
+                $query->where('form5_id', $form8->form5_id)
+                    ->where(function ($q) {
+                        $q->where('is_returned', true)
+                            ->orWhereRaw('total < original_total');
+                    });
+            },
+            'form5.submissions.item',
+            'form5.submissions.unit'
+        ]);
 
-    return view('form8.show', compact('form8'));
-}
+        return view('form8.show', compact('form8'));
+    }
 
     /**
      * Show the form for editing the specified resource.

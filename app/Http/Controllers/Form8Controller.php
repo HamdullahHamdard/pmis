@@ -246,9 +246,26 @@ class Form8Controller extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Form8 $form8)
-    {
-        //
-    }
+{
+    // Load related data
+    $form8->load([
+        'year',
+        'month',
+        'day',
+        'form5',
+        'form5.submissions' => function($query) use ($form8) {
+            $query->where('form5_id', $form8->form5_id)
+                  ->where(function($q) {
+                      $q->where('is_returned', true)
+                        ->orWhereRaw('total < original_total');
+                  });
+        },
+        'form5.submissions.item',
+        'form5.submissions.unit'
+    ]);
+
+    return view('form8.show', compact('form8'));
+}
 
     /**
      * Show the form for editing the specified resource.

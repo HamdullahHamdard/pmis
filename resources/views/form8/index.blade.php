@@ -54,6 +54,9 @@
                                 <th scope="row" class="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $form8->id }}
                                 </th>
+                                <td class="px-6 py-4 text-lg font-medium">
+                                    {{ $form8->day->name }} / {{ $form8->month->name }} / {{ $form8->year->name }}
+                                </td>
                                 <th scope="row" class="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $form8->form5_id }}
                                 </th>
@@ -64,16 +67,14 @@
                                     {{ $form8->trusted }}
                                 </th>
 
-                                <td class="px-6 py-4 text-lg font-medium">
-                                    {{ $form8->day->name }} / {{ $form8->month->name }} / {{ $form8->year->name }}
-                                </td>
+
                                 <td class="flex justify-end py-4">
                                     @can('view-items')
                                         <a href="#" class="flex items-center justify-center p-2 font-medium text-center text-gray-200 bg-blue-600 rounded-md hover:bg-blue-700">
                                             <i data-feather="eye"></i>
                                         </a>
                                     @endcan
-                                    @can('edit-items')
+                                    {{-- @can('edit-items')
                                         <a href="#" class="flex items-center justify-center p-2 mr-2 font-medium text-center text-gray-200 bg-blue-600 rounded-md hover:bg-blue-700">
                                             <i data-feather="edit"></i>
                                         </a>
@@ -83,7 +84,7 @@
                                         <a onclick="return confirm('Are you sure to delete this record?')" href="#" class="flex items-center justify-center p-2 mr-2 text-center text-gray-200 bg-red-500 rounded-md hover:bg-red-700">
                                             <i data-feather="trash-2"></i>
                                         </a>
-                                     @endcan
+                                     @endcan --}}
                                 </td>
                             </tr>
                             @endforeach

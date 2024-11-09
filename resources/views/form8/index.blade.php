@@ -49,9 +49,18 @@
                             @foreach($form8s as $form8)
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-md">
                                 <th scope="row" class="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{ $item->total }}
+                                    {{ $form8->id }}
                                 </th>
                                 <th scope="row" class="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                                    {{ $form8->form5_id }}
+                                </th>
+                                <th scope="row" class="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                                    {{ $form8->form8_number }}
+                                </th>
+                                <th scope="row" class="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                                    {{ $form8->trusted }}
+                                </th>
+                                {{-- <th scope="row" class="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                                     @foreach ($categories as $category)
                                         @php
                                             $showItemCategory = "";
@@ -62,34 +71,34 @@
                                         @endphp
                                             {{ $showItemCategory}}
                                     @endforeach
-                                </th>
-                                <td class="px-6 py-4 text-lg font-medium">
-                                    {{-- {{ $item->item_stock_number }} --}}
-                                </td>
-                                {{-- <td class="flex justify-end py-4"> --}}
-                                    {{-- @can('view-items') --}}
-                                        {{-- <a href="#" class="flex items-center justify-center p-2 font-medium text-center text-gray-200 bg-blue-600 rounded-md hover:bg-blue-700">
+                                </th> --}}
+                                {{-- <td class="px-6 py-4 text-lg font-medium">
+                                    {{ $item->item_stock_number }}
+                                </td> --}}
+                                <td class="flex justify-end py-4">
+                                    @can('view-items')
+                                        <a href="#" class="flex items-center justify-center p-2 font-medium text-center text-gray-200 bg-blue-600 rounded-md hover:bg-blue-700">
                                             <i data-feather="eye"></i>
-                                        </a> --}}
-                                    {{-- @endcan --}}
-                                    {{-- @can('edit-items') --}}
-                                        {{-- <a href="#" class="flex items-center justify-center p-2 mr-2 font-medium text-center text-gray-200 bg-blue-600 rounded-md hover:bg-blue-700">
+                                        </a>
+                                    @endcan
+                                    @can('edit-items')
+                                        <a href="#" class="flex items-center justify-center p-2 mr-2 font-medium text-center text-gray-200 bg-blue-600 rounded-md hover:bg-blue-700">
                                             <i data-feather="edit"></i>
-                                        </a> --}}
-                                    {{-- @endcan --}}
+                                        </a>
+                                    @endcan
 
-                                    {{-- @can('delete-items') --}}
-                                        {{-- <a onclick="return confirm('Are you sure to delete this record?')" href="#" class="flex items-center justify-center p-2 mr-2 text-center text-gray-200 bg-red-500 rounded-md hover:bg-red-700">
+                                    @can('delete-items')
+                                        <a onclick="return confirm('Are you sure to delete this record?')" href="#" class="flex items-center justify-center p-2 mr-2 text-center text-gray-200 bg-red-500 rounded-md hover:bg-red-700">
                                             <i data-feather="trash-2"></i>
-                                        </a> --}}
-                                    {{-- @endcan --}}
-                                {{-- </td> --}}
+                                        </a>
+                                     @endcan
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
                     <div class="flex mt-4">
-                        {!! $items->links() !!}
+                        {!! $form8s->links() !!}
                     </div>
                 </div>
             </div>

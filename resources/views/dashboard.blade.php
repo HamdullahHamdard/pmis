@@ -58,7 +58,7 @@
                 </form>
             </div>
 
-            @permission('view-dashboardCalcs')
+            @can('view-dashboardCalcs')
             <div class="px-6 py-4 mb-4 overflow-x-auto bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
                 <div class="flex justify-between px-6 py-4 mx-auto space-y-4 text-gray-700 max-w-7xl sm:px-6 lg:px-8 dark:text-gray-100 sm:space-y-0">
                     <div>
@@ -120,7 +120,7 @@
                         </div>
                     </div>
 
-                    @permission('view-users')
+                    @can('view-users')
                     <div class="py-4 text-center bg-green-200 rounded-md sm:py-6">
                         <div class="flex items-center justify-center mb-2">
                             <h5 class="text-4xl font-bold tracking-tight text-gray-900">
@@ -145,9 +145,9 @@
                             <a href="{{ url("/users") }}" class="flex items-center justify-center w-48 py-2 mt-4 text-lg text-center text-white bg-green-500 rounded-lg hover:bg-green-600"><i data-feather="external-link" class="w-5"></i> <span class="mr-2">نمایش</span></a>
                         </div>
                     </div>
-                    @endpermission
+                    @endcan
 
-                    @permission("view-roles")
+                    @can("view-roles")
                     <div class="py-4 text-center bg-yellow-200 rounded-md sm:py-6">
                         <div class="flex items-center justify-center mb-2">
                             <h5 class="text-4xl font-bold tracking-tight text-gray-900">
@@ -170,10 +170,10 @@
                             <a href="{{ url("/roles") }}" class="flex items-center justify-center w-48 py-2 mt-4 text-lg text-center text-white bg-yellow-500 rounded-lg hover:bg-yellow-600"><i data-feather="external-link" class="w-5"></i> <span class="mr-2">نمایش</span></a>
                         </div>
                     </div>
-                    @endpermission
+                    @endcan
                 </div>
             </div>
-            @endpermission
+            @endcan
 
 
             <div class="grid gap-4 sm:grid-cols-2">
@@ -230,7 +230,7 @@
                                         @endforeach
                                     </th>
                                     <td class="flex justify-end py-4">
-                                        @permission('view-items')
+                                        @can('view-items')
                                             <a data-popover-target="view-popover" href="{{ url('stock/items/show/'.$item->id) }}" class="flex items-center justify-center p-2 font-medium text-center text-gray-200 bg-green-500 rounded-md hover:bg-green-600">
                                                 <i data-feather="eye"></i>
                                             </a>
@@ -240,8 +240,8 @@
                                                 </div>
                                                 <div data-popper-arrow></div>
                                             </div>
-                                        @endpermission
-                                        @permission('edit-items')
+                                        @endcan
+                                        @can('edit-items')
                                             <a data-popover-target="edit-popover" href="{{ url('stock/items/edit/'.$item->id) }}" class="flex items-center justify-center p-2 mr-2 font-medium text-center text-gray-200 bg-blue-600 rounded-md hover:bg-blue-700">
                                                 <i data-feather="edit"></i>
                                             </a>
@@ -251,9 +251,9 @@
                                                 </div>
                                                 <div data-popper-arrow></div>
                                             </div>
-                                        @endpermission
+                                        @endcan
 
-                                        @permission('delete-items')
+                                        @can('delete-items')
                                             <a data-popover-target="delete-popover" onclick="return confirm('Are you sure to delete this record?')" href="{{ url('stock/items/delete/'.$item->id) }}" class="flex items-center justify-center p-2 mr-2 text-center text-gray-200 bg-red-500 rounded-md hover:bg-red-600">
                                                 <i data-feather="trash-2"></i>
                                             </a>
@@ -263,7 +263,7 @@
                                                 </div>
                                                 <div data-popper-arrow></div>
                                             </div>
-                                        @endpermission
+                                        @endcan
                                     </td>
                                 </tr>
                                 @elseif(auth()->user()->province_id == 13)
@@ -287,7 +287,7 @@
                                         @endforeach
                                     </th>
                                     <td class="flex justify-end py-4">
-                                        @permission('view-items')
+                                        @can('view-items')
                                             <a data-popover-target="view-popover" href="{{ url('stock/items/show/'.$item->id) }}" class="flex items-center justify-center p-2 font-medium text-center text-gray-200 bg-green-500 rounded-md hover:bg-green-600">
                                                 <i data-feather="eye"></i>
                                             </a>
@@ -297,8 +297,8 @@
                                                 </div>
                                                 <div data-popper-arrow></div>
                                             </div>
-                                        @endpermission
-                                        @permission('edit-items')
+                                        @endcan
+                                        @can('edit-items')
                                             <a data-popover-target="edit-popover" href="{{ url('stock/items/edit/'.$item->id) }}" class="flex items-center justify-center p-2 mr-2 font-medium text-center text-gray-200 bg-blue-600 rounded-md hover:bg-blue-700">
                                                 <i data-feather="edit"></i>
                                             </a>
@@ -308,9 +308,9 @@
                                                 </div>
                                                 <div data-popper-arrow></div>
                                             </div>
-                                        @endpermission
+                                        @endcan
 
-                                        @permission('delete-items')
+                                        @can('delete-items')
                                             <a data-popover-target="delete-popover" onclick="return confirm('Are you sure to delete this record?')" href="{{ url('stock/items/delete/'.$item->id) }}" class="flex items-center justify-center p-2 mr-2 text-center text-gray-200 bg-red-500 rounded-md hover:bg-red-600">
                                                 <i data-feather="trash-2"></i>
                                             </a>
@@ -320,7 +320,7 @@
                                                 </div>
                                                 <div data-popper-arrow></div>
                                             </div>
-                                        @endpermission
+                                        @endcan
                                     </td>
                                 </tr>
                                 @endif

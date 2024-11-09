@@ -99,7 +99,7 @@
                 </p>
             </div>
 
-            @can('view-employees')
+            @if(auth()->user()->province_id == 13)
             <div class="py-4 text-center bg-white rounded-md dark:bg-gray-800">
                 <h1 class="mb-4 text-4xl font-semibold">{{ $totalEmployees }}</h1>
                 <p>
@@ -109,7 +109,7 @@
                     <a href="{{ url("employees") }}" class="flex items-center justify-center w-48 py-2 mt-4 text-lg text-center text-white bg-gray-700 border border-gray-600 rounded-lg hover:bg-gray-600"><i data-feather="external-link" class="w-5"></i> <span class="mr-2">نمایش</span></a>
                 </div>
             </div>
-            @endcan
+            @endif
 
             @can('view-employeeTypes')
             <div class="py-4 text-center bg-white rounded-md dark:bg-gray-800">

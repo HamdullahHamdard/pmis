@@ -89,7 +89,7 @@ class UserController extends Controller
         ]);
 
         // Convert role IDs to role names before assigning
-        $roles = Role::whereIn('id', (array) $request->input("roles"))->pluck('name')->toArray();
+        $user->assignRole($request->role_id);
 
         Alert::success("نوۍ کارونکي په بریالیتوب سره جوړ شو");
 
@@ -137,7 +137,7 @@ class UserController extends Controller
             "name" => "required",
             "email" => "required|email|unique:users,email," . $id,
             "password" => "required|same:confirm-password",
-            "roles" => "required",
+            "role_id" => "required",
         ]);
 
         $user = User::find($id);
@@ -164,7 +164,7 @@ class UserController extends Controller
             ->delete();
 
         // Convert role IDs to role names before assigning
-    $roles = Role::whereIn('id', (array) $request->input("roles"))->pluck('name')->toArray();
+        $user->assignRole($request->role_id);
 
         Alert::success("د کارونکي معلومات په بریالیتوب سره سم شول");
 

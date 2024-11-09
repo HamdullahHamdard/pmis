@@ -32,10 +32,13 @@
                                     شماره
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    اسم فورم
+                                     د توزیع نمبر
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    تاریخ
+                                    د تسلیمی نمبر
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    معتمد
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-left">
                                     اقدام
@@ -43,13 +46,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach($items as $item) --}}
+                            @foreach($form8s as $form8)
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-md">
                                 <th scope="row" class="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{-- {{ $item->total }} --}}
+                                    {{ $item->total }}
                                 </th>
                                 <th scope="row" class="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{-- @foreach ($categories as $category)
+                                    @foreach ($categories as $category)
                                         @php
                                             $showItemCategory = "";
                                             if($item->category_id == $category->id) {
@@ -58,7 +61,7 @@
 
                                         @endphp
                                             {{ $showItemCategory}}
-                                    @endforeach --}}
+                                    @endforeach
                                 </th>
                                 <td class="px-6 py-4 text-lg font-medium">
                                     {{-- {{ $item->item_stock_number }} --}}
@@ -82,11 +85,11 @@
                                     {{-- @endcan --}}
                                 {{-- </td> --}}
                             </tr>
-                            {{-- @endforeach --}}
+                            @endforeach
                         </tbody>
                     </table>
                     <div class="flex mt-4">
-                        {{-- {!! $items->links() !!} --}}
+                        {!! $items->links() !!}
                     </div>
                 </div>
             </div>

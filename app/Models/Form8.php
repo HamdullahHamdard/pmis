@@ -26,21 +26,19 @@ class Form8 extends Model
         return $this->hasOne(Form5::class);
     }
 
-    // Form relation with Year
-    public function year()
-    {
-        return $this->hasOne(Year::class);
-    }
-
-    // Form relation with Year
-    public function month()
-    {
-        return $this->hasOne(Month::class);
-    }
-
-    // Form relation with Year
     public function day()
     {
-        return $this->hasOne(Day::class);
+        return $this->belongsTo(Day::class, 'purchaseDay_id');
     }
+
+    public function month()
+    {
+        return $this->belongsTo(Month::class, 'purchaseMonth_id');
+    }
+
+    public function year()
+    {
+        return $this->belongsTo(Year::class, 'purchaseYear_id');
+    }
+
 }

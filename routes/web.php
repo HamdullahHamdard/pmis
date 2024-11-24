@@ -579,7 +579,6 @@ Route::middleware("auth")->group(function () {
             Form5SubmissionController::class,
             "destroy",
         ]);
-        Route::get('/get-form5/{id}', [Form8Controller::class, 'getForm5Details']);
     });
 
 

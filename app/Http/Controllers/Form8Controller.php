@@ -42,9 +42,7 @@ class Form8Controller extends Controller
      */
     public function create(Request $request)
     {
-        // Get form5_id from either POST or GET request
-        $form5_id = $request->input('form5_id');
-
+        // Get all available Form5s with non-returned submissions
         $form5s = Form5::whereHas('submissions', function ($query) {
             $query->where('is_returned', false);
         })->with(['submissions' => function ($query) {
@@ -54,14 +52,25 @@ class Form8Controller extends Controller
         $selectedForm5 = null;
         $submissions = null;
 
+        // Check if we have a form5_id in the session
+        $form5_id = session('selected_form5_id');
+
         if ($form5_id) {
-            $selectedForm5 = Form5::with('submissions')->find($form5_id);
+            $selectedForm5 = Form5::with(['submissions' => function ($query) {
+                $query->where('is_returned', false);
+            }])->find($form5_id);
 
-            if (!$selectedForm5) {
-                return redirect()->back()->with('error', 'No records found for the selected Form5.');
+            if ($selectedForm5) {
+                $submissions = $selectedForm5->submissions->where('is_returned', false);
+
+                // If no submissions are available, show an error
+                if ($submissions->isEmpty()) {
+                    session()->forget('selected_form5_id');
+                    return redirect()->route('form8s.create')->with('error', 'No available items found for the selected Form5.');
+                }
+            } else {
+                session()->forget('selected_form5_id');
             }
-
-            $submissions = $selectedForm5->submissions->where('is_returned', false);
         }
 
         return view('form8.create', compact('form5s', 'submissions', 'selectedForm5'));
@@ -73,8 +82,18 @@ class Form8Controller extends Controller
      * @param  \App\Http\Requests\StoreForm8Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreForm8Request $request)
+    public function store(Request $request)
     {
+        // Check if this is just a form selection request
+        if ($request->has('form_selection_only') && $request->form_selection_only == '1') {
+            // Store the selected form5_id in the session
+            session(['selected_form5_id' => $request->form5_id]);
+
+            // Redirect back to the create page
+            return redirect()->route('form8s.create');
+        }
+
+        // This is a regular form submission
         // Validate that we have submission IDs
         if (!$request->has('submission_ids') || empty($request->submission_ids)) {
             return redirect()->back()->with('error', 'No items were selected for processing.');
@@ -115,6 +134,9 @@ class Form8Controller extends Controller
                 $submission->save();
             }
         }
+
+        // Clear the session after successful submission
+        session()->forget('selected_form5_id');
 
         return redirect()->route('form8s.index')->with('success', 'Form submitted successfully.');
     }

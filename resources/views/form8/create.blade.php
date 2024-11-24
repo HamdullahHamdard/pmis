@@ -48,56 +48,53 @@
                 </div>
 
                 <!-- Form selection -->
-                <div id="form-selection-container" class="mb-6">
-                    <form method="GET" class="w-full mx-auto" id="form-selection">
-                        @csrf
-                        <div class="mb-4">
-                            <label for="form5-select" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                انتخاب فورم
-                            </label>
-                            <select name="form5_id" id="form5-select" required
-                                class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
-                                <option value="" hidden class="py-2 text-gray-300">انتخاب کړي</option>
+                <div id="form-selection-container" class="mb-6 {{ $selectedForm5 ? 'hidden' : '' }}">
+                    <div class="mb-4">
+                        <label for="form5-select" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            انتخاب فورم
+                        </label>
+                        <select id="form5-select" required
+                            class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
+                            <option value="" hidden class="py-2 text-gray-300">انتخاب کړي</option>
 
-                                @if(auth()->user()->province_id == 13)
-                                    @foreach ($form5s as $form5)
+                            @if(auth()->user()->province_id == 13)
+                                @foreach ($form5s as $form5)
+                                    <option value="{{ $form5->id }}"
+                                        {{ request('form5_id') == $form5->id ? 'selected' : '' }}
+                                        class="py-2">
+                                        {{ $form5->id }} {{ $form5->form9s->employee->name }}
+                                    </option>
+                                @endforeach
+                            @else
+                                @foreach ($form5s as $form5)
+                                    @if($form5->id == auth()->user()->province_id)
                                         <option value="{{ $form5->id }}"
                                             {{ request('form5_id') == $form5->id ? 'selected' : '' }}
                                             class="py-2">
                                             {{ $form5->id }} {{ $form5->form9s->employee->name }}
                                         </option>
-                                    @endforeach
-                                @else
-                                    @foreach ($form5s as $form5)
-                                        @if($form5->id == auth()->user()->province_id)
-                                            <option value="{{ $form5->id }}"
-                                                {{ request('form5_id') == $form5->id ? 'selected' : '' }}
-                                                class="py-2">
-                                                {{ $form5->id }} {{ $form5->form9s->employee->name }}
-                                            </option>
-                                        @endif
-                                    @endforeach
-                                @endif
-                            </select>
-                        </div>
-                        <div class="flex justify-end">
-                            <button type="button" id="select-form-button"
-                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white transition-colors bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                <span id="select-form-button-text">انتخاب فورم</span>
-                                <svg id="select-form-loading" class="hidden w-5 h-5 ml-2 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                </svg>
-                            </button>
-                        </div>
-                    </form>
+                                    @endif
+                                @endforeach
+                            @endif
+                        </select>
+                    </div>
+                    <div class="flex justify-end">
+                        <button type="button" id="select-form-button"
+                            class="inline-flex items-center px-4 py-2 text-sm font-medium text-white transition-colors bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            <span id="select-form-button-text">انتخاب فورم</span>
+                            <svg id="select-form-loading" class="hidden w-5 h-5 ml-2 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Main form with both steps -->
                 <form method="POST" class="w-full mx-auto" id="main-form" action="{{ route('form8s.store') }}"
                     enctype='multipart/form-data'>
                     @csrf
-                    <input type="hidden" name="form5_id" value="{{ $selectedForm5->id ?? '' }}">
+                    <input type="hidden" name="form5_id" id="selected-form5-id" value="{{ $selectedForm5->id ?? '' }}">
 
                     <!-- Step 1: Select items -->
                     <div id="step-1" class="transition-all duration-300 {{ !$selectedForm5 ? 'hidden' : '' }}">
@@ -120,7 +117,7 @@
                                 <div class="relative">
                                     <select id="items-select" name="submission_ids[]" multiple
                                         class="w-full min-h-[200px] border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
-                                        @foreach ($submissions as $submission)
+                                        @foreach ($submissions ?? [] as $submission)
                                             <option value="{{ $submission->id }}">
                                                 {{ $submission->employee->name ?? 'No Employee Name' }} : {{ $submission->item->name ?? 'No Item Name' }}
                                             </option>
@@ -189,7 +186,7 @@
         const selectAllButton = document.getElementById('select-all-button');
         const deselectAllButton = document.getElementById('deselect-all-button');
         const selectionCount = document.getElementById('selection-count');
-        const formSelectionForm = document.getElementById('form-selection');
+        const formSelectionContainer = document.getElementById('form-selection-container');
         const selectFormButton = document.getElementById('select-form-button');
         const selectFormButtonText = document.getElementById('select-form-button-text');
         const selectFormLoading = document.getElementById('select-form-loading');
@@ -197,6 +194,7 @@
         const submitButtonText = document.getElementById('submit-button-text');
         const submitLoading = document.getElementById('submit-loading');
         const form5Select = document.getElementById('form5-select');
+        const selectedForm5Id = document.getElementById('selected-form5-id');
 
         // Update selection count
         function updateSelectionCount() {
@@ -234,8 +232,8 @@
             });
         }
 
-        // Form selection button click handler - AJAX submission to prevent token in URL
-        if (selectFormButton && formSelectionForm) {
+        // Form selection button click handler - Direct navigation without AJAX
+        if (selectFormButton && form5Select) {
             selectFormButton.addEventListener('click', function() {
                 // Validate form selection
                 if (!form5Select || !form5Select.value) {
@@ -246,7 +244,7 @@
                     errorMessage.textContent = 'لطفا یک فورم را انتخاب کنید';
 
                     // Insert error message before the form
-                    formSelectionForm.parentNode.insertBefore(errorMessage, formSelectionForm);
+                    formSelectionContainer.parentNode.insertBefore(errorMessage, formSelectionContainer);
 
                     // Remove error message after 3 seconds
                     setTimeout(() => {
@@ -261,47 +259,37 @@
                 selectFormButtonText.textContent = 'در حال بارگذاری...';
                 selectFormLoading.classList.remove('hidden');
 
-                // Create form data
-                const formData = new FormData(formSelectionForm);
+                // Navigate to the page with the selected form ID using the History API
+                // This avoids exposing the token in the URL
+                const url = new URL(window.location.href);
+                url.searchParams.delete('_token'); // Remove token if it exists
+                url.searchParams.set('form5_id', form5Select.value);
 
-                // Send AJAX request
-                fetch('{{ route("form8s.create") }}', {
-                    method: 'GET',
-                    body: formData,
-                    headers: {
-                        'X-Requested-With': 'XMLHttpRequest'
-                    }
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    // Redirect to the same page without query parameters
-                    window.location.href = '{{ route("form8s.create") }}';
-                })
-                .catch(error => {
-                    console.error('Error:', error);
+                // Use History API to change URL without reloading
+                window.history.pushState({}, '', url.pathname);
 
-                    // Show error message
-                    const errorMessage = document.createElement('div');
-                    errorMessage.className = 'p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800';
-                    errorMessage.setAttribute('role', 'alert');
-                    errorMessage.textContent = 'خطا در ارسال فرم. لطفا دوباره تلاش کنید.';
+                // Then reload the page with the form ID as a POST parameter
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '{{ route("form8s.create") }}';
+                form.style.display = 'none';
 
-                    // Insert error message before the form
-                    formSelectionForm.parentNode.insertBefore(errorMessage, formSelectionForm);
+                // Add CSRF token
+                const csrfToken = document.createElement('input');
+                csrfToken.type = 'hidden';
+                csrfToken.name = '_token';
+                csrfToken.value = '{{ csrf_token() }}';
+                form.appendChild(csrfToken);
 
-                    // Remove error message after 3 seconds
-                    setTimeout(() => {
-                        errorMessage.remove();
-                    }, 3000);
-                })
-                .finally(() => {
-                    // Hide loading indicator
-                    selectFormButton.disabled = false;
-                    selectFormButtonText.textContent = 'انتخاب فورم';
-                    selectFormLoading.classList.add('hidden');
-                });
+                // Add form5_id
+                const form5IdInput = document.createElement('input');
+                form5IdInput.type = 'hidden';
+                form5IdInput.name = 'form5_id';
+                form5IdInput.value = form5Select.value;
+                form.appendChild(form5IdInput);
+
+                document.body.appendChild(form);
+                form.submit();
             });
         }
 
@@ -527,6 +515,8 @@
 
                 // Show loading indicator
                 if (submitButton && submitButtonText && submitLoading) {
+                    submitButton.disabled = true;
+                    submitButtonText.textContent = 'در حال ثبت...';  {
                     submitButton.disabled = true;
                     submitButtonText.textContent = 'در حال ثبت...';
                     submitLoading.classList.remove('hidden');

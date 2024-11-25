@@ -48,7 +48,7 @@
                 </div>
 
                 <!-- Form selection -->
-                <div id="form-selection-container" class="mb-6 {{ $selectedForm5 ? 'hidden' : '' }}">
+                <div id="form-selection-container" class="mb-6 {{ isset($selectedForm5) ? 'hidden' : '' }}">
                     <div class="mb-4">
                         <label for="form5-select" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                             انتخاب فورم
@@ -97,8 +97,8 @@
                     <input type="hidden" name="form5_id" id="selected-form5-id" value="{{ $selectedForm5->id ?? '' }}">
 
                     <!-- Step 1: Select items -->
-                    <div id="step-1" class="transition-all duration-300 {{ !$selectedForm5 ? 'hidden' : '' }}">
-                        @if ($selectedForm5)
+                    <div id="step-1" class="transition-all duration-300 {{ !isset($selectedForm5) ? 'hidden' : '' }}">
+                        @if (isset($selectedForm5))
                             <div class="mb-6">
                                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                     انتخاب موارد
@@ -187,14 +187,14 @@
         const deselectAllButton = document.getElementById('deselect-all-button');
         const selectionCount = document.getElementById('selection-count');
         const formSelectionContainer = document.getElementById('form-selection-container');
-        const selectFormButton = document.getElementById('select-form-button');
-        const selectFormButtonText = document.getElementById('select-form-button-text');
-        const selectFormLoading = document.getElementById('select-form-loading');
         const submitButton = document.getElementById('submit-button');
         const submitButtonText = document.getElementById('submit-button-text');
         const submitLoading = document.getElementById('submit-loading');
         const form5Select = document.getElementById('form5-select');
         const selectedForm5Id = document.getElementById('selected-form5-id');
+        const selectFormButton = document.getElementById('select-form-button');
+        const selectFormButtonText = document.getElementById('select-form-button-text');
+        const selectFormLoading = document.getElementById('select-form-loading');
 
         // Update selection count
         function updateSelectionCount() {
@@ -232,7 +232,7 @@
             });
         }
 
-        // Form selection button click handler - Direct navigation without AJAX
+        // Form selection button click handler - Using session storage to avoid URL parameters
         if (selectFormButton && form5Select) {
             selectFormButton.addEventListener('click', function() {
                 // Validate form selection
@@ -259,19 +259,13 @@
                 selectFormButtonText.textContent = 'در حال بارگذاری...';
                 selectFormLoading.classList.remove('hidden');
 
-                // Navigate to the page with the selected form ID using the History API
-                // This avoids exposing the token in the URL
-                const url = new URL(window.location.href);
-                url.searchParams.delete('_token'); // Remove token if it exists
-                url.searchParams.set('form5_id', form5Select.value);
+                // Store the selected form ID in session storage
+                sessionStorage.setItem('selected_form5_id', form5Select.value);
 
-                // Use History API to change URL without reloading
-                window.history.pushState({}, '', url.pathname);
-
-                // Then reload the page with the form ID as a POST parameter
+                // Create a form and submit it via POST to avoid exposing data in URL
                 const form = document.createElement('form');
                 form.method = 'POST';
-                form.action = '{{ route("form8s.create") }}';
+                form.action = '{{ route("form8s.store") }}';
                 form.style.display = 'none';
 
                 // Add CSRF token
@@ -287,6 +281,13 @@
                 form5IdInput.name = 'form5_id';
                 form5IdInput.value = form5Select.value;
                 form.appendChild(form5IdInput);
+
+                // Add a flag to indicate this is just for selection, not final submission
+                const selectionFlag = document.createElement('input');
+                selectionFlag.type = 'hidden';
+                selectionFlag.name = 'form_selection_only';
+                selectionFlag.value = '1';
+                form.appendChild(selectionFlag);
 
                 document.body.appendChild(form);
                 form.submit();
@@ -515,8 +516,6 @@
 
                 // Show loading indicator
                 if (submitButton && submitButtonText && submitLoading) {
-                    submitButton.disabled = true;
-                    submitButtonText.textContent = 'در حال ثبت...';  {
                     submitButton.disabled = true;
                     submitButtonText.textContent = 'در حال ثبت...';
                     submitLoading.classList.remove('hidden');

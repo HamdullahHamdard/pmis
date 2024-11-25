@@ -585,7 +585,15 @@ Route::middleware("auth")->group(function () {
     Route::group(['middleware' => ['auth']], function() {
         Route::resource('form9s', Form9Controller::class);
         Route::resource('form5s', Form5Controller::class);
-        Route::resource('form8s', Form8Controller::class);
+        // Form8 routes
+    Route::get('form8s', [Form8Controller::class, 'index'])->name('form8s.index');
+    Route::get('form8s/create', [Form8Controller::class, 'create'])->name('form8s.create');
+    Route::post('form8s/select-form', [Form8Controller::class, 'selectForm'])->name('form8s.select-form');
+    Route::get('form8s/select-items', [Form8Controller::class, 'selectItems'])->name('form8s.select-items');
+    Route::post('form8s/select-items', [Form8Controller::class, 'processItemSelection'])->name('form8s.select-items');
+    Route::get('form8s/add-details', [Form8Controller::class, 'addDetails'])->name('form8s.add-details');
+    Route::post('form8s', [Form8Controller::class, 'store'])->name('form8s.store');
+
 
 
     });

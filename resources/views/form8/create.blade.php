@@ -413,7 +413,7 @@
                                 class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
                                 placeholder="شخص جدید را وارد کنید">
                         </div>
-                        
+
                     </div>
                 `;
 
@@ -457,7 +457,7 @@
                 let isValid = true;
                 let firstInvalidField = null;
                 const priceInputs = document.querySelectorAll('input[name^="new_prices"]');
-                const personSelects = document.querySelectorAll('select[name^="certified_persons"]');
+                const personSelects = document.querySelectorAll('input[name^="certified_persons"]');
 
                 priceInputs.forEach(input => {
                     if (!input.value) {

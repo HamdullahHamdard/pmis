@@ -130,7 +130,7 @@ class Form8Controller extends Controller
 
                 // Mark submission as returned
                 $submission->is_returned = true;
-                $submission->certified_person_id = $certified_person;
+                // $submission->certified_person_id = $certified_person;
                 $submission->save();
             }
         }

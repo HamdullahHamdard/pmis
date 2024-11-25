@@ -407,22 +407,13 @@
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                شخص مسئول
+                                قیمت جدید
                             </label>
-                            <select name="certified_persons[${submissionId}]" required
-                                class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
-                                <option value="" hidden>انتخاب کنید</option>
-                                @foreach($employees ?? [] as $employee)
-                                    <option value="{{ $employee->id }}">{{ $employee->name }}</option>
-                                @endforeach
-                                <!-- Fallback options if no employees are available -->
-                                @if(empty($employees))
-                                    <option value="person1">شخص 1</option>
-                                    <option value="person2">شخص 2</option>
-                                    <option value="person3">شخص 3</option>
-                                @endif
-                            </select>
+                            <input type="number" name="certified_persons[${submissionId}]" required
+                                class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
+                                placeholder="شخص جدید را وارد کنید">
                         </div>
+                        
                     </div>
                 `;
 

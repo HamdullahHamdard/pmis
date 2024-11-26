@@ -30,6 +30,11 @@
                     <table class="w-full text-sm text-right text-gray-500 dark:text-gray-400">
                         <thead class="text-lg text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
+                                @if(auth()->user()->hasRole('Admin'))
+                                    <th scope="col" class="px-6 py-3">
+                                        ولایت
+                                    </th>
+                                @endif
                                 <th scope="col" class="px-6 py-3">
                                     شماره
                                 </th>

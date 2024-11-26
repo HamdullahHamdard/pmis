@@ -230,6 +230,7 @@ class Form8Controller extends Controller
         }
         $form8 = Form8::create([
             'form5_id' => $request->form5_id,
+            'province_id' => auth()->user()->province_id,
             'form8_number' => $request->form8_number,
             "trusted" => $request->trusted,
             'purchaseYear_id' => $request->purchaseYear,

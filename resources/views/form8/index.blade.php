@@ -61,7 +61,7 @@
                                     @if(auth()->user()->hasRole('Admin'))
                                         <th scope="row"
                                             class="px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                                            {{ $form8->id }}
+                                            {{ $form8->province->name }}
                                         </th>
                                     @endif
                                     <th scope="row"

@@ -26,6 +26,10 @@ class Form8 extends Model
     {
         return $this->belongsTo(Form5::class, 'form5_id');
     }
+    public function province()
+    {
+        return $this->belongsTo(Province::class);
+    }
 
 
     public function day()

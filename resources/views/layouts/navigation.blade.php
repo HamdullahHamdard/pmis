@@ -27,7 +27,13 @@
                     </x-nav-link>
                 </div>
                 @endcan
-
+                @can('view-submission')
+                <div class="hidden space-x-4 sm:ml-6 sm:flex">
+                    <x-nav-link :href="route('form8s.index')" :active="request()->routeIs('form8s.index')">
+                        <i data-feather="check-circle" class="w-5 ml-2"></i>
+                        {{ __('تسلیمیانې') }}
+                    </x-nav-link>
+                </div>
                 @can('view-usables')
                 <div class="hidden space-x-4 sm:ml-6 sm:flex">
                     <x-nav-link :href="route('usables')" :active="request()->routeIs('usables')">
@@ -50,12 +56,7 @@
                         {{ __('فورم توزیع') }}
                     </x-nav-link>
                 </div>
-                <div class="hidden space-x-4 sm:mr-6 sm:flex">
-                    <x-nav-link :href="route('form8s.index')" :active="request()->routeIs('form8s.index')">
-                        <i data-feather="settings" class="w-5 ml-2"></i>
-                        {{ __('تسلیمی') }}
-                    </x-nav-link>
-                </div>
+
                 {{-- @endcan --}}
             </div>
 
@@ -161,3 +162,5 @@
         </div>
     </div>
 </nav>
+
+        

@@ -24,8 +24,8 @@
         <!-- Production Styles -->
         {{-- <link rel="stylesheet" href="{{ asset('build/assets/app-b36c5dcb.css') }}"> --}}
     </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex justify-center items-center bg-gray-100 dark:bg-gray-900 mx-auto w-full p-0">
+    <body class="font-sans bg-[url('/images/login-bg.jpg')] bg-cover bg-center antialiased">
+        <div class="min-h-screen flex justify-center items-center backdrop-brightness-50 backdrop-filter backdrop-grayscale backdrop-blur-md backdrop-contrast-200 mx-auto w-full p-0">
             <div class="container mx-auto max-w-sm lg:max-w-4xl p-2">
                 <div class="flex flex-col sm:flex-row rounded-lg shadow-lg overflow-hidden w-full">
                     <div class="w-full lg:w-1/2 py-8 px-2 sm:p-2 bg-cover flex flex-col justify-center items-center bg-[#018ac0]">

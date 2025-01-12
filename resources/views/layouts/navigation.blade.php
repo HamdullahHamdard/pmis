@@ -34,6 +34,8 @@
                         {{ __('تسلیمیانې') }}
                     </x-nav-link>
                 </div>
+                @endcan
+                
                 @can('view-usables')
                 <div class="hidden space-x-4 sm:ml-6 sm:flex">
                     <x-nav-link :href="route('usables')" :active="request()->routeIs('usables')">
@@ -163,4 +165,3 @@
     </div>
 </nav>
 
-        

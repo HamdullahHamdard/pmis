@@ -30,7 +30,11 @@ return new class extends Migration
             $table->string("item_stock_number");
             $table->string("images");
             $table->unsignedInteger("purchaseYear_id")->nullable();
+            $table->unsignedInteger("purchaseMonth_id")->nullable();
 
+            $table->foreign("purchaseMonth_id")
+                ->references("id")
+                ->on("months");
             $table->foreign("purchaseYear_id")
                 ->references("id")
                 ->on("years");

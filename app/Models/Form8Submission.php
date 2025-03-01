@@ -21,4 +21,14 @@ class Form8Submission extends Model
     {
         return $this->belongsTo(Form8::class);
     }
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class);
+    }
+
+    // Submission relation with Province
+    public function item()
+    {
+        return $this->belongsTo(Item::class);
+    }
 }

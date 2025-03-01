@@ -39,7 +39,10 @@ class Item extends Model
     {
         return $this->hasOne(Unit::class);
     }
-
+    public function form8Submissions()
+    {
+        return $this->hasMany(Form8Submission::class);
+    }
     // Item relation with Category
     public function category()
     {

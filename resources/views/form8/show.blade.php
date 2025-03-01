@@ -20,7 +20,7 @@
 
                 <!-- Form8 Header Information -->
                 <div class="p-6 md:p-8">
-                    <div class="flex flex-col items-center justify-around gap-6 md:flex-row md:gap-10 md:items-center">
+                    <div class="flex flex-col items-start justify-around gap-6 md:flex-row md:gap-10 md:items-center">
                         <div class="flex flex-row items-center">
                             <span class="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400">شماره فورم ۸: </span>
                             <span class="text-xl font-bold text-gray-900 dark:text-white">{{ $form8->form8_number }}</span>

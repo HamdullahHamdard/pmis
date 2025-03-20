@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('form8_number');
             $table->string('trusted');
-            $table->string('price');
             $table->unsignedBigInteger("purchaseYear_id");
             $table->unsignedBigInteger("purchaseMonth_id");
             $table->unsignedBigInteger("purchaseDay_id");

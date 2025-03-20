@@ -147,13 +147,25 @@
                         @endforeach
                         <div>
                             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                 د تسلیمی نمبر
+                            </label>
+                            <input type="text" name="form8_number" required
+                                class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
+                                placeholder="تسلیمی جدید را وارد کنید"
+                                value="{{ old('form8_number') }}">
+                            @error('form8_number.' . $submission->id)
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                  معتمد
                             </label>
-                            <input type="number" name="certified_persons" required
+                            <input type="text" name="trusted" required
                                 class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
                                 placeholder="معتمد جدید را وارد کنید"
-                                value="{{ old('certified_persons') }}">
-                            @error('certified_persons.' . $submission->id)
+                                value="{{ old('trusted') }}">
+                            @error('trusted')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>

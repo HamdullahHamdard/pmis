@@ -220,6 +220,9 @@ class Form8Controller extends Controller
                 $submission->save();
             }
         }
+        $form8 = Form8::create([
+
+        ]);
 
         return redirect()->route('form8s.index')->with('success', 'فورم با موفقیت ثبت شد');
     }

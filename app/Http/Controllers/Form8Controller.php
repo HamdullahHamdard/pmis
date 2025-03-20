@@ -162,7 +162,7 @@ class Form8Controller extends Controller
                 ->with('error', 'هیچ موردی انتخاب نشده است');
         }
 
-        return view('form8.add-details', compact('selectedForm5', 'selectedSubmissions'));
+        return view('form8.add-details', compact('years','months','days','selectedForm5', 'selectedSubmissions'));
     }
 
     /**

@@ -62,7 +62,7 @@
                         @foreach($selectedSubmissions as $index => $submission)
                             <div class="p-5 transition-all border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 hover:border-indigo-200 dark:hover:border-indigo-800">
                                 <h3 class="mb-4 font-medium text-gray-900 dark:text-white">
-                                    {{ $index + 1 }}. {{ $submission->employee->name ?? 'No Employee Name' }} : {{ $submission->item->name ?? 'No Item Name' }}
+                                    {{ $index + 1 }}. {{ $submission->item->name ?? 'No Item Name' }} : مقدار: {{ $submission->total ?? 'No Quantity Name' }}
                                 </h3>
 
                                 <input type="hidden" name="submission_ids[]" value="{{ $submission->id }}">

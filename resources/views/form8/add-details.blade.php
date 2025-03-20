@@ -48,10 +48,18 @@
                 </div>
 
                 <!-- Selected Form Info -->
-                <div class="p-4 mb-6 rounded-lg bg-gray-50 dark:bg-gray-700">
-                    <h3 class="mb-2 font-medium text-gray-900 dark:text-white">فورم انتخاب شده:</h3>
-                    <p class="text-gray-700 dark:text-gray-300">{{ $selectedForm5->id }} {{ $selectedForm5->form9s->employee->name }}</p>
+                <div class="flex flex-row items-start gap-4 p-4 mb-6 rounded-lg bg-gray-50 dark:bg-gray-700 md:flex-col md:items-center">
+                    <h3 class="font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                     انتخاب شوی فورم:
+                    </h3>
+                    <p class="text-gray-700 dark:text-gray-300 whitespace-nowrap">
+                        د توزیع  نمبر: {{ $selectedForm5->id }}
+                    </p>
+                    <p class="text-gray-700 dark:text-gray-300 whitespace-nowrap">
+                        شخص: {{ $selectedForm5->form9s->employee->name }}
+                    </p>
                 </div>
+
 
                 <!-- Add details form -->
                 <form method="POST" action="{{ route('form8s.store') }}">
@@ -65,7 +73,7 @@
                                     {{ $index + 1 }}. {{ $submission->item->name ?? 'No Item Name' }}
                                 </h3>
                                 <h4 class="mb-4 font-medium text-gray-900 dark:text-white">
-                                    تسلیم شوی مقدار: {{ $submission->total ?? 'No Quantity Name' }}
+                                    {{ $index + 1 }}.     تسلیم شوی مقدار: {{ $submission->total ?? 'No Quantity Name' }}
                                 </h4>
 
 

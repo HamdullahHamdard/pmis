@@ -82,6 +82,18 @@
                                     </div>
                                     <div>
                                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                            مقدار
+                                        </label>
+                                        <input type="number" name="new_quantity[{{ $submission->id }}]" required
+                                            class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
+                                            placeholder="قیمت جدید را وارد کنید"
+                                            value="{{ old('new_prices.' . $submission->id) }}">
+                                        @error('new_prices.' . $submission->id)
+                                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    <div>
+                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                             شخص تایید کننده
                                         </label>
                                         <input type="number" name="certified_persons[{{ $submission->id }}]" required
@@ -93,7 +105,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                                {{-- <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                                     <div>
                                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                             قیمت جدید
@@ -130,7 +142,7 @@
                                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                         @enderror
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         @endforeach
                     </div>

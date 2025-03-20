@@ -188,7 +188,7 @@ class Form8Controller extends Controller
             if($submission->total < $total)
             {
                 Alert::error("داخل شوی مقدار مو د توزیع تر مقدار زیات دی");
-                return redirect()->route('form8s.index');
+                return redirect()->back();
             }
             // Ensure submission exists before updating
             if ($submission) {

@@ -212,6 +212,7 @@ class Form8Controller extends Controller
                 if($submission->total == $total){
                     $submission->is_returned = true;
                 }if($submission->total > $total){
+                    $submission->total = $submission->total - $total;
                     $submission->is_returned = false;
                 }
 

@@ -68,7 +68,7 @@
 
                     <div class="space-y-6">
                         @foreach($selectedSubmissions as $index => $submission)
-                            <div class="p-5 transition-all border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 hover:border-indigo-200 dark:hover:border-indigo-800">
+                            <div class="transition-all rounded-lg shadow-sm hover:border-indigo-200 dark:hover:border-indigo-800">
                                 <h3 class="font-medium text-gray-900 dark:text-white">
                                     {{ $index + 1 }}. {{ $submission->item->name ?? 'No Item Name' }}
                                 </h3>
@@ -101,18 +101,6 @@
                                             placeholder="قیمت جدید را وارد کنید"
                                             value="{{ old('new_prices.' . $submission->id) }}">
                                         @error('new_prices.' . $submission->id)
-                                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                    <div>
-                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                            شخص تایید کننده
-                                        </label>
-                                        <input type="number" name="certified_persons[{{ $submission->id }}]" required
-                                            class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
-                                            placeholder="شخص جدید را وارد کنید"
-                                            value="{{ old('certified_persons.' . $submission->id) }}">
-                                        @error('certified_persons.' . $submission->id)
                                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                         @enderror
                                     </div>
@@ -157,6 +145,18 @@
                                 </div> --}}
                             </div>
                         @endforeach
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                 معتمد
+                            </label>
+                            <input type="number" name="certified_persons" required
+                                class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
+                                placeholder="معتمد جدید را وارد کنید"
+                                value="{{ old('certified_persons') }}">
+                            @error('certified_persons.' . $submission->id)
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
                     </div>
 
                     <div class="flex items-center justify-between mt-8">

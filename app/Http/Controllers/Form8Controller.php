@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Form8;
 use App\Http\Requests\StoreForm8Request;
 use App\Http\Requests\UpdateForm8Request;
+use App\Models\Day;
 use App\Models\Form5;
 use App\Models\Item;
+use App\Models\Month;
 use App\Models\Submission;
 use App\Models\Unit;
+use App\Models\Year;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -135,7 +138,9 @@ class Form8Controller extends Controller
     {
         $form5_id = $request->form5_id;
         $submissionIds = $request->submission_ids;
-
+        $years = Year::orderBy("id", "DESC")->get();
+        $months = Month::all();
+        $days = Day::all();
         if (!$form5_id || !$submissionIds) {
             return redirect()->route('form8s.create')
                 ->with('error', 'اطلاعات ناقص است. لطفا از ابتدا شروع کنید');

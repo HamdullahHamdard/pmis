@@ -145,6 +145,7 @@
                                 </div> --}}
                             </div>
                         @endforeach
+
                         <div>
                             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                  د تسلیمی نمبر
@@ -168,6 +169,37 @@
                             @error('trusted')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
+                        </div>
+                        <div class="mt-3">
+                            <div class="flex items-center justify-start text-center">
+                                <x-input-label for="date" :value="__('تاریخ خرید جنس')" />
+                                <span class="text-xl text-red-500">*</span>
+                            </div>
+                            <div class="flex gap-3 mt-2">
+                                <select class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
+                                    name="purchaseYear">
+                                    <option selected disabled hidden>سال</option>
+                                    @foreach ($years as $year)
+                                        <option value="{{ $year->id}}" class="py-2">{{$year->name}}</option>
+                                    @endforeach
+                                </select>
+
+                                <select class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
+                                    name="purchaseMonth">
+                                    <option hidden>ماه</option>
+                                    @foreach ($months as $month)
+                                        <option value="{{ $month->id}}" class="py-2">{{$month->name}}</option>
+                                    @endforeach
+                                </select>
+
+                                <select class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
+                                    name="purchaseDay">
+                                    <option hidden>روز</option>
+                                    @foreach ($days as $day)
+                                        <option value="{{ $day->id}}" class="py-2">{{$day->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                     </div>
 

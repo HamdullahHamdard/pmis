@@ -18,6 +18,10 @@ use Illuminate\Support\Facades\File;
 
 class SettingController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     */
     public function index()
     {
         // Total Employees Registered

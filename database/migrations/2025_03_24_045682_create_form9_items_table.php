@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Form9;
+use App\Models\Item;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('form9_items', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Form9::class);
+            $table->foreignIdFor(Item::class);
+            $table->unsignedInteger('quantity');
             $table->timestamps();
         });
     }

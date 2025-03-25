@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignIdFor(EmployeeShift::class);
             $table->foreignIdFor(EmployeeType::class);
             $table->string("name");
+            $table->string('father_name')->nullable();
             $table->string("employment_id");
             $table->string("position");
             $table->string("contact");

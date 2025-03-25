@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreForm8Request extends FormRequest
+class CreateStockRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class StoreForm8Request extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,11 @@ class StoreForm8Request extends FormRequest
     public function rules()
     {
         return [
-            //
+            "item" => "required",
+            "details" => "required",
+            "total" => "required",
+            "purchase_price" => "required",
+            "item_number" => "required",
         ];
     }
 }

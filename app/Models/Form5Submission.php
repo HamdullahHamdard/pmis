@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Form5Submission extends Model
 {
-    /** @use HasFactory<\Database\Factories\Form5SubmissionFactory> */
     use HasFactory;
+
+    protected $table = 'form5_submission';
+    protected $fillable = [
+        'id',
+        'form5_id',
+        'submission_id'
+    ];
 }

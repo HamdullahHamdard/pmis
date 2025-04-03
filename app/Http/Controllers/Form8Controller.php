@@ -226,11 +226,11 @@ class Form8Controller extends Controller
             }
         }
         $form8 = Form8::create([
-            "form8_number" => $request->form8_number;
-            "trusted" =>$request->trusted;
-            'purchaseYear_id' =>$request->purchaseYear;
-            'purchaseMonth_id' =>$request->purchaseMonth;
-            'purchaseDay_id' =>$request->purchaseDay;
+            "form8_number" => $request->form8_number,
+            "trusted" => $request->trusted,
+            'purchaseYear_id' =>$request->purchaseYear,
+            'purchaseMonth_id' =>$request->purchaseMonth,
+            'purchaseDay_id' =>$request->purchaseDay,
         ]);
 
         return redirect()->route('form8s.index')->with('success', 'فورم با موفقیت ثبت شد');

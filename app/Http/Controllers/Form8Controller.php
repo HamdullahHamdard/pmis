@@ -178,11 +178,11 @@ class Form8Controller extends Controller
             'submission_ids' => 'required|array|min:1',
             'submission_ids.*' => 'exists:submissions,id',
             'new_prices' => 'required|array',
-            'new'  => 'exists:submissions,id',
-            'new_prices' => 'required|array',
+            // 'new'  => 'exists:submissions,id',
+            // 'new_prices' => 'required|array',
             'new_prices.*' => 'required|numeric',
-            'certified_persons' => 'required|array',
-            'certified_persons.*' => 'required|numeric',
+            // 'certified_persons' => 'required|array',
+            // 'certified_persons.*' => 'required|numeric',
         ]);
 
         // Process each submission
@@ -199,7 +199,6 @@ class Form8Controller extends Controller
             if ($submission) {
                 $item_id = $submission->item_id;
                 $new_price = $request->new_prices[$id];
-                $certified_person = $request->certified_persons[$id];
 
 
                 // Update the item

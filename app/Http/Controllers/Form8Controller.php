@@ -185,6 +185,8 @@ class Form8Controller extends Controller
             // 'certified_persons.*' => 'required|numeric',
         ]);
 
+        $from5 = Form5::find($request->form5_id);
+        // dd($from5);
         // Process each submission
         foreach ($request->submission_ids as $id) {
             // Find the submission
@@ -214,6 +216,7 @@ class Form8Controller extends Controller
 
                 // Mark submission as returned
                 if($submission->total == $total){
+                    $submission->total = $submission->total - $total;
                     $submission->is_returned = true;
                 }if($submission->total > $total){
                     $submission->total = $submission->total - $total;
@@ -225,7 +228,7 @@ class Form8Controller extends Controller
             }
         }
         $form8 = Form8::create([
-            'form5_id' => $request->form5_id,
+            'form5_id' => $from5->id,
             'form8_number' => $request->form8_number,
             "trusted" => $request->trusted,
             'purchaseYear_id' =>$request->purchaseYear,

@@ -185,7 +185,7 @@ class Form8Controller extends Controller
             // 'certified_persons.*' => 'required|numeric',
         ]);
 
-        $from5 = Form5::find($request->form5_id);
+        // $from5 = Form5::find();
         // dd($from5);
         // Process each submission
         foreach ($request->submission_ids as $id) {
@@ -228,7 +228,7 @@ class Form8Controller extends Controller
             }
         }
         $form8 = Form8::create([
-            'form5_id' => $from5->id,
+            'form5_id' => $request->form5_id,
             'form8_number' => $request->form8_number,
             "trusted" => $request->trusted,
             'purchaseYear_id' =>$request->purchaseYear,

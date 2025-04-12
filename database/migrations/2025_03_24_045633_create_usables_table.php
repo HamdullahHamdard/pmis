@@ -26,26 +26,14 @@ return new class extends Migration
             $table->integer("total");
             $table->string("unit_price");
             $table->string("total_price");
-            $table->unsignedInteger("purchaseYear_id")->nullable();
-            $table->unsignedInteger("purchaseMonth_id")->nullable();
-            $table->unsignedInteger("purchaseDay_id")->nullable();
-            $table->timestamps();
+            $table->unsignedBigInteger("purchaseYear_id");
+            $table->unsignedBigInteger("purchaseMonth_id");
+            $table->unsignedBigInteger("purchaseDay_id");
 
-            $table->foreign("purchaseYear_id")
-                ->references("id")
-                ->on("years");
+            $table->foreign("purchaseDay_id")->references("id")->on("days")->onDelete("cascade");
+            $table->foreign("purchaseMonth_id")->references("id")->on("months")->onDelete("cascade");
+            $table->foreign("purchaseYear_id")->references("id")->on("years")->onDelete("cascade");
 
-            $table->foreign("purchaseMonth_id")
-                ->references("id")
-                ->on("months");
-
-            $table->foreign("purchaseDay_id")
-                ->references("id")
-                ->on("days");
-
-            $table->foreign("province_id")
-                ->references("id")
-                ->on("provinces");
             $table->timestamps();
         });
     }

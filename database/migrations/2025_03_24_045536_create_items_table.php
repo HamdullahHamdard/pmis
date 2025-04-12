@@ -29,20 +29,14 @@ return new class extends Migration
             $table->string("purchase_price");
             $table->string("item_stock_number");
             $table->string("images");
-            $table->unsignedInteger("purchaseYear_id")->nullable();
-            $table->unsignedInteger("purchaseMonth_id")->nullable();
-            $table->unsignedInteger("purchaseDay_id")->nullable();
+            $table->unsignedBigInteger("purchaseYear_id");
+$table->unsignedBigInteger("purchaseMonth_id");
+$table->unsignedBigInteger("purchaseDay_id");
 
-            $table->foreign("purchaseDay_id")
-                ->references("id")
-                ->on("days");
-            $table->foreign("purchaseMonth_id")
-                ->references("id")
-                ->on("months");
-            $table->foreign("purchaseYear_id")
-                ->references("id")
-                ->on("years");
-            $table->timestamps();
+$table->foreign("purchaseDay_id")->references("id")->on("days")->onDelete("cascade");
+$table->foreign("purchaseMonth_id")->references("id")->on("months")->onDelete("cascade");
+$table->foreign("purchaseYear_id")->references("id")->on("years")->onDelete("cascade");
+
         });
     }
 

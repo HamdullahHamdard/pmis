@@ -1,3 +1,120 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html,
+body {
+    direction: rtl;
+    font-family: "IBMPlexSansArabic-Medium", sans-serif;
+}
+
+/* Fonts */
+@font-face {
+    font-family: "IBMPlexSansArabic-Light", sans-serif;
+    src: url(../../public/fonts/IBMPlexSansArabic-Light.ttf) format("ttf");
+    font-weight: 300;
+    font-display: swap;
+    font-style: normal;
+}
+
+.rta-font-light {
+    font-family: "IBMPlexSansArabic-Light";
+}
+
+@font-face {
+    font-family: "IBMPlexSansArabic-Regular", sans-serif;
+    src: url(../../public/fonts/IBMPlexSansArabic-Regular.ttf) format("ttf");
+    font-weight: 400;
+    font-display: swap;
+    font-style: normal;
+}
+
+.rta-font-regular {
+    font-family: "IBMPlexSansArabic-Regular", sans-serif;
+}
+
+@font-face {
+    font-family: "IBM Plex Sans Arabic", sans-serif;
+    src: url(../../public/fonts/IBMPlexSansArabic-Medium.ttf) format("ttf");
+    font-weight: 500;
+    font-display: swap;
+    font-style: normal;
+}
+
+.rta-font-medium {
+    font-family: "IBMPlexSansArabic-Medium", sans-serif;
+}
+
+@font-face {
+    font-family: "IBM Plex Sans Arabic", sans-serif;
+    src: url(../../public/fonts/IBMPlexSansArabic-SemiBold.ttf) format("ttf");
+    font-weight: 600;
+    font-display: swap;
+    font-style: normal;
+}
+
+.rta-font-semibold {
+    font-family: "IBMPlexSansArabic-SemiBold", sans-serif;
+}
+
+@font-face {
+    font-family: "IBM Plex Sans Arabic", sans-serif;
+    src: url(../../public/fonts/IBMPlexSansArabic-Bold.ttf) format("ttf");
+    font-weight: 700;
+    font-display: swap;
+    font-style: normal;
+}
+
+.rta-font-bold {
+    font-family: "IBMPlexSansArabic-Bold", sans-serif;
+}
+
+/* Change create roles direction to LTR */
+.roles-from-left {
+    direction: ltr !important;
+}
+
+/* Print Styles */
+@media print {
+    body {
+        margin: 20px 10px;
+    }
+
+    .show-page-heading {
+        @apply block !important;
+    }
+
+    .show-item-top-heading {
+        @apply flex justify-between !important;
+    }
+
+    .show-edit-item,
+    .show-edit-emp {
+        @apply hidden !important;
+    }
+
+    .show-img-wrapper {
+        @apply flex justify-center items-center !important;
+    }
+
+    .show-item-img {
+        @apply w-[14rem] !important;
+    }
+
+    .show-item-return {
+        @apply hidden !important;
+    }
+
+    .show-emp-table {
+        @apply border !important;
+    }
+
+    .show-emp-table th,
+    .show-emp-table td {
+        @apply border !important;
+    }
+
+    .show-cta {
+        @apply hidden !important;
+    }
+}

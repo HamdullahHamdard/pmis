@@ -36,7 +36,7 @@ $table->unsignedBigInteger("purchaseDay_id");
 $table->foreign("purchaseDay_id")->references("id")->on("days")->onDelete("cascade");
 $table->foreign("purchaseMonth_id")->references("id")->on("months")->onDelete("cascade");
 $table->foreign("purchaseYear_id")->references("id")->on("years")->onDelete("cascade");
-
+$table->timestamps();
         });
     }
 

@@ -21,6 +21,7 @@ class Form9Seeder extends Seeder
             0 => [
                 'department_id' => 1,
                 'employee_id' => 1,
+                'form9s_number' => 23,
                 // 'requested_management'=> "مدیریت عمومی ترانسپورت",
                 'form_date' => "1403/05/22",
                 // 'first_details' => "کارمندانی که این جنس را تسلیم شده اند، کارمندانی که این جنس را تسلیم شده اند، کارمندانی که این جنس را تسلیم شده اند، کارمندانی که این جنس را تسلیم شده اند",

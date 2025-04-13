@@ -133,7 +133,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
+        $request->validate([
             "name" => "required",
             "email" => "required|email|unique:users,email," . $id,
             "password" => "required|same:confirm-password",
@@ -163,7 +163,8 @@ class UserController extends Controller
             ->where("model_id", $id)
             ->delete();
 
-        $user->assignRole($request->roles);
+        // Convert role IDs to role names before assigning
+    $roles = Role::whereIn('id', (array) $request->input("roles"))->pluck('name')->toArray();
 
         Alert::success("د کارونکي معلومات په بریالیتوب سره سم شول");
 

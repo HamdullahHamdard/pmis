@@ -4,7 +4,7 @@ import "../css/app.css";
 
 import Alpine from "alpinejs";
 
-// import Chart from "chart.js/auto";
+import Chart from "chart.js/auto";
 
 import "flowbite";
 
@@ -12,7 +12,7 @@ import feather from "feather-icons";
 
 feather.replace();
 
-// window.Chart = Chart;
+window.Chart = Chart;
 
 window.Alpine = Alpine;
 

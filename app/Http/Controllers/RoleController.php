@@ -65,7 +65,11 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $role = Role::create(["name" => $request->input("name")]);
-        $role->syncPermissions($request->permission);
+
+        // Convert permission IDs to names before syncing
+        $permissions = Permission::whereIn('id', $request->permissions)->pluck('name')->toArray();
+
+        $role->syncPermissions($permissions);
 
         Alert::success("نوۍ صلاحیت په بریالیتوب سره جوړ شو");
 

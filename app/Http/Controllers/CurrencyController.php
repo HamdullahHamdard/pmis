@@ -13,22 +13,22 @@ class CurrencyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
-    {
-        $this->middleware(
-            "permission:view-currencies|create-currencies|edit-currencies|delete-currencies",
-            ["only" => ["index", "store"]]
-        );
-        $this->middleware("permission:create-currencies", [
-            "only" => ["create", "store"],
-        ]);
-        $this->middleware("permission:edit-currencies", [
-            "only" => ["edit", "update"],
-        ]);
-        $this->middleware("permission:delete-currencies", [
-            "only" => ["destroy"],
-        ]);
-    }
+    // function __construct()
+    // {
+    //     $this->middleware(
+    //         "permission:view-currencies|create-currencies|edit-currencies|delete-currencies",
+    //         ["only" => ["index", "store"]]
+    //     );
+    //     $this->middleware("permission:create-currencies", [
+    //         "only" => ["create", "store"],
+    //     ]);
+    //     $this->middleware("permission:edit-currencies", [
+    //         "only" => ["edit", "update"],
+    //     ]);
+    //     $this->middleware("permission:delete-currencies", [
+    //         "only" => ["destroy"],
+    //     ]);
+    // }
 
     /**
      * Display a listing of the resource.

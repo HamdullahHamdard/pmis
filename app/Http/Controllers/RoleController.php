@@ -135,16 +135,21 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            "name" => "required",
-            "permission" => "required",
+        $request->validate([
+            "name" => "required|string|max:255",
+            "permissions" => "required|array", // Ensure it's an array
+            "permissions.*" => "exists:permissions,id", // Validate each permission exists
         ]);
 
-        $role = Role::find($id);
+        $role = Role::findOrFail($id);
         $role->name = $request->input("name");
         $role->save();
 
-        $role->syncPermissions($request->input("permission"));
+        // Convert permission IDs to names before syncing (if IDs are sent)
+        $permissions = Permission::whereIn('id', $request->input("permissions"))->pluck('name')->toArray();
+
+        $role->syncPermissions($permissions);
+
 
         Alert::success("صلاحیت په بریالیتوب سره سم شو");
 

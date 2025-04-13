@@ -19,17 +19,7 @@ class UsableSubmissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
-    {
-        $this->middleware("permission:view-usableSubmission");
-        $this->middleware("permission:create-usableSubmission", [
-            "only" => ["create", "store"],
-        ]);
-        $this->middleware("permission:edit-usableSubmission", [
-            "only" => ["edit", "update"],
-        ]);
 
-    }
 
     /**
      * Display a listing of the resource.

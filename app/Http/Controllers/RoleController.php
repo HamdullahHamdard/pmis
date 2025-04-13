@@ -64,6 +64,11 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            "name" => "required|string|max:255",
+            "permissions" => "required|array",
+            "permissions.*" => "exists:permissions,id", // Ensure each permission ID exists
+        ]);
         $role = Role::create(["name" => $request->input("name")]);
 
         // Convert permission IDs to names before syncing

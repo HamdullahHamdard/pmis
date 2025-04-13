@@ -88,7 +88,8 @@ class UserController extends Controller
             "province_id" => $request->input("province")
         ]);
 
-        $user->assignRole($request->input("roles"));
+        // Convert role IDs to role names before assigning
+        $roles = Role::whereIn('id', (array) $request->input("roles"))->pluck('name')->toArray();
 
         Alert::success("نوۍ کارونکي په بریالیتوب سره جوړ شو");
 

@@ -18,19 +18,19 @@ class Form9Controller extends Controller
 {
 
 
-    function __construct()
-    {
-        $this->middleware("permission:view-employees");
-        $this->middleware("permission:create-employees", [
-            "only" => ["create", "store"],
-        ]);
-        $this->middleware("permission:edit-employees", [
-            "only" => ["edit", "update"],
-        ]);
-        $this->middleware("permission:delete-employees", [
-            "only" => ["destroy"],
-        ]);
-    }
+    // function __construct()
+    // {
+    //     $this->middleware("permission:view-employees");
+    //     $this->middleware("permission:create-employees", [
+    //         "only" => ["create", "store"],
+    //     ]);
+    //     $this->middleware("permission:edit-employees", [
+    //         "only" => ["edit", "update"],
+    //     ]);
+    //     $this->middleware("permission:delete-employees", [
+    //         "only" => ["destroy"],
+    //     ]);
+    // }
     /**
      * Display a listing of the resource.
      *

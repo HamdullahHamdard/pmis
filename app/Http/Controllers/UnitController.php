@@ -16,19 +16,19 @@ class UnitController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
-    {
-        $this->middleware("permission:view-units");
-        $this->middleware("permission:create-units", [
-            "only" => ["create", "store"],
-        ]);
-        $this->middleware("permission:edit-units", [
-            "only" => ["edit", "update"],
-        ]);
-        $this->middleware("permission:delete-units", [
-            "only" => ["destroy"],
-        ]);
-    }
+    // function __construct()
+    // {
+    //     $this->middleware("permission:view-units");
+    //     $this->middleware("permission:create-units", [
+    //         "only" => ["create", "store"],
+    //     ]);
+    //     $this->middleware("permission:edit-units", [
+    //         "only" => ["edit", "update"],
+    //     ]);
+    //     $this->middleware("permission:delete-units", [
+    //         "only" => ["destroy"],
+    //     ]);
+    // }
 
     /**
      * Display a listing of the resource.

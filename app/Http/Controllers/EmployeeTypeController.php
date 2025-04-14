@@ -15,22 +15,22 @@ class EmployeeTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
-    {
-        $this->middleware(
-            "permission:view-employeeTypes|create-employeeTypes|edit-employeeTypes|delete-employeeTypes",
-            ["only" => ["index", "store"]]
-        );
-        $this->middleware("permission:create-employeeTypes", [
-            "only" => ["create", "store"],
-        ]);
-        $this->middleware("permission:edit-employeeTypes", [
-            "only" => ["edit", "update"],
-        ]);
-        $this->middleware("permission:delete-employeeTypes", [
-            "only" => ["destroy"],
-        ]);
-    }
+    // function __construct()
+    // {
+    //     $this->middleware(
+    //         "permission:view-employeeTypes|create-employeeTypes|edit-employeeTypes|delete-employeeTypes",
+    //         ["only" => ["index", "store"]]
+    //     );
+    //     $this->middleware("permission:create-employeeTypes", [
+    //         "only" => ["create", "store"],
+    //     ]);
+    //     $this->middleware("permission:edit-employeeTypes", [
+    //         "only" => ["edit", "update"],
+    //     ]);
+    //     $this->middleware("permission:delete-employeeTypes", [
+    //         "only" => ["destroy"],
+    //     ]);
+    // }
 
     /**
      * Display a listing of the resource.

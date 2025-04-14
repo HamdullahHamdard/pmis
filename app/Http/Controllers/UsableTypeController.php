@@ -16,22 +16,22 @@ class UsableTypeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
-    {
-        $this->middleware(
-            "permission:view-usableTypes|create-usableTypes|edit-usableTypes|delete-usableTypes",
-            ["only" => ["index", "store"]]
-        );
-        $this->middleware("permission:create-usableTypes", [
-            "only" => ["create", "store"],
-        ]);
-        $this->middleware("permission:edit-usableTypes", [
-            "only" => ["edit", "update"],
-        ]);
-        $this->middleware("permission:delete-usableTypes", [
-            "only" => ["destroy"],
-        ]);
-    }
+    // function __construct()
+    // {
+    //     $this->middleware(
+    //         "permission:view-usableTypes|create-usableTypes|edit-usableTypes|delete-usableTypes",
+    //         ["only" => ["index", "store"]]
+    //     );
+    //     $this->middleware("permission:create-usableTypes", [
+    //         "only" => ["create", "store"],
+    //     ]);
+    //     $this->middleware("permission:edit-usableTypes", [
+    //         "only" => ["edit", "update"],
+    //     ]);
+    //     $this->middleware("permission:delete-usableTypes", [
+    //         "only" => ["destroy"],
+    //     ]);
+    // }
 
     /**
      * Display a listing of the resource.

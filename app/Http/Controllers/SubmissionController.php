@@ -19,19 +19,19 @@ class SubmissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
-    {
-        $this->middleware("permission:view-submission");
-        $this->middleware("permission:create-submission", [
-            "only" => ["create", "store"],
-        ]);
-        $this->middleware("permission:edit-submission", [
-            "only" => ["edit", "update"],
-        ]);
-        $this->middleware("permission:delete-submission", [
-            "only" => ["destroy"],
-        ]);
-    }
+    // function __construct()
+    // {
+    //     $this->middleware("permission:view-submission");
+    //     $this->middleware("permission:create-submission", [
+    //         "only" => ["create", "store"],
+    //     ]);
+    //     $this->middleware("permission:edit-submission", [
+    //         "only" => ["edit", "update"],
+    //     ]);
+    //     $this->middleware("permission:delete-submission", [
+    //         "only" => ["destroy"],
+    //     ]);
+    // }
 
     /**
      * Display a listing of the resource.

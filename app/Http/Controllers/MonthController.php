@@ -16,13 +16,13 @@ class MonthController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
-    {
-        $this->middleware('permission:view-months|create-months|edit-months|delete-months', ['only' => ['index', 'store']]);
-        $this->middleware('permission:create-months', ['only' => ['create', 'store']]);
-        $this->middleware('permission:edit-months', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:delete-months', ['only' => ['destroy']]);
-    }
+    // function __construct()
+    // {
+    //     $this->middleware('permission:view-months|create-months|edit-months|delete-months', ['only' => ['index', 'store']]);
+    //     $this->middleware('permission:create-months', ['only' => ['create', 'store']]);
+    //     $this->middleware('permission:edit-months', ['only' => ['edit', 'update']]);
+    //     $this->middleware('permission:delete-months', ['only' => ['destroy']]);
+    // }
 
     /**
      * Display a listing of the resource.

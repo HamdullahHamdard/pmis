@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('form8s', function (Blueprint $table) {
             $table->id();
+            $table->string('trusted');
+            $table->string('price');
+
             $table->timestamps();
         });
     }

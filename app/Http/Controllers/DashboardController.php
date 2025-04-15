@@ -11,7 +11,6 @@ use App\Models\Usable;
 use App\Models\User;
 use Carbon\Carbon;
 use Spatie\Permission\Models\Role as ModelsRole;
-use Jenssegers\Date\Date;
 use Spatie\Activitylog\Models\Activity;
 
 class DashboardController extends Controller
@@ -55,8 +54,8 @@ class DashboardController extends Controller
         $kabulTime = Carbon::create(2012, 1, 1, 0, 0, 0, "Asia/Kabul");
 
         // Afghan Date
-        Date::setLocale("ps");
-        $afghanDate = Date::now()->format("j F Y");
+        // Date::setLocale("ps");
+        // $afghanDate = Date::now()->format("j F Y");
 
         // Items based on categories
         $totalItItems = 0;
@@ -242,7 +241,7 @@ class DashboardController extends Controller
                 "items",
                 "totalItems",
                 "categories",
-                "afghanDate",
+                // "afghanDate",
                 "kabulTime",
                 // Items Counts
                 "totalItItems",

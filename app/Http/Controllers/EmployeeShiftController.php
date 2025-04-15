@@ -15,22 +15,22 @@ class EmployeeShiftController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
-    {
-        $this->middleware(
-            "permission:view-employeeShifts|create-employeeShifts|edit-employeeShifts|delete-employeeShifts",
-            ["only" => ["index", "store"]]
-        );
-        $this->middleware("permission:create-employeeShifts", [
-            "only" => ["create", "store"],
-        ]);
-        $this->middleware("permission:edit-employeeShifts", [
-            "only" => ["edit", "update"],
-        ]);
-        $this->middleware("permission:delete-employeeShifts", [
-            "only" => ["destroy"],
-        ]);
-    }
+    // function __construct()
+    // {
+    //     $this->middleware(
+    //         "permission:view-employeeShifts|create-employeeShifts|edit-employeeShifts|delete-employeeShifts",
+    //         ["only" => ["index", "store"]]
+    //     );
+    //     $this->middleware("permission:create-employeeShifts", [
+    //         "only" => ["create", "store"],
+    //     ]);
+    //     $this->middleware("permission:edit-employeeShifts", [
+    //         "only" => ["edit", "update"],
+    //     ]);
+    //     $this->middleware("permission:delete-employeeShifts", [
+    //         "only" => ["destroy"],
+    //     ]);
+    // }
 
     /**
      * Display a listing of the resource.

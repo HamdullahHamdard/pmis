@@ -16,13 +16,13 @@ class YearController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
-    {
-        $this->middleware('permission:view-years|create-years|edit-years|delete-years', ['only' => ['index', 'store']]);
-        $this->middleware('permission:create-years', ['only' => ['create', 'store']]);
-        $this->middleware('permission:edit-years', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:delete-years', ['only' => ['destroy']]);
-    }
+    // function __construct()
+    // {
+    //     $this->middleware('permission:view-years|create-years|edit-years|delete-years', ['only' => ['index', 'store']]);
+    //     $this->middleware('permission:create-years', ['only' => ['create', 'store']]);
+    //     $this->middleware('permission:edit-years', ['only' => ['edit', 'update']]);
+    //     $this->middleware('permission:delete-years', ['only' => ['destroy']]);
+    // }
 
     /**
      * Display a listing of the resource.

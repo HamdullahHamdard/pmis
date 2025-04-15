@@ -15,19 +15,19 @@ class DepartmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
-    {
-        $this->middleware("permission:view-departments");
-        $this->middleware("permission:create-departments", [
-            "only" => ["create", "store"],
-        ]);
-        $this->middleware("permission:edit-departments", [
-            "only" => ["edit", "update"],
-        ]);
-        $this->middleware("permission:delete-departments", [
-            "only" => ["destroy"],
-        ]);
-    }
+    // function __construct()
+    // {
+    //     $this->middleware("permission:view-departments");
+    //     $this->middleware("permission:create-departments", [
+    //         "only" => ["create", "store"],
+    //     ]);
+    //     $this->middleware("permission:edit-departments", [
+    //         "only" => ["edit", "update"],
+    //     ]);
+    //     $this->middleware("permission:delete-departments", [
+    //         "only" => ["destroy"],
+    //     ]);
+    // }
 
     /**
      * Display a listing of the resource.

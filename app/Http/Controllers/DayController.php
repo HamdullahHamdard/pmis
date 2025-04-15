@@ -16,13 +16,13 @@ class DayController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
-    {
-        $this->middleware('permission:view-days|create-days|edit-days|delete-days', ['only' => ['index', 'store']]);
-        $this->middleware('permission:create-days', ['only' => ['create', 'store']]);
-        $this->middleware('permission:edit-days', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:delete-days', ['only' => ['destroy']]);
-    }
+    // function __construct()
+    // {
+    //     $this->middleware('permission:view-days|create-days|edit-days|delete-days', ['only' => ['index', 'store']]);
+    //     $this->middleware('permission:create-days', ['only' => ['create', 'store']]);
+    //     $this->middleware('permission:edit-days', ['only' => ['edit', 'update']]);
+    //     $this->middleware('permission:delete-days', ['only' => ['destroy']]);
+    // }
 
     /**
      * Display a listing of the resource.

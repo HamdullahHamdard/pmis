@@ -33,17 +33,17 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
-    {
-        $this->middleware("permission:view-items");
-        $this->middleware("permission:create-items", [
-            "only" => ["create", "store"],
-        ]);
-        $this->middleware("permission:edit-items", [
-            "only" => ["edit", "update"],
-        ]);
-        $this->middleware("permission:delete-items", ["only" => ["destroy"]]);
-    }
+    // function __construct()
+    // {
+    //     $this->middleware("permission:view-items");
+    //     $this->middleware("permission:create-items", [
+    //         "only" => ["create", "store"],
+    //     ]);
+    //     $this->middleware("permission:edit-items", [
+    //         "only" => ["edit", "update"],
+    //     ]);
+    //     $this->middleware("permission:delete-items", ["only" => ["destroy"]]);
+    // }
 
     /**
      * Display a listing of the resource.

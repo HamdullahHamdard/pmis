@@ -29,17 +29,17 @@ class UsableController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
-    {
-        $this->middleware("permission:view-usables");
-        $this->middleware("permission:create-usables", [
-            "only" => ["create", "store"],
-        ]);
-        $this->middleware("permission:edit-usables", [
-            "only" => ["edit", "update"],
-        ]);
-        $this->middleware("permission:delete-usables", ["only" => ["destroy"]]);
-    }
+    // function __construct()
+    // {
+    //     $this->middleware("permission:view-usables");
+    //     $this->middleware("permission:create-usables", [
+    //         "only" => ["create", "store"],
+    //     ]);
+    //     $this->middleware("permission:edit-usables", [
+    //         "only" => ["edit", "update"],
+    //     ]);
+    //     $this->middleware("permission:delete-usables", ["only" => ["destroy"]]);
+    // }
 
     /**
      * Display a listing of the resource.

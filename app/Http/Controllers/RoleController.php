@@ -16,20 +16,20 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
-    {
-        $this->middleware(
-            "permission:view-roles|create-roles|edit-roles|delete-roles",
-            ["only" => ["index", "store"]]
-        );
-        $this->middleware("permission:create-roles", [
-            "only" => ["create", "store"],
-        ]);
-        $this->middleware("permission:edit-roles", [
-            "only" => ["edit", "update"],
-        ]);
-        $this->middleware("permission:delete-roles", ["only" => ["destroy"]]);
-    }
+    // function __construct()
+    // {
+    //     $this->middleware(
+    //         "permission:view-roles|create-roles|edit-roles|delete-roles",
+    //         ["only" => ["index", "store"]]
+    //     );
+    //     $this->middleware("permission:create-roles", [
+    //         "only" => ["create", "store"],
+    //     ]);
+    //     $this->middleware("permission:edit-roles", [
+    //         "only" => ["edit", "update"],
+    //     ]);
+    //     $this->middleware("permission:delete-roles", ["only" => ["destroy"]]);
+    // }
 
     /**
      * Display a listing of the resource.
@@ -64,8 +64,17 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            "name" => "required|string|max:255",
+            "permissions" => "required|array",
+            "permissions.*" => "exists:permissions,id", // Ensure each permission ID exists
+        ]);
         $role = Role::create(["name" => $request->input("name")]);
-        $role->syncPermissions($request->permission);
+
+        // Convert permission IDs to names before syncing
+        $permissions = Permission::whereIn('id', $request->permissions)->pluck('name')->toArray();
+
+        $role->syncPermissions($permissions);
 
         Alert::success("نوۍ صلاحیت په بریالیتوب سره جوړ شو");
 
@@ -126,16 +135,21 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            "name" => "required",
-            "permission" => "required",
+        $request->validate([
+            "name" => "required|string|max:255",
+            "permissions" => "required|array", // Ensure it's an array
+            "permissions.*" => "exists:permissions,id", // Validate each permission exists
         ]);
 
-        $role = Role::find($id);
+        $role = Role::findOrFail($id);
         $role->name = $request->input("name");
         $role->save();
 
-        $role->syncPermissions($request->input("permission"));
+        // Convert permission IDs to names before syncing (if IDs are sent)
+        $permissions = Permission::whereIn('id', $request->input("permissions"))->pluck('name')->toArray();
+
+        $role->syncPermissions($permissions);
+
 
         Alert::success("صلاحیت په بریالیتوب سره سم شو");
 

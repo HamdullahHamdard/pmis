@@ -19,17 +19,17 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
-    {
-        $this->middleware("permission:view-users");
-        $this->middleware("permission:create-users", [
-            "only" => ["create", "store"],
-        ]);
-        $this->middleware("permission:edit-users", [
-            "only" => ["edit", "update"],
-        ]);
-        $this->middleware("permission:delete-users", ["only" => ["destroy"]]);
-    }
+    // function __construct()
+    // {
+    //     $this->middleware("permission:view-users");
+    //     $this->middleware("permission:create-users", [
+    //         "only" => ["create", "store"],
+    //     ]);
+    //     $this->middleware("permission:edit-users", [
+    //         "only" => ["edit", "update"],
+    //     ]);
+    //     $this->middleware("permission:delete-users", ["only" => ["destroy"]]);
+    // }
 
     /**
      * Display a listing of the resource.
@@ -88,7 +88,8 @@ class UserController extends Controller
             "province_id" => $request->input("province")
         ]);
 
-        $user->assignRole($request->input("roles"));
+        // Convert role IDs to role names before assigning
+        $roles = Role::whereIn('id', (array) $request->input("roles"))->pluck('name')->toArray();
 
         Alert::success("نوۍ کارونکي په بریالیتوب سره جوړ شو");
 
@@ -132,7 +133,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
+        $request->validate([
             "name" => "required",
             "email" => "required|email|unique:users,email," . $id,
             "password" => "required|same:confirm-password",
@@ -162,7 +163,8 @@ class UserController extends Controller
             ->where("model_id", $id)
             ->delete();
 
-        $user->assignRole($request->roles);
+        // Convert role IDs to role names before assigning
+    $roles = Role::whereIn('id', (array) $request->input("roles"))->pluck('name')->toArray();
 
         Alert::success("د کارونکي معلومات په بریالیتوب سره سم شول");
 

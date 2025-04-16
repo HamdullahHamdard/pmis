@@ -6,6 +6,7 @@ use App\Models\Form8;
 use App\Http\Requests\StoreForm8Request;
 use App\Http\Requests\UpdateForm8Request;
 use App\Models\Form5;
+use App\Models\Submission;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 
@@ -64,8 +65,19 @@ class Form8Controller extends Controller
      */
     public function store(StoreForm8Request $request)
     {
-        //
-        dd($request);
+        foreach ($request->submission_ids as $id) {
+            // Find the submission
+            $submission = Submission::find($id);
+
+            // Ensure submission exists before updating
+            if ($submission) {
+                $submission->is_returned = true;
+                $submission->save();
+            } else {
+            }
+        }
+
+        return redirect()->back()->with('success', 'Submissions updated successfully.');
     }
 
     /**

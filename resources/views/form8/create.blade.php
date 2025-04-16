@@ -33,42 +33,44 @@
                     </div>
                 </div>
 
-                <!-- Step 1: Select form and items -->
-                <div id="step-1" class="transition-all duration-300">
-                    <form method="GET" class="w-full mx-auto" action="{{ route('form8s.create') }}"
-                    enctype='multipart/form-data' id="form-step-1">
-                    @csrf
-                        <select name="form5_id" id="form5-select" required onchange="this.form.submit()"
-                        class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
-                        <option value="" hidden class="py-2 text-gray-300">انتخاب کړي</option>
+                <!-- Form selection -->
+                <form method="GET" class="w-full mx-auto mb-4" action="{{ route('form8s.create') }}"
+                enctype='multipart/form-data' id="form-selection">
+                @csrf
+                    <select name="form5_id" id="form5-select" required onchange="this.form.submit()"
+                    class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
+                    <option value="" hidden class="py-2 text-gray-300">انتخاب کړي</option>
 
-                        @if(auth()->user()->province_id == 13)
-                            @foreach ($form5s as $form5)
+                    @if(auth()->user()->province_id == 13)
+                        @foreach ($form5s as $form5)
+                            <option value="{{ $form5->id }}"
+                                {{ request('form5_id') == $form5->id ? 'selected' : '' }}
+                                class="py-2">
+                                {{ $form5->id }} {{ $form5->form9s->employee->name }}
+                            </option>
+                        @endforeach
+                    @else
+                        @foreach ($form5s as $form5)
+                            @if($form5->id == auth()->user()->province_id)
                                 <option value="{{ $form5->id }}"
                                     {{ request('form5_id') == $form5->id ? 'selected' : '' }}
                                     class="py-2">
                                     {{ $form5->id }} {{ $form5->form9s->employee->name }}
                                 </option>
-                            @endforeach
-                        @else
-                            @foreach ($form5s as $form5)
-                                @if($form5->id == auth()->user()->province_id)
-                                    <option value="{{ $form5->id }}"
-                                        {{ request('form5_id') == $form5->id ? 'selected' : '' }}
-                                        class="py-2">
-                                        {{ $form5->id }} {{ $form5->form9s->employee->name }}
-                                    </option>
-                                @endif
-                            @endforeach
-                        @endif
-                    </select>
-                    </form>
+                            @endif
+                        @endforeach
+                    @endif
+                </select>
+                </form>
 
-                    <form method="POST" class="w-full mx-auto my-2" id="main-form" action="{{ url('forms/form8/store') }}"
-                        enctype='multipart/form-data'>
-                        @csrf
-                        <input type="hidden" name="form5_id" value="{{ $selectedForm5->id ?? '' }}">
+                <!-- Main form with both steps -->
+                <form method="POST" class="w-full mx-auto" id="main-form" action="{{ route('form8s.store') }}"
+                    enctype='multipart/form-data'>
+                    @csrf
+                    <input type="hidden" name="form5_id" value="{{ $selectedForm5->id ?? '' }}">
 
+                    <!-- Step 1: Select items -->
+                    <div id="step-1" class="transition-all duration-300">
                         @if ($selectedForm5)
                             <div class="mb-4">
                                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -86,32 +88,29 @@
                             </div>
                         @endif
 
-                        <!-- Hidden container for step 2 form fields that will be populated by JavaScript -->
-                        <div id="dynamic-fields-container" class="hidden"></div>
-
                         <div class="flex items-center justify-end mt-8">
                             <button type="button" id="next-button" class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                 {{ __('بعدی') }}
                             </button>
                         </div>
-                    </form>
-                </div>
-
-                <!-- Step 2: Enter prices and select certified persons -->
-                <div id="step-2" class="hidden transition-all duration-300">
-                    <div id="selected-items-container" class="space-y-4">
-                        <!-- Selected items will be populated here via JavaScript -->
                     </div>
 
-                    <div class="flex items-center justify-between mt-8">
-                        <button type="button" id="back-button" class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-gray-700 uppercase transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                            {{ __('برگشت') }}
-                        </button>
-                        <x-primary-button id="submit-button" form="main-form">
-                            {{ __('ثبت کردن فورم') }}
-                        </x-primary-button>
+                    <!-- Step 2: Enter prices and select certified persons -->
+                    <div id="step-2" class="hidden transition-all duration-300">
+                        <div id="selected-items-container" class="space-y-4">
+                            <!-- Selected items will be populated here via JavaScript -->
+                        </div>
+
+                        <div class="flex items-center justify-between mt-8">
+                            <button type="button" id="back-button" class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-gray-700 uppercase transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                {{ __('برگشت') }}
+                            </button>
+                            <x-primary-button type="submit">
+                                {{ __('ثبت کردن فورم') }}
+                            </x-primary-button>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -124,19 +123,25 @@
         const step2Indicator = document.getElementById('step-2-indicator');
         const nextButton = document.getElementById('next-button');
         const backButton = document.getElementById('back-button');
-        const submitButton = document.getElementById('submit-button');
         const itemsSelect = document.getElementById('items-select');
         const selectedItemsContainer = document.getElementById('selected-items-container');
-        const dynamicFieldsContainer = document.getElementById('dynamic-fields-container');
         const mainForm = document.getElementById('main-form');
+
+        // Debug: Log selected items when the page loads
+        if (itemsSelect) {
+            console.log('Initial selected items:', itemsSelect.selectedOptions.length);
+        }
 
         // Move to step 2
         nextButton.addEventListener('click', function() {
             // Validate that at least one item is selected
-            if (itemsSelect && itemsSelect.selectedOptions.length === 0) {
+            if (!itemsSelect || itemsSelect.selectedOptions.length === 0) {
                 alert('لطفا حداقل یک مورد را انتخاب کنید');
                 return;
             }
+
+            // Debug: Log selected items
+            console.log('Selected items:', itemsSelect.selectedOptions.length);
 
             // Show step 2 and hide step 1
             step1.classList.add('hidden');
@@ -167,16 +172,37 @@
         // Generate form fields for selected items
         function generateItemFields() {
             selectedItemsContainer.innerHTML = '';
-            dynamicFieldsContainer.innerHTML = ''; // Clear previous fields
 
             if (!itemsSelect) return;
 
-            // Create a hidden input to store the selected submission IDs
-            const selectedIds = Array.from(itemsSelect.selectedOptions).map(option => option.value);
+            // Create a hidden container for submission IDs if it doesn't exist
+            let submissionIdsContainer = document.getElementById('submission-ids-container');
+            if (!submissionIdsContainer) {
+                submissionIdsContainer = document.createElement('div');
+                submissionIdsContainer.id = 'submission-ids-container';
+                submissionIdsContainer.style.display = 'none';
+                mainForm.appendChild(submissionIdsContainer);
+            } else {
+                submissionIdsContainer.innerHTML = '';
+            }
 
-            Array.from(itemsSelect.selectedOptions).forEach((option, index) => {
+            // Get all selected options
+            const selectedOptions = Array.from(itemsSelect.selectedOptions);
+
+            // Debug: Log selected options
+            console.log('Selected options:', selectedOptions.map(opt => opt.value));
+
+            // Process each selected item
+            selectedOptions.forEach((option, index) => {
                 const submissionId = option.value;
                 const itemText = option.textContent.trim();
+
+                // Create hidden input for submission ID
+                const submissionIdInput = document.createElement('input');
+                submissionIdInput.type = 'hidden';
+                submissionIdInput.name = 'submission_ids[]';
+                submissionIdInput.value = submissionId;
+                submissionIdsContainer.appendChild(submissionIdInput);
 
                 // Create visual representation for the user
                 const itemDiv = document.createElement('div');
@@ -188,7 +214,7 @@
                             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                 قیمت جدید
                             </label>
-                            <input type="number" id="price-${submissionId}" required
+                            <input type="number" name="new_prices[${submissionId}]" required
                                 class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
                                 placeholder="قیمت جدید را وارد کنید">
                         </div>
@@ -196,37 +222,23 @@
                             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                 شخص مسئول
                             </label>
-                            <input type="text" id="price-${submissionId}" required
-                                class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
-                                placeholder="شخص جدید را وارد کنید">
+                            <select name="certified_persons[${submissionId}]" required
+                                class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
+                                <option value="" hidden>انتخاب کنید</option>
+                                <option value="person1">شخص 1</option>
+                                <option value="person2">شخص 2</option>
+                                <option value="person3">شخص 3</option>
+                                <!-- You should populate this with actual data from your database -->
+                            </select>
                         </div>
                     </div>
                 `;
 
                 selectedItemsContainer.appendChild(itemDiv);
-
-                // Create actual form fields that will be submitted
-                const priceInput = document.createElement('input');
-                priceInput.type = 'hidden';
-                priceInput.name = `new_prices[${submissionId}]`;
-                priceInput.id = `hidden-price-${submissionId}`;
-                dynamicFieldsContainer.appendChild(priceInput);
-
-                const personInput = document.createElement('input');
-                personInput.type = 'hidden';
-                personInput.name = `certified_persons[${submissionId}]`;
-                personInput.id = `hidden-person-${submissionId}`;
-                dynamicFieldsContainer.appendChild(personInput);
-
-                // Add event listeners to update hidden fields
-                document.getElementById(`price-${submissionId}`).addEventListener('input', function(e) {
-                    document.getElementById(`hidden-price-${submissionId}`).value = e.target.value;
-                });
-
-                document.getElementById(`person-${submissionId}`).addEventListener('change', function(e) {
-                    document.getElementById(`hidden-person-${submissionId}`).value = e.target.value;
-                });
             });
+
+            // Debug: Log the number of items added to step 2
+            console.log('Items added to step 2:', selectedItemsContainer.children.length);
         }
 
         // Handle form submission
@@ -238,35 +250,39 @@
                 return;
             }
 
-            // We're on step 2, validate and prepare data before submission
-            const selectedIds = Array.from(itemsSelect.selectedOptions).map(option => option.value);
+            // We're on step 2, validate before submission
+            const submissionIdsContainer = document.getElementById('submission-ids-container');
+            if (!submissionIdsContainer || submissionIdsContainer.children.length === 0) {
+                e.preventDefault();
+                alert('خطا: هیچ موردی انتخاب نشده است');
+                return;
+            }
+
+            // Check if all required fields are filled
             let isValid = true;
+            const priceInputs = document.querySelectorAll('input[name^="new_prices"]');
+            const personSelects = document.querySelectorAll('select[name^="certified_persons"]');
 
-            // Validate all fields are filled
-            selectedIds.forEach(id => {
-                const priceField = document.getElementById(`price-${id}`);
-                const personField = document.getElementById(`person-${id}`);
-
-                if (!priceField.value) {
-                    alert('لطفا قیمت جدید را برای تمام موارد وارد کنید');
+            priceInputs.forEach(input => {
+                if (!input.value) {
                     isValid = false;
-                    return;
                 }
+            });
 
-                if (!personField.value) {
-                    alert('لطفا شخص مسئول را برای تمام موارد انتخاب کنید');
+            personSelects.forEach(select => {
+                if (!select.value) {
                     isValid = false;
-                    return;
                 }
-
-                // Update hidden fields with final values
-                document.getElementById(`hidden-price-${id}`).value = priceField.value;
-                document.getElementById(`hidden-person-${id}`).value = personField.value;
             });
 
             if (!isValid) {
                 e.preventDefault();
+                alert('لطفا تمام فیلدها را پر کنید');
+                return;
             }
+
+            // Form is valid, allow submission
+            console.log('Form is being submitted with data:', new FormData(mainForm));
         });
     });
 </script>

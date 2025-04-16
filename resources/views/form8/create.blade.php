@@ -20,6 +20,13 @@
                     </h1>
                 </div>
 
+                <!-- Display any error messages -->
+                @if(session('error'))
+                    <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
                 <!-- Step indicator -->
                 <div class="flex items-center justify-center my-4">
                     <div class="flex items-center">
@@ -76,6 +83,11 @@
                                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                     انتخاب موارد
                                 </label>
+                                <div class="flex items-center mb-2">
+                                    <button type="button" id="select-all-button" class="px-3 py-1 text-xs text-white bg-indigo-600 rounded hover:bg-indigo-700">
+                                        انتخاب همه
+                                    </button>
+                                </div>
                                 <select id="items-select" name="submission_ids[]" multiple
                                     class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
 
@@ -126,10 +138,21 @@
         const itemsSelect = document.getElementById('items-select');
         const selectedItemsContainer = document.getElementById('selected-items-container');
         const mainForm = document.getElementById('main-form');
+        const selectAllButton = document.getElementById('select-all-button');
 
         // Debug: Log selected items when the page loads
         if (itemsSelect) {
             console.log('Initial selected items:', itemsSelect.selectedOptions.length);
+        }
+
+        // Select all items button
+        if (selectAllButton && itemsSelect) {
+            selectAllButton.addEventListener('click', function() {
+                for (let i = 0; i < itemsSelect.options.length; i++) {
+                    itemsSelect.options[i].selected = true;
+                }
+                console.log('All items selected:', itemsSelect.selectedOptions.length);
+            });
         }
 
         // Move to step 2
@@ -225,10 +248,15 @@
                             <select name="certified_persons[${submissionId}]" required
                                 class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
                                 <option value="" hidden>انتخاب کنید</option>
-                                <option value="person1">شخص 1</option>
-                                <option value="person2">شخص 2</option>
-                                <option value="person3">شخص 3</option>
-                                <!-- You should populate this with actual data from your database -->
+                                @foreach($employees ?? [] as $employee)
+                                    <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                                @endforeach
+                                <!-- Fallback options if no employees are available -->
+                                @if(empty($employees))
+                                    <option value="person1">شخص 1</option>
+                                    <option value="person2">شخص 2</option>
+                                    <option value="person3">شخص 3</option>
+                                @endif
                             </select>
                         </div>
                     </div>

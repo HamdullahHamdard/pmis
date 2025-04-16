@@ -579,12 +579,14 @@ Route::middleware("auth")->group(function () {
             Form5SubmissionController::class,
             "destroy",
         ]);
+        Route::get('/get-form5/{id}', [Form8Controller::class, 'getForm5Details']);
     });
 
 
     Route::group(['middleware' => ['auth']], function() {
         Route::resource('form9s', Form9Controller::class);
         Route::resource('form5s', Form5Controller::class);
+        Route::resource('form8s', Form8Controller::class);
 
 
     });

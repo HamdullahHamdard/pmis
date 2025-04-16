@@ -1,155 +1,317 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
                 {{ __('اضافه کردن فورم اعاده تحویلخانه جدید') }}
             </h2>
 
-            <a href={{ route('form8') }} class="text-gray-600 flex dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+            <a href={{ route('form8s.index') }}
+                class="flex text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
                 برگشت <i data-feather="corner-up-left" class="w-5 mr-1"></i>
             </a>
         </div>
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
+        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div class="p-6 overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
                 <div>
-                    <h1 class="text-center text-xl sm:text-2xl font-medium text-gray-800 dark:text-white">اعاده تحویلخانه</h1>
+                    <h1 class="text-xl font-medium text-center text-gray-800 sm:text-2xl dark:text-white">اعاده تحویلخانه
+                    </h1>
                 </div>
-                <form method="POST" class="w-full mx-auto" action="{{ url('forms/form8/store') }}" enctype='multipart/form-data'
-                    id="app-form">
+
+                <!-- Display any error messages -->
+                @if(session('error'))
+                    <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
+                <!-- Step indicator -->
+                <div class="flex items-center justify-center my-4">
+                    <div class="flex items-center">
+                        <div id="step-1-indicator" class="flex items-center justify-center w-8 h-8 text-white bg-indigo-600 rounded-full">
+                            1
+                        </div>
+                        <div class="w-16 h-1 bg-indigo-600"></div>
+                        <div id="step-2-indicator" class="flex items-center justify-center w-8 h-8 text-gray-500 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-400">
+                            2
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form selection -->
+                <form method="GET" class="w-full mx-auto mb-4" action="{{ route('form8s.create') }}"
+                enctype='multipart/form-data' id="form-selection">
+                @csrf
+                    <select name="form5_id" id="form5-select" required onchange="this.form.submit()"
+                    class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
+                    <option value="" hidden class="py-2 text-gray-300">انتخاب کړي</option>
+
+                    @if(auth()->user()->province_id == 13)
+                        @foreach ($form5s as $form5)
+                            <option value="{{ $form5->id }}"
+                                {{ request('form5_id') == $form5->id ? 'selected' : '' }}
+                                class="py-2">
+                                {{ $form5->id }} {{ $form5->form9s->employee->name }}
+                            </option>
+                        @endforeach
+                    @else
+                        @foreach ($form5s as $form5)
+                            @if($form5->id == auth()->user()->province_id)
+                                <option value="{{ $form5->id }}"
+                                    {{ request('form5_id') == $form5->id ? 'selected' : '' }}
+                                    class="py-2">
+                                    {{ $form5->id }} {{ $form5->form9s->employee->name }}
+                                </option>
+                            @endif
+                        @endforeach
+                    @endif
+                </select>
+                </form>
+
+                <!-- Main form with both steps -->
+                <form method="POST" class="w-full mx-auto" id="main-form" action="{{ route('form8s.store') }}"
+                    enctype='multipart/form-data'>
                     @csrf
+                    <input type="hidden" name="form5_id" value="{{ $selectedForm5->id ?? '' }}">
 
-                    <!-- Header -->
-                    <div class="mt-4 w-full flex justify-between">
-                        <div class="grid grid-cols-4 items-center gap-3">
-                            <x-input-label for="formNumber" :value="__('شماره')" class="text-gray-800 text-lg col-span-1" />
-                            <x-text-input id="formNumber" class="col-span-3 block mt-1" type="number" name="formNumber" :value="old('formNumber')" required autofocus autocomplete="formNumber" />
-                            <x-input-error :messages="$errors->get('formNumber')" class="mt-2" />
-                        </div>
-                        <div class="grid grid-cols-4 items-center gap-3">
-                            <x-input-label for="formDate" :value="__('تاریخ')" class="text-gray-800 text-lg col-span-1" />
-                            <x-text-input id="formDate" class="col-span-3 block mt-1" type="date" name="formDate" :value="old('formDate')" required autofocus autocomplete="formDate" />
-                            <x-input-error :messages="$errors->get('formDate')" class="mt-2" />
-                        </div>
-                    </div>
-
-                    <table class="w-full text-sm text-right text-gray-500 dark:text-gray-400 mt-6">
-                        <thead class="text-lg text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                            <tr>
-                                <th scope="col" class="px-6 py-3">
-                                    اسم جنس
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    مشخصات
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    مقدار
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    واحد
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    قیمت
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    قیمت مجموع
-                                </th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-md">
-
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div class="mt-6 flex justify-center border-b border-gray-100 dark:border-gray-700">
-                        <button data-modal-target="form8-modal" data-modal-toggle="form8-modal" type="button" class="text-gray-600 hover:text-black dark:text-gray-300 dark:hover:text-white font-medium p-3 rounded-md text-center">
-                            <i data-feather="plus" class="w-8 h-8"></i>
-                        </button>
-                    </div>
-
-                    <!-- Main modal -->
-                    <div id="form8-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                        <div class="relative w-full max-w-xl max-h-full">
-                            <!-- Modal content -->
-                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-800">
-                                <button type="button" class="absolute top-3 left-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="form8-modal">
-                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                    </svg>
-                                    <span class="sr-only">Close modal</span>
-                                </button>
-                                <div class="px-6 py-6 lg:px-8">
-                                    <h3 class="mb-6 text-xl font-medium text-gray-900 dark:text-white">اضافه کردن جنس اعاده تحویلخانه</h3>
-                                    <form class="space-y-6" action="#">
-
-                                        <!-- Item Name -->
-                                        <div class="mb-3">
-                                            <x-input-label for="itemName" :value="__('اسم جنس')" class="text-gray-800 text-lg col-span-1" />
-                                            <x-text-input id="itemName" class="col-span-3 block mt-1 w-full" type="number" name="itemName" :value="old('itemName')" required autofocus autocomplete="itemName" />
-                                            <x-input-error :messages="$errors->get('itemName')" class="mt-2" />
-                                        </div>
-
-                                        <!-- Item Details -->
-                                        <div class="mb-6">
-                                            <x-input-label for="details" :value="__('مشخصات جنس')" />
-                                            <x-text-area id="details" class="block mt-1 w-full" type="text" name="details" :value="old('details')" required autofocus autocomplete="details" />
-                                            <x-input-error :messages="$errors->get('details')" class="mt-2" />
-                                        </div>
-
-                                        <!-- Total -->
-                                        <div class="mb-3">
-                                            <x-input-label for="total" :value="__('مقدار')" class="text-gray-800 text-lg col-span-1" />
-                                            <x-text-input id="total" class="col-span-3 block mt-1 w-full" type="number" name="total" :value="old('total')" required autofocus autocomplete="total" />
-                                            <x-input-error :messages="$errors->get('total')" class="mt-2" />
-                                        </div>
-
-                                        <!-- Units -->
-                                        <div class="mb-3">
-                                            <x-input-label for="category" :value="__('واحد')" />
-                                            <select
-                                                class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm w-full mt-1"
-                                                name="unit">
-                                                @foreach ($units as $unit)
-                                                    <option value="{{ $unit->id}}" class="py-2">{{$unit->name}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                        <!-- Purchase Price -->
-                                        <div class="mt-3">
-                                            <x-input-label for="purchasePrice" :value="__('قیمت خرید')" />
-                                            <x-text-input id="purchasePrice" class="block mt-1 w-full" type="text" name="purchasePrice" :value="old('purchasePrice')" required autofocus autocomplete="purchasePrice" />
-                                            <x-input-error :messages="$errors->get('purchasePrice')" class="mt-2" />
-                                        </div>
-
-                                        <button type="submit" class="w-full mt-4 text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-sky-600 dark:hover:bg-sky-700 dark:focus:ring-sky-800">اضافه کردن</button>
-
-                                    </form>
+                    <!-- Step 1: Select items -->
+                    <div id="step-1" class="transition-all duration-300">
+                        @if ($selectedForm5)
+                            <div class="mb-4">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                    انتخاب موارد
+                                </label>
+                                <div class="flex items-center mb-2">
+                                    <button type="button" id="select-all-button" class="px-3 py-1 text-xs text-white bg-indigo-600 rounded hover:bg-indigo-700">
+                                        انتخاب همه
+                                    </button>
                                 </div>
+                                <select id="items-select" name="submission_ids[]" multiple
+                                    class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
+
+                                    @foreach ($selectedForm5->submissions as $submission)
+                                        <option value="{{ $submission->id }}">
+                                            {{ $submission->employee->name ?? 'No Employee Name' }} : {{ $submission->item->name ?? 'No Item Name' }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
+                        @endif
+
+                        <div class="flex items-center justify-end mt-8">
+                            <button type="button" id="next-button" class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                {{ __('بعدی') }}
+                            </button>
                         </div>
                     </div>
 
-                    <!-- Footer -->
-                    <footer>
-                        <div>
-
+                    <!-- Step 2: Enter prices and select certified persons -->
+                    <div id="step-2" class="hidden transition-all duration-300">
+                        <div id="selected-items-container" class="space-y-4">
+                            <!-- Selected items will be populated here via JavaScript -->
                         </div>
-                    </footer>
 
-                    <!-- Submit Button -->
-                    <div class="flex items-center justify-end mt-8">
-                        <x-primary-button>
-                            {{ __('ثبت کردن فورم') }}
-                        </x-primary-button>
+                        <div class="flex items-center justify-between mt-8">
+                            <button type="button" id="back-button" class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-gray-700 uppercase transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                {{ __('برگشت') }}
+                            </button>
+                            <x-primary-button type="submit">
+                                {{ __('ثبت کردن فورم') }}
+                            </x-primary-button>
+                        </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const step1 = document.getElementById('step-1');
+        const step2 = document.getElementById('step-2');
+        const step1Indicator = document.getElementById('step-1-indicator');
+        const step2Indicator = document.getElementById('step-2-indicator');
+        const nextButton = document.getElementById('next-button');
+        const backButton = document.getElementById('back-button');
+        const itemsSelect = document.getElementById('items-select');
+        const selectedItemsContainer = document.getElementById('selected-items-container');
+        const mainForm = document.getElementById('main-form');
+        const selectAllButton = document.getElementById('select-all-button');
+
+        // Debug: Log selected items when the page loads
+        if (itemsSelect) {
+            console.log('Initial selected items:', itemsSelect.selectedOptions.length);
+        }
+
+        // Select all items button
+        if (selectAllButton && itemsSelect) {
+            selectAllButton.addEventListener('click', function() {
+                for (let i = 0; i < itemsSelect.options.length; i++) {
+                    itemsSelect.options[i].selected = true;
+                }
+                console.log('All items selected:', itemsSelect.selectedOptions.length);
+            });
+        }
+
+        // Move to step 2
+        nextButton.addEventListener('click', function() {
+            // Validate that at least one item is selected
+            if (!itemsSelect || itemsSelect.selectedOptions.length === 0) {
+                alert('لطفا حداقل یک مورد را انتخاب کنید');
+                return;
+            }
+
+            // Debug: Log selected items
+            console.log('Selected items:', itemsSelect.selectedOptions.length);
+
+            // Show step 2 and hide step 1
+            step1.classList.add('hidden');
+            step2.classList.remove('hidden');
+
+            // Update step indicators
+            step1Indicator.classList.remove('bg-indigo-600', 'text-white');
+            step1Indicator.classList.add('bg-indigo-300', 'text-indigo-800');
+            step2Indicator.classList.remove('bg-gray-200', 'text-gray-500', 'dark:bg-gray-700', 'dark:text-gray-400');
+            step2Indicator.classList.add('bg-indigo-600', 'text-white');
+
+            // Generate form fields for each selected item
+            generateItemFields();
+        });
+
+        // Move back to step 1
+        backButton.addEventListener('click', function() {
+            step2.classList.add('hidden');
+            step1.classList.remove('hidden');
+
+            // Update step indicators
+            step1Indicator.classList.remove('bg-indigo-300', 'text-indigo-800');
+            step1Indicator.classList.add('bg-indigo-600', 'text-white');
+            step2Indicator.classList.remove('bg-indigo-600', 'text-white');
+            step2Indicator.classList.add('bg-gray-200', 'text-gray-500', 'dark:bg-gray-700', 'dark:text-gray-400');
+        });
+
+        // Generate form fields for selected items
+        function generateItemFields() {
+            selectedItemsContainer.innerHTML = '';
+
+            if (!itemsSelect) return;
+
+            // Create a hidden container for submission IDs if it doesn't exist
+            let submissionIdsContainer = document.getElementById('submission-ids-container');
+            if (!submissionIdsContainer) {
+                submissionIdsContainer = document.createElement('div');
+                submissionIdsContainer.id = 'submission-ids-container';
+                submissionIdsContainer.style.display = 'none';
+                mainForm.appendChild(submissionIdsContainer);
+            } else {
+                submissionIdsContainer.innerHTML = '';
+            }
+
+            // Get all selected options
+            const selectedOptions = Array.from(itemsSelect.selectedOptions);
+
+            // Debug: Log selected options
+            console.log('Selected options:', selectedOptions.map(opt => opt.value));
+
+            // Process each selected item
+            selectedOptions.forEach((option, index) => {
+                const submissionId = option.value;
+                const itemText = option.textContent.trim();
+
+                // Create hidden input for submission ID
+                const submissionIdInput = document.createElement('input');
+                submissionIdInput.type = 'hidden';
+                submissionIdInput.name = 'submission_ids[]';
+                submissionIdInput.value = submissionId;
+                submissionIdsContainer.appendChild(submissionIdInput);
+
+                // Create visual representation for the user
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'p-4 border border-gray-200 rounded-md dark:border-gray-700';
+                itemDiv.innerHTML = `
+                    <h3 class="mb-3 font-medium text-gray-900 dark:text-white">${itemText}</h3>
+                    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                قیمت جدید
+                            </label>
+                            <input type="number" name="new_prices[${submissionId}]" required
+                                class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
+                                placeholder="قیمت جدید را وارد کنید">
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                شخص مسئول
+                            </label>
+                            <select name="certified_persons[${submissionId}]" required
+                                class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
+                                <option value="" hidden>انتخاب کنید</option>
+                                @foreach($employees ?? [] as $employee)
+                                    <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                                @endforeach
+                                <!-- Fallback options if no employees are available -->
+                                @if(empty($employees))
+                                    <option value="person1">شخص 1</option>
+                                    <option value="person2">شخص 2</option>
+                                    <option value="person3">شخص 3</option>
+                                @endif
+                            </select>
+                        </div>
+                    </div>
+                `;
+
+                selectedItemsContainer.appendChild(itemDiv);
+            });
+
+            // Debug: Log the number of items added to step 2
+            console.log('Items added to step 2:', selectedItemsContainer.children.length);
+        }
+
+        // Handle form submission
+        mainForm.addEventListener('submit', function(e) {
+            // If we're on step 1, prevent submission and go to step 2
+            if (!step1.classList.contains('hidden')) {
+                e.preventDefault();
+                nextButton.click();
+                return;
+            }
+
+            // We're on step 2, validate before submission
+            const submissionIdsContainer = document.getElementById('submission-ids-container');
+            if (!submissionIdsContainer || submissionIdsContainer.children.length === 0) {
+                e.preventDefault();
+                alert('خطا: هیچ موردی انتخاب نشده است');
+                return;
+            }
+
+            // Check if all required fields are filled
+            let isValid = true;
+            const priceInputs = document.querySelectorAll('input[name^="new_prices"]');
+            const personSelects = document.querySelectorAll('select[name^="certified_persons"]');
+
+            priceInputs.forEach(input => {
+                if (!input.value) {
+                    isValid = false;
+                }
+            });
+
+            personSelects.forEach(select => {
+                if (!select.value) {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                e.preventDefault();
+                alert('لطفا تمام فیلدها را پر کنید');
+                return;
+            }
+
+            // Form is valid, allow submission
+            console.log('Form is being submitted with data:', new FormData(mainForm));
+        });
+    });
+</script>
 </x-app-layout>

@@ -19,7 +19,7 @@ class Form5 extends Model
         'distribution_date',
         'details',
         'form9s_id',
-    ] ;
+    ];
 
 
     public function items()
@@ -27,19 +27,19 @@ class Form5 extends Model
         return $this->belongsToMany(Item::class);
     }
 
-    public function form9s() : BelongsTo
+    public function form9s(): BelongsTo
     {
         return $this->belongsTo(Form9::class);
     }
 
     public function submissions()
-{
-    return $this->belongsToMany(Submission::class);
-}
+    {
+        return $this->belongsToMany(Submission::class);
+    }
 
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()->useLogName('فورم ف س ۵')
-            ->setDescriptionForEvent(fn (string $eventName) => "Form 5 has been {$eventName}");
+            ->setDescriptionForEvent(fn(string $eventName) => "Form 5 has been {$eventName}");
     }
 }

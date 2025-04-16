@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Form8;
 use App\Http\Requests\StoreForm8Request;
 use App\Http\Requests\UpdateForm8Request;
+use App\Models\Form5;
+use App\Models\Item;
+use App\Models\Submission;
 use App\Models\Unit;
+use Illuminate\Http\Request;
 
 class Form8Controller extends Controller
 {
@@ -16,18 +20,42 @@ class Form8Controller extends Controller
      */
     public function index()
     {
-        return view('form8.index');
+        $form8s = Form8::paginate(10);
+        return view('form8.index', compact('form8s'));
     }
-
+    public function getForm5Details($id)
+    {
+        $form5 = Form5::find($id);
+        return response()->json([
+            'distribution_date' => $form5->distribution_date,
+            'details' => $form5->details,
+            'submissions' => $form5->submissions,
+            'form9s_id' => $form5->form9s_id,
+        ]);
+    }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        $units = Unit::all();
-        return view('form8.create', compact('units'));
+        $form5_id = $request->input('form5_id'); // match the select name
+        $form5s = Form5::all();
+
+        $selectedForm5 = null;
+
+        if ($form5_id) {
+            $selectedForm5 = Form5::with('submissions')->find($form5_id);
+
+            // dd($selectedForm5);
+
+            if (!$selectedForm5) {
+                return redirect()->back()->with('error', 'No records found for the selected Form5.');
+            }
+        }
+
+        return view('form8.create', compact('form5s', 'selectedForm5'));
     }
 
     /**
@@ -38,7 +66,23 @@ class Form8Controller extends Controller
      */
     public function store(StoreForm8Request $request)
     {
-        //
+        foreach ($request->submission_ids as $id) {
+            // Find the submission
+            $submission = Submission::find($id);
+
+            // Ensure submission exists before updating
+            if ($submission) {
+                $item_id = $submission->item_id;
+
+                $item = Item::find($item_id);
+
+                $submission->is_returned = true;
+                $submission->save();
+            } else {
+            }
+        }
+
+        return redirect()->back()->with('success', 'Submissions updated successfully.');
     }
 
     /**

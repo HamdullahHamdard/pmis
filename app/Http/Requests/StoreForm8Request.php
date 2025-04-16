@@ -13,7 +13,7 @@ class StoreForm8Request extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**

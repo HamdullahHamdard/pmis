@@ -6,8 +6,8 @@
             </h2>
 
             <a href={{ route('form8s.index') }}
-                class="flex text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
-                برگشت <i data-feather="corner-up-left" class="w-5 mr-1"></i>
+                class="flex items-center text-gray-600 transition-colors dark:text-gray-300 hover:text-gray-800 dark:hover:text-white">
+                برگشت <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg>
             </a>
         </div>
     </x-slot>
@@ -15,60 +15,83 @@
     <div class="py-12">
         <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="p-6 overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
-                <div>
-                    <h1 class="text-xl font-medium text-center text-gray-800 sm:text-2xl dark:text-white">اعاده تحویلخانه
-                    </h1>
+                <div class="mb-6">
+                    <h1 class="text-xl font-medium text-center text-gray-800 sm:text-2xl dark:text-white">اعاده تحویلخانه</h1>
                 </div>
 
-                <!-- Display any error messages -->
+                <!-- Display any error or success messages -->
                 @if(session('error'))
                     <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
                         {{ session('error') }}
                     </div>
                 @endif
 
+                @if(session('success'))
+                    <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800" role="alert">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
                 <!-- Step indicator -->
-                <div class="flex items-center justify-center my-4">
+                <div class="flex items-center justify-center my-6">
                     <div class="flex items-center">
-                        <div id="step-1-indicator" class="flex items-center justify-center w-8 h-8 text-white bg-indigo-600 rounded-full">
-                            1
+                        <div id="step-1-indicator" class="flex items-center justify-center w-10 h-10 text-white bg-indigo-600 rounded-full shadow-md">
+                            <span class="text-sm font-medium">1</span>
                         </div>
-                        <div class="w-16 h-1 bg-indigo-600"></div>
-                        <div id="step-2-indicator" class="flex items-center justify-center w-8 h-8 text-gray-500 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-400">
-                            2
+                        <div class="w-20 h-1 bg-indigo-200 dark:bg-indigo-800">
+                            <div id="progress-bar" class="h-1 transition-all duration-300 bg-indigo-600" style="width: 0%"></div>
+                        </div>
+                        <div id="step-2-indicator" class="flex items-center justify-center w-10 h-10 text-gray-500 bg-gray-200 rounded-full shadow-md dark:bg-gray-700 dark:text-gray-400">
+                            <span class="text-sm font-medium">2</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Form selection -->
-                <form method="GET" class="w-full mx-auto mb-4" action="{{ route('form8s.create') }}"
-                enctype='multipart/form-data' id="form-selection">
-                @csrf
-                    <select name="form5_id" id="form5-select" required onchange="this.form.submit()"
-                    class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
-                    <option value="" hidden class="py-2 text-gray-300">انتخاب کړي</option>
+                <div id="form-selection-container" class="mb-6">
+                    <form method="POST" class="w-full mx-auto" id="form-selection" action="{{ route('form8s.create') }}">
+                        @csrf
+                        <div class="mb-4">
+                            <label for="form5-select" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                انتخاب فورم
+                            </label>
+                            <select name="form5_id" id="form5-select" required
+                                class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
+                                <option value="" hidden class="py-2 text-gray-300">انتخاب کړي</option>
 
-                    @if(auth()->user()->province_id == 13)
-                        @foreach ($form5s as $form5)
-                            <option value="{{ $form5->id }}"
-                                {{ request('form5_id') == $form5->id ? 'selected' : '' }}
-                                class="py-2">
-                                {{ $form5->id }} {{ $form5->form9s->employee->name }}
-                            </option>
-                        @endforeach
-                    @else
-                        @foreach ($form5s as $form5)
-                            @if($form5->id == auth()->user()->province_id)
-                                <option value="{{ $form5->id }}"
-                                    {{ request('form5_id') == $form5->id ? 'selected' : '' }}
-                                    class="py-2">
-                                    {{ $form5->id }} {{ $form5->form9s->employee->name }}
-                                </option>
-                            @endif
-                        @endforeach
-                    @endif
-                </select>
-                </form>
+                                @if(auth()->user()->province_id == 13)
+                                    @foreach ($form5s as $form5)
+                                        <option value="{{ $form5->id }}"
+                                            {{ request('form5_id') == $form5->id ? 'selected' : '' }}
+                                            class="py-2">
+                                            {{ $form5->id }} {{ $form5->form9s->employee->name }}
+                                        </option>
+                                    @endforeach
+                                @else
+                                    @foreach ($form5s as $form5)
+                                        @if($form5->id == auth()->user()->province_id)
+                                            <option value="{{ $form5->id }}"
+                                                {{ request('form5_id') == $form5->id ? 'selected' : '' }}
+                                                class="py-2">
+                                                {{ $form5->id }} {{ $form5->form9s->employee->name }}
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                        <div class="flex justify-end">
+                            <button type="submit" id="select-form-button"
+                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white transition-colors bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                <span id="select-form-button-text">انتخاب فورم</span>
+                                <svg id="select-form-loading" class="hidden w-5 h-5 ml-2 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+                </div>
 
                 <!-- Main form with both steps -->
                 <form method="POST" class="w-full mx-auto" id="main-form" action="{{ route('form8s.store') }}"
@@ -77,49 +100,72 @@
                     <input type="hidden" name="form5_id" value="{{ $selectedForm5->id ?? '' }}">
 
                     <!-- Step 1: Select items -->
-                    <div id="step-1" class="transition-all duration-300">
+                    <div id="step-1" class="transition-all duration-300 {{ !$selectedForm5 ? 'hidden' : '' }}">
                         @if ($selectedForm5)
-                            <div class="mb-4">
+                            <div class="mb-6">
                                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                     انتخاب موارد
                                 </label>
-                                <div class="flex items-center mb-2">
-                                    <button type="button" id="select-all-button" class="px-3 py-1 text-xs text-white bg-indigo-600 rounded hover:bg-indigo-700">
+                                <div class="flex items-center mb-3">
+                                    <button type="button" id="select-all-button"
+                                        class="px-3 py-1 text-sm text-white transition-colors bg-indigo-600 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                         انتخاب همه
                                     </button>
+                                    <button type="button" id="deselect-all-button"
+                                        class="px-3 py-1 ml-2 text-sm text-gray-700 transition-colors bg-gray-200 rounded hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2">
+                                        لغو همه
+                                    </button>
                                 </div>
-                                <select id="items-select" name="submission_ids[]" multiple
-                                    class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
 
-                                    @foreach ($submissions as $submission)
-                                        <option value="{{ $submission->id }}">
-                                            {{ $submission->employee->name ?? 'No Employee Name' }} : {{ $submission->item->name ?? 'No Item Name' }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                <div class="relative">
+                                    <select id="items-select" name="submission_ids[]" multiple
+                                        class="w-full min-h-[200px] border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600">
+                                        @foreach ($submissions as $submission)
+                                            <option value="{{ $submission->id }}">
+                                                {{ $submission->employee->name ?? 'No Employee Name' }} : {{ $submission->item->name ?? 'No Item Name' }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <div id="selection-count" class="absolute px-2 py-1 text-xs text-gray-500 bg-white rounded-md bottom-2 right-2 dark:text-gray-400 dark:bg-gray-900">
+                                        0 مورد انتخاب شده
+                                    </div>
+                                </div>
+
+                                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                                    برای انتخاب چندین مورد، کلید Ctrl (یا Command در Mac) را نگه دارید و کلیک کنید
+                                </p>
                             </div>
                         @endif
 
                         <div class="flex items-center justify-end mt-8">
-                            <button type="button" id="next-button" class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-white uppercase transition duration-150 ease-in-out bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700 focus:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            <button type="button" id="next-button"
+                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white transition-colors bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                 {{ __('بعدی') }}
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-1 rtl:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                             </button>
                         </div>
                     </div>
 
                     <!-- Step 2: Enter prices and select certified persons -->
                     <div id="step-2" class="hidden transition-all duration-300">
-                        <div id="selected-items-container" class="space-y-4">
+                        <div id="selected-items-container" class="space-y-6">
                             <!-- Selected items will be populated here via JavaScript -->
                         </div>
 
                         <div class="flex items-center justify-between mt-8">
-                            <button type="button" id="back-button" class="inline-flex items-center px-4 py-2 text-xs font-semibold tracking-widest text-gray-700 uppercase transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            <button type="button" id="back-button"
+                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 transition-colors bg-white border border-gray-300 rounded-md shadow-sm dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-1 rtl:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                                 {{ __('برگشت') }}
                             </button>
-                            <x-primary-button type="submit">
-                                {{ __('ثبت کردن فورم') }}
-                            </x-primary-button>
+                            <button type="submit" id="submit-button"
+                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-white transition-colors bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                <span id="submit-button-text">{{ __('ثبت کردن فورم') }}</span>
+                                <svg id="submit-loading" class="hidden w-5 h-5 ml-2 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -129,20 +175,42 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Elements
         const step1 = document.getElementById('step-1');
         const step2 = document.getElementById('step-2');
         const step1Indicator = document.getElementById('step-1-indicator');
         const step2Indicator = document.getElementById('step-2-indicator');
+        const progressBar = document.getElementById('progress-bar');
         const nextButton = document.getElementById('next-button');
         const backButton = document.getElementById('back-button');
         const itemsSelect = document.getElementById('items-select');
         const selectedItemsContainer = document.getElementById('selected-items-container');
         const mainForm = document.getElementById('main-form');
         const selectAllButton = document.getElementById('select-all-button');
+        const deselectAllButton = document.getElementById('deselect-all-button');
+        const selectionCount = document.getElementById('selection-count');
+        const formSelectionForm = document.getElementById('form-selection');
+        const selectFormButton = document.getElementById('select-form-button');
+        const selectFormButtonText = document.getElementById('select-form-button-text');
+        const selectFormLoading = document.getElementById('select-form-loading');
+        const submitButton = document.getElementById('submit-button');
+        const submitButtonText = document.getElementById('submit-button-text');
+        const submitLoading = document.getElementById('submit-loading');
 
-        // Debug: Log selected items when the page loads
+        // Update selection count
+        function updateSelectionCount() {
+            if (itemsSelect && selectionCount) {
+                const count = itemsSelect.selectedOptions.length;
+                selectionCount.textContent = `${count} مورد انتخاب شده`;
+            }
+        }
+
+        // Initialize selection count
         if (itemsSelect) {
-            console.log('Initial selected items:', itemsSelect.selectedOptions.length);
+            updateSelectionCount();
+
+            // Update count when selection changes
+            itemsSelect.addEventListener('change', updateSelectionCount);
         }
 
         // Select all items button
@@ -151,49 +219,99 @@
                 for (let i = 0; i < itemsSelect.options.length; i++) {
                     itemsSelect.options[i].selected = true;
                 }
-                console.log('All items selected:', itemsSelect.selectedOptions.length);
+                updateSelectionCount();
+            });
+        }
+
+        // Deselect all items button
+        if (deselectAllButton && itemsSelect) {
+            deselectAllButton.addEventListener('click', function() {
+                for (let i = 0; i < itemsSelect.options.length; i++) {
+                    itemsSelect.options[i].selected = false;
+                }
+                updateSelectionCount();
+            });
+        }
+
+        // Form selection form submission
+        if (formSelectionForm) {
+            formSelectionForm.addEventListener('submit', function(e) {
+                // Show loading indicator
+                if (selectFormButton && selectFormButtonText && selectFormLoading) {
+                    selectFormButton.disabled = true;
+                    selectFormButtonText.textContent = 'در حال بارگذاری...';
+                    selectFormLoading.classList.remove('hidden');
+                }
             });
         }
 
         // Move to step 2
-        nextButton.addEventListener('click', function() {
-            // Validate that at least one item is selected
-            if (!itemsSelect || itemsSelect.selectedOptions.length === 0) {
-                alert('لطفا حداقل یک مورد را انتخاب کنید');
-                return;
-            }
+        if (nextButton) {
+            nextButton.addEventListener('click', function() {
+                // Validate that at least one item is selected
+                if (!itemsSelect || itemsSelect.selectedOptions.length === 0) {
+                    // Show error message
+                    const errorMessage = document.createElement('div');
+                    errorMessage.className = 'p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800';
+                    errorMessage.setAttribute('role', 'alert');
+                    errorMessage.textContent = 'لطفا حداقل یک مورد را انتخاب کنید';
 
-            // Debug: Log selected items
-            console.log('Selected items:', itemsSelect.selectedOptions.length);
+                    // Insert error message before the form
+                    mainForm.parentNode.insertBefore(errorMessage, mainForm);
 
-            // Show step 2 and hide step 1
-            step1.classList.add('hidden');
-            step2.classList.remove('hidden');
+                    // Remove error message after 3 seconds
+                    setTimeout(() => {
+                        errorMessage.remove();
+                    }, 3000);
 
-            // Update step indicators
-            step1Indicator.classList.remove('bg-indigo-600', 'text-white');
-            step1Indicator.classList.add('bg-indigo-300', 'text-indigo-800');
-            step2Indicator.classList.remove('bg-gray-200', 'text-gray-500', 'dark:bg-gray-700', 'dark:text-gray-400');
-            step2Indicator.classList.add('bg-indigo-600', 'text-white');
+                    return;
+                }
 
-            // Generate form fields for each selected item
-            generateItemFields();
-        });
+                // Show step 2 and hide step 1
+                step1.classList.add('hidden');
+                step2.classList.remove('hidden');
+
+                // Update step indicators
+                step1Indicator.classList.remove('bg-indigo-600', 'text-white');
+                step1Indicator.classList.add('bg-indigo-400', 'text-white');
+                step2Indicator.classList.remove('bg-gray-200', 'text-gray-500', 'dark:bg-gray-700', 'dark:text-gray-400');
+                step2Indicator.classList.add('bg-indigo-600', 'text-white');
+
+                // Update progress bar
+                progressBar.style.width = '100%';
+
+                // Generate form fields for each selected item
+                generateItemFields();
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
 
         // Move back to step 1
-        backButton.addEventListener('click', function() {
-            step2.classList.add('hidden');
-            step1.classList.remove('hidden');
+        if (backButton) {
+            backButton.addEventListener('click', function() {
+                step2.classList.add('hidden');
+                step1.classList.remove('hidden');
 
-            // Update step indicators
-            step1Indicator.classList.remove('bg-indigo-300', 'text-indigo-800');
-            step1Indicator.classList.add('bg-indigo-600', 'text-white');
-            step2Indicator.classList.remove('bg-indigo-600', 'text-white');
-            step2Indicator.classList.add('bg-gray-200', 'text-gray-500', 'dark:bg-gray-700', 'dark:text-gray-400');
-        });
+                // Update step indicators
+                step1Indicator.classList.remove('bg-indigo-400', 'text-white');
+                step1Indicator.classList.add('bg-indigo-600', 'text-white');
+                step2Indicator.classList.remove('bg-indigo-600', 'text-white');
+                step2Indicator.classList.add('bg-gray-200', 'text-gray-500', 'dark:bg-gray-700', 'dark:text-gray-400');
+
+                // Update progress bar
+                progressBar.style.width = '0%';
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
 
         // Generate form fields for selected items
         function generateItemFields() {
+            if (!selectedItemsContainer) return;
+
             selectedItemsContainer.innerHTML = '';
 
             if (!itemsSelect) return;
@@ -212,9 +330,6 @@
             // Get all selected options
             const selectedOptions = Array.from(itemsSelect.selectedOptions);
 
-            // Debug: Log selected options
-            console.log('Selected options:', selectedOptions.map(opt => opt.value));
-
             // Process each selected item
             selectedOptions.forEach((option, index) => {
                 const submissionId = option.value;
@@ -229,10 +344,10 @@
 
                 // Create visual representation for the user
                 const itemDiv = document.createElement('div');
-                itemDiv.className = 'p-4 border border-gray-200 rounded-md dark:border-gray-700';
+                itemDiv.className = 'p-5 border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 transition-all hover:border-indigo-200 dark:hover:border-indigo-800';
                 itemDiv.innerHTML = `
-                    <h3 class="mb-3 font-medium text-gray-900 dark:text-white">${itemText}</h3>
-                    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <h3 class="mb-4 font-medium text-gray-900 dark:text-white">${index + 1}. ${itemText}</h3>
+                    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                         <div>
                             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                 قیمت جدید
@@ -264,54 +379,100 @@
 
                 selectedItemsContainer.appendChild(itemDiv);
             });
-
-            // Debug: Log the number of items added to step 2
-            console.log('Items added to step 2:', selectedItemsContainer.children.length);
         }
 
         // Handle form submission
-        mainForm.addEventListener('submit', function(e) {
-            // If we're on step 1, prevent submission and go to step 2
-            if (!step1.classList.contains('hidden')) {
-                e.preventDefault();
-                nextButton.click();
-                return;
-            }
+        if (mainForm) {
+            mainForm.addEventListener('submit', function(e) {
+                // If we're on step 1, prevent submission and go to step 2
+                if (!step1.classList.contains('hidden')) {
+                    e.preventDefault();
+                    nextButton.click();
+                    return;
+                }
 
-            // We're on step 2, validate before submission
-            const submissionIdsContainer = document.getElementById('submission-ids-container');
-            if (!submissionIdsContainer || submissionIdsContainer.children.length === 0) {
-                e.preventDefault();
-                alert('خطا: هیچ موردی انتخاب نشده است');
-                return;
-            }
+                // We're on step 2, validate before submission
+                const submissionIdsContainer = document.getElementById('submission-ids-container');
+                if (!submissionIdsContainer || submissionIdsContainer.children.length === 0) {
+                    e.preventDefault();
 
-            // Check if all required fields are filled
-            let isValid = true;
-            const priceInputs = document.querySelectorAll('input[name^="new_prices"]');
-            const personSelects = document.querySelectorAll('select[name^="certified_persons"]');
+                    // Show error message
+                    const errorMessage = document.createElement('div');
+                    errorMessage.className = 'p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800';
+                    errorMessage.setAttribute('role', 'alert');
+                    errorMessage.textContent = 'خطا: هیچ موردی انتخاب نشده است';
 
-            priceInputs.forEach(input => {
-                if (!input.value) {
-                    isValid = false;
+                    // Insert error message before the form
+                    mainForm.parentNode.insertBefore(errorMessage, mainForm);
+
+                    // Remove error message after 3 seconds
+                    setTimeout(() => {
+                        errorMessage.remove();
+                    }, 3000);
+
+                    return;
+                }
+
+                // Check if all required fields are filled
+                let isValid = true;
+                let firstInvalidField = null;
+                const priceInputs = document.querySelectorAll('input[name^="new_prices"]');
+                const personSelects = document.querySelectorAll('select[name^="certified_persons"]');
+
+                priceInputs.forEach(input => {
+                    if (!input.value) {
+                        isValid = false;
+                        input.classList.add('border-red-500', 'dark:border-red-500');
+                        if (!firstInvalidField) firstInvalidField = input;
+                    } else {
+                        input.classList.remove('border-red-500', 'dark:border-red-500');
+                    }
+                });
+
+                personSelects.forEach(select => {
+                    if (!select.value) {
+                        isValid = false;
+                        select.classList.add('border-red-500', 'dark:border-red-500');
+                        if (!firstInvalidField) firstInvalidField = select;
+                    } else {
+                        select.classList.remove('border-red-500', 'dark:border-red-500');
+                    }
+                });
+
+                if (!isValid) {
+                    e.preventDefault();
+
+                    // Show error message
+                    const errorMessage = document.createElement('div');
+                    errorMessage.className = 'p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800';
+                    errorMessage.setAttribute('role', 'alert');
+                    errorMessage.textContent = 'لطفا تمام فیلدها را پر کنید';
+
+                    // Insert error message before the form
+                    mainForm.parentNode.insertBefore(errorMessage, mainForm);
+
+                    // Remove error message after 3 seconds
+                    setTimeout(() => {
+                        errorMessage.remove();
+                    }, 3000);
+
+                    // Scroll to first invalid field
+                    if (firstInvalidField) {
+                        firstInvalidField.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        firstInvalidField.focus();
+                    }
+
+                    return;
+                }
+
+                // Show loading indicator
+                if (submitButton && submitButtonText && submitLoading) {
+                    submitButton.disabled = true;
+                    submitButtonText.textContent = 'در حال ثبت...';
+                    submitLoading.classList.remove('hidden');
                 }
             });
-
-            personSelects.forEach(select => {
-                if (!select.value) {
-                    isValid = false;
-                }
-            });
-
-            if (!isValid) {
-                e.preventDefault();
-                alert('لطفا تمام فیلدها را پر کنید');
-                return;
-            }
-
-            // Form is valid, allow submission
-            console.log('Form is being submitted with data:', new FormData(mainForm));
-        });
+        }
     });
 </script>
 </x-app-layout>

@@ -49,7 +49,7 @@
 
                 <!-- Form selection -->
                 <div id="form-selection-container" class="mb-6">
-                    <form method="POST" class="w-full mx-auto" id="form-selection" action="{{ route('form8s.create') }}">
+                    <form method="GET" class="w-full mx-auto" id="form-selection" action="{{ route('form8s.create') }}">
                         @csrf
                         <div class="mb-4">
                             <label for="form5-select" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">

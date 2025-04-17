@@ -42,8 +42,16 @@ class Form8Controller extends Controller
      */
     public function create(Request $request)
     {
-        // Changed from GET to POST method to avoid exposing token in URL
+        // Accept both GET and POST requests, but prefer POST to avoid token in URL
         $form5_id = $request->input('form5_id');
+
+        // Check if this is an AJAX request
+        if ($request->ajax()) {
+            // For AJAX requests, just return a success response
+            // The JavaScript will handle the redirect without query parameters
+            return response()->json(['success' => true]);
+        }
+
         $form5s = Form5::whereHas('submissions', function ($query) {
             $query->where('is_returned', false);
         })->with(['submissions' => function ($query) {

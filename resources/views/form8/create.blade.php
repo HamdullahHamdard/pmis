@@ -49,7 +49,7 @@
 
                 <!-- Form selection -->
                 <div id="form-selection-container" class="mb-6">
-                    <form method="GET" class="w-full mx-auto" id="form-selection" action="{{ route('form8s.create') }}">
+                    <form method="POST" class="w-full mx-auto" id="form-selection">
                         @csrf
                         <div class="mb-4">
                             <label for="form5-select" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -81,7 +81,7 @@
                             </select>
                         </div>
                         <div class="flex justify-end">
-                            <button type="submit" id="select-form-button"
+                            <button type="button" id="select-form-button"
                                 class="inline-flex items-center px-4 py-2 text-sm font-medium text-white transition-colors bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                 <span id="select-form-button-text">انتخاب فورم</span>
                                 <svg id="select-form-loading" class="hidden w-5 h-5 ml-2 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -196,6 +196,7 @@
         const submitButton = document.getElementById('submit-button');
         const submitButtonText = document.getElementById('submit-button-text');
         const submitLoading = document.getElementById('submit-loading');
+        const form5Select = document.getElementById('form5-select');
 
         // Update selection count
         function updateSelectionCount() {
@@ -233,15 +234,74 @@
             });
         }
 
-        // Form selection form submission
-        if (formSelectionForm) {
-            formSelectionForm.addEventListener('submit', function(e) {
-                // Show loading indicator
-                if (selectFormButton && selectFormButtonText && selectFormLoading) {
-                    selectFormButton.disabled = true;
-                    selectFormButtonText.textContent = 'در حال بارگذاری...';
-                    selectFormLoading.classList.remove('hidden');
+        // Form selection button click handler - AJAX submission to prevent token in URL
+        if (selectFormButton && formSelectionForm) {
+            selectFormButton.addEventListener('click', function() {
+                // Validate form selection
+                if (!form5Select || !form5Select.value) {
+                    // Show error message
+                    const errorMessage = document.createElement('div');
+                    errorMessage.className = 'p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800';
+                    errorMessage.setAttribute('role', 'alert');
+                    errorMessage.textContent = 'لطفا یک فورم را انتخاب کنید';
+
+                    // Insert error message before the form
+                    formSelectionForm.parentNode.insertBefore(errorMessage, formSelectionForm);
+
+                    // Remove error message after 3 seconds
+                    setTimeout(() => {
+                        errorMessage.remove();
+                    }, 3000);
+
+                    return;
                 }
+
+                // Show loading indicator
+                selectFormButton.disabled = true;
+                selectFormButtonText.textContent = 'در حال بارگذاری...';
+                selectFormLoading.classList.remove('hidden');
+
+                // Create form data
+                const formData = new FormData(formSelectionForm);
+
+                // Send AJAX request
+                fetch('{{ route("form8s.create") }}', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    // Redirect to the same page without query parameters
+                    window.location.href = '{{ route("form8s.create") }}';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+
+                    // Show error message
+                    const errorMessage = document.createElement('div');
+                    errorMessage.className = 'p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800';
+                    errorMessage.setAttribute('role', 'alert');
+                    errorMessage.textContent = 'خطا در ارسال فرم. لطفا دوباره تلاش کنید.';
+
+                    // Insert error message before the form
+                    formSelectionForm.parentNode.insertBefore(errorMessage, formSelectionForm);
+
+                    // Remove error message after 3 seconds
+                    setTimeout(() => {
+                        errorMessage.remove();
+                    }, 3000);
+                })
+                .finally(() => {
+                    // Hide loading indicator
+                    selectFormButton.disabled = false;
+                    selectFormButtonText.textContent = 'انتخاب فورم';
+                    selectFormLoading.classList.add('hidden');
+                });
             });
         }
 

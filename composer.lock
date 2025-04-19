@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5af443de07ec41b02431336ef48e3e7e",
+    "content-hash": "040d31d0a3ebd50930b4fec6737bd061",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -1430,58 +1430,6 @@
                 }
             ],
             "time": "2025-02-03T10:55:03+00:00"
-        },
-        {
-            "name": "jenssegers/date",
-            "version": "v2.0.20",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jenssegers/date.git",
-                "reference": "422c6682fe68de59398ef89cca45d920afe12436"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jenssegers/date/zipball/422c6682fe68de59398ef89cca45d920afe12436",
-                "reference": "422c6682fe68de59398ef89cca45d920afe12436",
-                "shasum": ""
-            },
-            "require": {
-                "nesbot/carbon": "*",
-                "php": ">=5.3.0",
-                "symfony/translation": "*"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "*",
-                "satooshi/php-coveralls": "*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Jenssegers\\Date": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jens Segers",
-                    "homepage": "http://jenssegers.be"
-                }
-            ],
-            "description": "A date library to help you work with dates",
-            "keywords": [
-                "date",
-                "datetime",
-                "laravel",
-                "time"
-            ],
-            "support": {
-                "issues": "https://github.com/jenssegers/date/issues",
-                "source": "https://github.com/jenssegers/date/tree/v2.0.20"
-            },
-            "time": "2015-03-14T13:21:54+00:00"
         },
         {
             "name": "khaled.alshamaa/ar-php",

@@ -187,7 +187,7 @@ class Form8Controller extends Controller
 
             if($submission->total < $request->total)
             {
-                Alert::success(" شفت کاری جدید موفقانه اضافه گردید");
+                Alert::error("داخل شوی مقدار مو د توزیع تر مقدار زیات دی");
                 return redirect()->route('form8s.index');
             }
             // Ensure submission exists before updating
@@ -210,6 +210,8 @@ class Form8Controller extends Controller
                 // Mark submission as returned
                 if($submission->total == $request->total){
                     $submission->is_returned = true;
+                }if($submission->total > $request->total){
+                    $submission->is_returned = false;
                 }
 
                 // $submission->certified_person_id = $certified_person;

@@ -48,10 +48,18 @@
                 </div>
 
                 <!-- Selected Form Info -->
-                <div class="p-4 mb-6 rounded-lg bg-gray-50 dark:bg-gray-700">
-                    <h3 class="mb-2 font-medium text-gray-900 dark:text-white">فورم انتخاب شده:</h3>
-                    <p class="text-gray-700 dark:text-gray-300">{{ $selectedForm5->id }} {{ $selectedForm5->form9s->employee->name }}</p>
+                <div class="flex flex-row items-start gap-4 p-4 mb-6 rounded-lg bg-gray-50 dark:bg-gray-700 md:flex-col md:items-center">
+                    <h3 class="font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                     انتخاب شوی فورم:
+                    </h3>
+                    <p class="text-gray-700 dark:text-gray-300 whitespace-nowrap">
+                        د توزیع  نمبر: {{ $selectedForm5->id }}
+                    </p>
+                    <p class="text-gray-700 dark:text-gray-300 whitespace-nowrap">
+                        شخص: {{ $selectedForm5->form9s->employee->name }}
+                    </p>
                 </div>
+
 
                 <!-- Add details form -->
                 <form method="POST" action="{{ route('form8s.store') }}">
@@ -60,10 +68,14 @@
 
                     <div class="space-y-6">
                         @foreach($selectedSubmissions as $index => $submission)
-                            <div class="p-5 transition-all border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 hover:border-indigo-200 dark:hover:border-indigo-800">
-                                <h3 class="mb-4 font-medium text-gray-900 dark:text-white">
-                                    {{ $index + 1 }}. {{ $submission->employee->name ?? 'No Employee Name' }} : {{ $submission->item->name ?? 'No Item Name' }}
+                            <div class="transition-all rounded-lg shadow-sm hover:border-indigo-200 dark:hover:border-indigo-800">
+                                <h3 class="font-medium text-gray-900 dark:text-white">
+                                    {{ $index + 1 }}. {{ $submission->item->name ?? 'No Item Name' }}
                                 </h3>
+                                <h4 class="mb-4 font-medium text-gray-900 dark:text-white">
+                                    {{ $index + 1 }}.     تسلیم شوی مقدار: {{ $submission->total ?? 'No Quantity Name' }}
+                                </h4>
+
 
                                 <input type="hidden" name="submission_ids[]" value="{{ $submission->id }}">
 
@@ -82,18 +94,18 @@
                                     </div>
                                     <div>
                                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                            شخص تایید کننده
+                                            مقدار
                                         </label>
-                                        <input type="number" name="certified_persons[{{ $submission->id }}]" required
+                                        <input type="number" name="new_quantity[{{ $submission->id }}]" required
                                             class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
-                                            placeholder="شخص جدید را وارد کنید"
-                                            value="{{ old('certified_persons.' . $submission->id) }}">
-                                        @error('certified_persons.' . $submission->id)
+                                            placeholder="قیمت جدید را وارد کنید"
+                                            value="{{ old('new_prices.' . $submission->id) }}">
+                                        @error('new_prices.' . $submission->id)
                                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                                {{-- <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                                     <div>
                                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                             قیمت جدید
@@ -130,9 +142,65 @@
                                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                         @enderror
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         @endforeach
+
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                 د تسلیمی نمبر
+                            </label>
+                            <input type="text" name="form8_number" required
+                                class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
+                                placeholder="تسلیمی جدید را وارد کنید"
+                                value="{{ old('form8_number') }}">
+                            @error('form8_number.' . $submission->id)
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                 معتمد
+                            </label>
+                            <input type="text" name="trusted" required
+                                class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
+                                placeholder="معتمد جدید را وارد کنید"
+                                value="{{ old('trusted') }}">
+                            @error('trusted')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+                        <div class="mt-3">
+                            <div class="flex items-center justify-start text-center">
+                                <x-input-label for="date" :value="__('تاریخ خرید جنس')" />
+                                <span class="text-xl text-red-500">*</span>
+                            </div>
+                            <div class="flex gap-3 mt-2">
+                                <select class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
+                                    name="purchaseYear">
+                                    <option selected disabled hidden>سال</option>
+                                    @foreach ($years as $year)
+                                        <option value="{{ $year->id}}" class="py-2">{{$year->name}}</option>
+                                    @endforeach
+                                </select>
+
+                                <select class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
+                                    name="purchaseMonth">
+                                    <option hidden>ماه</option>
+                                    @foreach ($months as $month)
+                                        <option value="{{ $month->id}}" class="py-2">{{$month->name}}</option>
+                                    @endforeach
+                                </select>
+
+                                <select class="w-full border-gray-300 rounded-md shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600"
+                                    name="purchaseDay">
+                                    <option hidden>روز</option>
+                                    @foreach ($days as $day)
+                                        <option value="{{ $day->id}}" class="py-2">{{$day->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="flex items-center justify-between mt-8">

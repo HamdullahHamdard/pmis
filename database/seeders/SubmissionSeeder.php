@@ -22,11 +22,11 @@ class SubmissionSeeder extends Seeder
             0 => [
                 "employee_id" => "1",
                 "item_id" => "1",
-                "total" => "1",
+                "total" => "80",
                 "department_id" => 1,
                 "details" => "This is is si s",
                 "province_id" => 1,
-                "is_returned" => true,
+                "is_returned" => false,
                 "created_at" => Carbon::now()->format("Y-m-d H:i:s"),
             ],
             1 => [

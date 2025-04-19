@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Form5;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,9 +14,9 @@ return new class extends Migration
     {
         Schema::create('form8s', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Form5::class);
             $table->string('form8_number');
             $table->string('trusted');
-            $table->string('price');
             $table->unsignedBigInteger("purchaseYear_id");
             $table->unsignedBigInteger("purchaseMonth_id");
             $table->unsignedBigInteger("purchaseDay_id");

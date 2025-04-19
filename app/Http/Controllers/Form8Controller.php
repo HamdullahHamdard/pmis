@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Form8;
 use App\Http\Requests\StoreForm8Request;
 use App\Http\Requests\UpdateForm8Request;
+use App\Models\Day;
 use App\Models\Form5;
 use App\Models\Item;
+use App\Models\Month;
 use App\Models\Submission;
 use App\Models\Unit;
+use App\Models\Year;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -135,7 +138,9 @@ class Form8Controller extends Controller
     {
         $form5_id = $request->form5_id;
         $submissionIds = $request->submission_ids;
-
+        $years = Year::orderBy("id", "DESC")->get();
+        $months = Month::all();
+        $days = Day::all();
         if (!$form5_id || !$submissionIds) {
             return redirect()->route('form8s.create')
                 ->with('error', 'اطلاعات ناقص است. لطفا از ابتدا شروع کنید');
@@ -157,7 +162,7 @@ class Form8Controller extends Controller
                 ->with('error', 'هیچ موردی انتخاب نشده است');
         }
 
-        return view('form8.add-details', compact('selectedForm5', 'selectedSubmissions'));
+        return view('form8.add-details', compact('years','months','days','selectedForm5', 'selectedSubmissions'));
     }
 
     /**
@@ -173,13 +178,15 @@ class Form8Controller extends Controller
             'submission_ids' => 'required|array|min:1',
             'submission_ids.*' => 'exists:submissions,id',
             'new_prices' => 'required|array',
-            'new'  => 'exists:submissions,id',
-            'new_prices' => 'required|array',
+            // 'new'  => 'exists:submissions,id',
+            // 'new_prices' => 'required|array',
             'new_prices.*' => 'required|numeric',
-            'certified_persons' => 'required|array',
-            'certified_persons.*' => 'required|numeric',
+            // 'certified_persons' => 'required|array',
+            // 'certified_persons.*' => 'required|numeric',
         ]);
 
+        // $from5 = Form5::find();
+        // dd($from5);
         // Process each submission
         foreach ($request->submission_ids as $id) {
             // Find the submission
@@ -188,13 +195,12 @@ class Form8Controller extends Controller
             if($submission->total < $total)
             {
                 Alert::error("داخل شوی مقدار مو د توزیع تر مقدار زیات دی");
-                return redirect()->route('form8s.index');
+                return redirect()->back();
             }
             // Ensure submission exists before updating
             if ($submission) {
                 $item_id = $submission->item_id;
                 $new_price = $request->new_prices[$id];
-                $certified_person = $request->certified_persons[$id];
 
 
                 // Update the item
@@ -210,8 +216,10 @@ class Form8Controller extends Controller
 
                 // Mark submission as returned
                 if($submission->total == $total){
+                    $submission->total = $submission->total - $total;
                     $submission->is_returned = true;
                 }if($submission->total > $total){
+                    $submission->total = $submission->total - $total;
                     $submission->is_returned = false;
                 }
 
@@ -219,6 +227,14 @@ class Form8Controller extends Controller
                 $submission->save();
             }
         }
+        $form8 = Form8::create([
+            'form5_id' => $request->form5_id,
+            'form8_number' => $request->form8_number,
+            "trusted" => $request->trusted,
+            'purchaseYear_id' =>$request->purchaseYear,
+            'purchaseMonth_id' =>$request->purchaseMonth,
+            'purchaseDay_id' =>$request->purchaseDay,
+        ]);
 
         return redirect()->route('form8s.index')->with('success', 'فورم با موفقیت ثبت شد');
     }

@@ -13,7 +13,7 @@ class Form8 extends Model
     protected $fillable = [
         'form8_number',
         'trusted',
-        'price',
+        'form5_id',
         'purchaseYear_id',
         'purchaseMonth_id',
         'purchaseDay_id',

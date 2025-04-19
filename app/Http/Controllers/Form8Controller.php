@@ -10,6 +10,7 @@ use App\Models\Item;
 use App\Models\Submission;
 use App\Models\Unit;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class Form8Controller extends Controller
 {
@@ -184,6 +185,9 @@ class Form8Controller extends Controller
             // Find the submission
             $submission = Submission::find($id);
 
+            if($submission->total < $request->total){
+                return
+            }
             // Ensure submission exists before updating
             if ($submission) {
                 $item_id = $submission->item_id;
@@ -202,7 +206,10 @@ class Form8Controller extends Controller
                 }
 
                 // Mark submission as returned
-                $submission->is_returned = true;
+                if($submission->total == $request->total){
+                    $submission->is_returned = true;
+                }
+
                 // $submission->certified_person_id = $certified_person;
                 $submission->save();
             }

@@ -184,7 +184,7 @@ class Form8Controller extends Controller
         foreach ($request->submission_ids as $id) {
             // Find the submission
             $submission = Submission::find($id);
-
+            $total = $request->new_quantity[$id];
             if($submission->total < $request->total)
             {
                 Alert::error("داخل شوی مقدار مو د توزیع تر مقدار زیات دی");
@@ -195,6 +195,7 @@ class Form8Controller extends Controller
                 $item_id = $submission->item_id;
                 $new_price = $request->new_prices[$id];
                 $certified_person = $request->certified_persons[$id];
+
 
                 // Update the item
                 $item = Item::find($item_id);

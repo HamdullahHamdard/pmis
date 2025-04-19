@@ -185,7 +185,7 @@ class Form8Controller extends Controller
             // Find the submission
             $submission = Submission::find($id);
             $total = $request->new_quantity[$id];
-            if($submission->total < $request->total)
+            if($submission->total < $total)
             {
                 Alert::error("داخل شوی مقدار مو د توزیع تر مقدار زیات دی");
                 return redirect()->route('form8s.index');
@@ -209,9 +209,9 @@ class Form8Controller extends Controller
                 }
 
                 // Mark submission as returned
-                if($submission->total == $request->total){
+                if($submission->total == $total){
                     $submission->is_returned = true;
-                }if($submission->total > $request->total){
+                }if($submission->total > $total){
                     $submission->is_returned = false;
                 }
 

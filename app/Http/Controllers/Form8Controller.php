@@ -186,6 +186,8 @@ class Form8Controller extends Controller
             $submission = Submission::find($id);
 
             if($submission->total < $request->total){
+
+        Alert::success(" شفت کاری جدید موفقانه اضافه گردید");
                 return
             }
             // Ensure submission exists before updating

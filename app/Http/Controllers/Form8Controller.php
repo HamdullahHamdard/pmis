@@ -184,15 +184,18 @@ class Form8Controller extends Controller
         foreach ($request->submission_ids as $id) {
             // Find the submission
             $submission = Submission::find($id);
-
-            if($submission->total < $request->total){
-                return
+            $total = $request->new_quantity[$id];
+            if($submission->total < $total)
+            {
+                Alert::error("داخل شوی مقدار مو د توزیع تر مقدار زیات دی");
+                return redirect()->route('form8s.index');
             }
             // Ensure submission exists before updating
             if ($submission) {
                 $item_id = $submission->item_id;
                 $new_price = $request->new_prices[$id];
                 $certified_person = $request->certified_persons[$id];
+
 
                 // Update the item
                 $item = Item::find($item_id);
@@ -206,8 +209,10 @@ class Form8Controller extends Controller
                 }
 
                 // Mark submission as returned
-                if($submission->total == $request->total){
+                if($submission->total == $total){
                     $submission->is_returned = true;
+                }if($submission->total > $total){
+                    $submission->is_returned = false;
                 }
 
                 // $submission->certified_person_id = $certified_person;

@@ -187,8 +187,8 @@ class Form8Controller extends Controller
 
             if($submission->total < $request->total){
 
-        Alert::success(" شفت کاری جدید موفقانه اضافه گردید");
-                return
+                Alert::success(" شفت کاری جدید موفقانه اضافه گردید");
+                return redirect()->route('form8s.index');
             }
             // Ensure submission exists before updating
             if ($submission) {

@@ -185,8 +185,8 @@ class Form8Controller extends Controller
             // Find the submission
             $submission = Submission::find($id);
 
-            if($submission->total < $request->total){
-
+            if($submission->total < $request->total)
+            {
                 Alert::success(" شفت کاری جدید موفقانه اضافه گردید");
                 return redirect()->route('form8s.index');
             }

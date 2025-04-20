@@ -74,16 +74,7 @@
                         </label>
 
                         <div class="relative">
-                            <div class="mb-3">
-                                <button type="submit" name="select_all" value="1"
-                                    class="px-3 py-1 text-sm text-white transition-colors bg-indigo-600 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                    انتخاب همه
-                                </button>
-                                <a href="{{ route('form8s.select-items', ['form5_id' => $selectedForm5->id]) }}"
-                                    class="inline-block px-3 py-1 ml-2 text-sm text-gray-700 transition-colors bg-gray-200 rounded hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2">
-                                    لغو همه
-                                </a>
-                            </div>
+
 
                             <div class="border border-gray-300 rounded-md dark:border-gray-700">
                                 @foreach ($submissions as $submission)
@@ -91,7 +82,7 @@
                                         <input type="checkbox" id="submission-{{ $submission->id }}" name="submission_ids[]" value="{{ $submission->id }}"
                                             class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                                             {{ in_array($submission->id, old('submission_ids', [])) ? 'checked' : '' }}>
-                                        <label for="submission-{{ $submission->id }}" class="block ml-2 text-sm font-medium text-gray-900 dark:text-white">
+                                        <label for="submission-{{ $submission->id }}" class="block mx-2 text-sm font-medium text-gray-900 dark:text-white">
                                             {{ $submission->employee->name ?? 'No Employee Name' }} : {{ $submission->item->name ?? 'No Item Name' }}
                                         </label>
                                     </div>

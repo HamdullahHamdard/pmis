@@ -32,6 +32,10 @@ class Form5 extends Model
         return $this->belongsTo(Form9::class);
     }
 
+    public function form8(): HasOne
+    {
+        return $this->hasOne(Form8::class);
+    }
     public function submissions()
     {
         return $this->belongsToMany(Submission::class);

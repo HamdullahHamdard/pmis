@@ -593,6 +593,7 @@ Route::middleware("auth")->group(function () {
     Route::post('form8s/select-items', [Form8Controller::class, 'processItemSelection'])->name('form8s.select-items');
     Route::get('form8s/add-details', [Form8Controller::class, 'addDetails'])->name('form8s.add-details');
     Route::post('form8s', [Form8Controller::class, 'store'])->name('form8s.store');
+    Route::get('form8s/{id}', [Form8Controller::class, 'show'])->name('form8s.show');
 
 
 

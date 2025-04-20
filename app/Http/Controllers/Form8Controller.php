@@ -7,6 +7,7 @@ use App\Http\Requests\StoreForm8Request;
 use App\Http\Requests\UpdateForm8Request;
 use App\Models\Day;
 use App\Models\Form5;
+use App\Models\Form8Submission;
 use App\Models\Item;
 use App\Models\Month;
 use App\Models\Submission;
@@ -206,6 +207,9 @@ class Form8Controller extends Controller
                 $item_id = $submission->item_id;
                 $new_price = $request->new_prices[$id];
 
+                $form8Submission = Form8Submission::create([
+
+                ]);
 
                 // Update the item
                 $item = Item::find($item_id);

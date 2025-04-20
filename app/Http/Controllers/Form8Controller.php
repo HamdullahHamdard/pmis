@@ -190,7 +190,15 @@ class Form8Controller extends Controller
             // 'certified_persons' => 'required|array',
             // 'certified_persons.*' => 'required|numeric',
         ]);
-
+        $form8 = Form8::create([
+            'form5_id' => $request->form5_id,
+            'province_id' => auth()->user()->province_id,
+            'form8_number' => $request->form8_number,
+            "trusted" => $request->trusted,
+            'purchaseYear_id' => $request->purchaseYear,
+            'purchaseMonth_id' => $request->purchaseMonth,
+            'purchaseDay_id' => $request->purchaseDay,
+        ]);
         // $from5 = Form5::find();
         // dd($from5);
         // Process each submission
@@ -209,6 +217,7 @@ class Form8Controller extends Controller
 
                 $form8Submission = Form8Submission::create([
                     'item_id' => $item_id,
+                    'form8_id' => $form8_id,
                     'employee_id' => $submission->employee_id,
                     'total' => $total,
 
@@ -235,15 +244,7 @@ class Form8Controller extends Controller
                 $submission->save();
             }
         }
-        $form8 = Form8::create([
-            'form5_id' => $request->form5_id,
-            'province_id' => auth()->user()->province_id,
-            'form8_number' => $request->form8_number,
-            "trusted" => $request->trusted,
-            'purchaseYear_id' => $request->purchaseYear,
-            'purchaseMonth_id' => $request->purchaseMonth,
-            'purchaseDay_id' => $request->purchaseDay,
-        ]);
+
 
         return redirect()->route('form8s.index')->with('success', 'فورم با موفقیت ثبت شد');
     }

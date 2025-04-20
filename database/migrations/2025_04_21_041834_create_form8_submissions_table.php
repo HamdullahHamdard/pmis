@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Employee;
+use App\Models\Form8;
 use App\Models\Item;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -16,6 +17,7 @@ return new class extends Migration
         Schema::create('form8_submissions', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Item::class);
+            $table->foreignIdFor(Form8::class);
             $table->foreignIdFor(Employee::class);
             $table->string('total');
             $table->timestamps();

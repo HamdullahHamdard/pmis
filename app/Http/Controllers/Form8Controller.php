@@ -208,6 +208,9 @@ class Form8Controller extends Controller
                 $new_price = $request->new_prices[$id];
 
                 $form8Submission = Form8Submission::create([
+                    'item_id' => $item_id,
+                    'employee_id' => $submission->employee_id,
+                    'total' => $total,
 
                 ]);
 

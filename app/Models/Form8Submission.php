@@ -17,4 +17,8 @@ class Form8Submission extends Model
         'employee_id',
         'total'
     ];
+    public function form8()
+    {
+        return $this->belongsTo(Form8::class;
+    }
 }

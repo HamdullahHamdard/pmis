@@ -19,6 +19,6 @@ class Form8Submission extends Model
     ];
     public function form8()
     {
-        return $this->belongsTo(Form8::class;
+        return $this->belongsTo(Form8::class);
     }
 }

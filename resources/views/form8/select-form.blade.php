@@ -89,7 +89,7 @@
                                     @endforeach
                                 @else
                                     @foreach ($form5s as $form5)
-                                        @if ($form5->id == auth()->user()->province_id)
+                                        @if ($form5->province_id == auth()->user()->province_id)
                                             <option value="{{ $form5->id }}" class="py-2">
                                                 {{ $form5->id }} {{ $form5->form9s->employee->name }}
                                             </option>

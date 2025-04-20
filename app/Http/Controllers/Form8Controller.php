@@ -46,7 +46,7 @@ class Form8Controller extends Controller
             $query->where('is_returned', false);
         })->with(['submissions' => function ($query) {
             $query->where('is_returned', false);
-        }])->get();
+        }])->where('province_id', auth()->user()->province_id)->get();
 
         return view('form8.select-form', compact('form5s'));
     }

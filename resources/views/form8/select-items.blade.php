@@ -48,33 +48,43 @@
                 </div>
 
                 <!-- Selected Form Info -->
-                <div class="p-4 mb-6 bg-gray-50 rounded-lg dark:bg-gray-700">
+                <div class="p-4 mb-6 rounded-lg bg-gray-50 dark:bg-gray-700">
                     <h3 class="mb-2 font-medium text-gray-900 dark:text-white">فورم انتخاب شده:</h3>
                     <p class="text-gray-700 dark:text-gray-300">{{ $selectedForm5->id }} {{ $selectedForm5->form9s->employee->name }}</p>
                 </div>
-
+                <div class="flex items-center gap-3 p-4 mb-6 text-sm text-red-800 border border-red-200 shadow-sm dark:bg-opacity-20 rounded-xl bg-red-50 dark:bg-red-600 dark:border-red-500 dark:text-white"
+                role="alert">
+                <svg class="w-8 h-8 mt-0.5 text-red-500 dark:text-white shrink-0" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 9v2m0 4h.01M12 5a7 7 0 100 14 7 7 0 000-14z" />
+                </svg>
+                <span class="font-medium leading-6">
+                    مهرباني وکړئ دغه برخه په دقت سره ډکه کړئ، ځکه وروسته د بدلون امکان نه لري.
+                </span>
+            </div>
                 <!-- Item selection form -->
                 <form method="POST" action="{{ route('form8s.select-items') }}">
                     @csrf
                     <input type="hidden" name="form5_id" value="{{ $selectedForm5->id }}">
-                    
+
                     <div class="mb-6">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                             انتخاب موارد
                         </label>
-                        
+
                         <div class="relative">
                             <div class="mb-3">
-                                <button type="submit" name="select_all" value="1" 
+                                <button type="submit" name="select_all" value="1"
                                     class="px-3 py-1 text-sm text-white transition-colors bg-indigo-600 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                     انتخاب همه
                                 </button>
-                                <a href="{{ route('form8s.select-items', ['form5_id' => $selectedForm5->id]) }}" 
+                                <a href="{{ route('form8s.select-items', ['form5_id' => $selectedForm5->id]) }}"
                                     class="inline-block px-3 py-1 ml-2 text-sm text-gray-700 transition-colors bg-gray-200 rounded hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2">
                                     لغو همه
                                 </a>
                             </div>
-                            
+
                             <div class="border border-gray-300 rounded-md dark:border-gray-700">
                                 @foreach ($submissions as $submission)
                                     <div class="flex items-center p-3 border-b border-gray-200 dark:border-gray-700 last:border-b-0">
@@ -87,7 +97,7 @@
                                     </div>
                                 @endforeach
                             </div>
-                            
+
                             <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
                                 لطفا موارد مورد نظر را انتخاب کنید
                             </p>

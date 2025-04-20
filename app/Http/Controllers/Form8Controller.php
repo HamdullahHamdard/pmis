@@ -206,10 +206,6 @@ class Form8Controller extends Controller
                 $item = Item::find($item_id);
                 if ($item) {
                     $item->purchase_price = $new_price;
-                    $item->purchaseDay_id = 14;
-                    $item->purchaseMonth_id = 11;
-                    $item->purchaseYear_id = 33;
-                    $item->m7number = 200;
                     $item->save();
                 }
 

@@ -26,9 +26,9 @@ class Form8Controller extends Controller
     public function index()
     {
         if(auth()->user()->hasRole('Admin')){
-            $form8s = Form8::paginate(10);
+            $form8s = Form8::with('form8Submissions')->paginate(10);
         }else{
-            $form8s = Form8::where('province_id', auth()->user()->province_id)->paginate(10);
+            $form8s = Form8::with('form8Submissions')->where('province_id', auth()->user()->province_id)->paginate(10);
         }
         // $form8s = Form8::paginate(10);
         return view('form8.index', compact('form8s'));

@@ -32,7 +32,10 @@ class Form8 extends Model
         return $this->belongsTo(Province::class);
     }
 
-
+    public function form8Submissions()
+    {
+        return $this->hasMany(Form8Submission::class);
+    }
     public function day()
     {
         return $this->belongsTo(Day::class, 'purchaseDay_id');

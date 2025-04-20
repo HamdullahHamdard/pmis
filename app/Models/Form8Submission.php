@@ -13,6 +13,7 @@ class Form8Submission extends Model
 
     protected $fillable = [
         'item_id',
+        'form8_id',
         'employee_id',
         'total'
     ];

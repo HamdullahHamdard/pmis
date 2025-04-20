@@ -11,6 +11,7 @@ class Form8 extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'form8_number',
         'trusted',
         'form5_id',

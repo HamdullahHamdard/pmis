@@ -217,7 +217,7 @@ class Form8Controller extends Controller
 
                 $form8Submission = Form8Submission::create([
                     'item_id' => $item_id,
-                    'form8_id' => $form8_id,
+                    'form8_id' => $form8->id,
                     'employee_id' => $submission->employee_id,
                     'total' => $total,
 

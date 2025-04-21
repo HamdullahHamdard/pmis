@@ -7,6 +7,7 @@ use App\Http\Requests\StoreForm8Request;
 use App\Http\Requests\UpdateForm8Request;
 use App\Models\Day;
 use App\Models\Form5;
+use App\Models\Form8Submission;
 use App\Models\Item;
 use App\Models\Month;
 use App\Models\Submission;
@@ -24,7 +25,12 @@ class Form8Controller extends Controller
      */
     public function index()
     {
-        $form8s = Form8::paginate(10);
+        if(auth()->user()->hasRole('Admin')){
+            $form8s = Form8::with('form8Submissions')->paginate(10);
+        }else{
+            $form8s = Form8::with('form8Submissions')->where('province_id', auth()->user()->province_id)->paginate(10);
+        }
+        // $form8s = Form8::paginate(10);
         return view('form8.index', compact('form8s'));
     }
 
@@ -184,7 +190,15 @@ class Form8Controller extends Controller
             // 'certified_persons' => 'required|array',
             // 'certified_persons.*' => 'required|numeric',
         ]);
-
+        $form8 = Form8::create([
+            'form5_id' => $request->form5_id,
+            'province_id' => auth()->user()->province_id,
+            'form8_number' => $request->form8_number,
+            "trusted" => $request->trusted,
+            'purchaseYear_id' => $request->purchaseYear,
+            'purchaseMonth_id' => $request->purchaseMonth,
+            'purchaseDay_id' => $request->purchaseDay,
+        ]);
         // $from5 = Form5::find();
         // dd($from5);
         // Process each submission
@@ -201,6 +215,13 @@ class Form8Controller extends Controller
                 $item_id = $submission->item_id;
                 $new_price = $request->new_prices[$id];
 
+                $form8Submission = Form8Submission::create([
+                    'item_id' => $item_id,
+                    'form8_id' => $form8->id,
+                    'employee_id' => $submission->employee_id,
+                    'total' => $total,
+
+                ]);
 
                 // Update the item
                 $item = Item::find($item_id);
@@ -223,14 +244,7 @@ class Form8Controller extends Controller
                 $submission->save();
             }
         }
-        $form8 = Form8::create([
-            'form5_id' => $request->form5_id,
-            'form8_number' => $request->form8_number,
-            "trusted" => $request->trusted,
-            'purchaseYear_id' => $request->purchaseYear,
-            'purchaseMonth_id' => $request->purchaseMonth,
-            'purchaseDay_id' => $request->purchaseDay,
-        ]);
+
 
         return redirect()->route('form8s.index')->with('success', 'فورم با موفقیت ثبت شد');
     }

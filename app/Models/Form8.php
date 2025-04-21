@@ -11,9 +11,11 @@ class Form8 extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
         'form8_number',
         'trusted',
         'form5_id',
+        'province_id',
         'purchaseYear_id',
         'purchaseMonth_id',
         'purchaseDay_id',
@@ -25,8 +27,15 @@ class Form8 extends Model
     {
         return $this->belongsTo(Form5::class, 'form5_id');
     }
+    public function province()
+    {
+        return $this->belongsTo(Province::class);
+    }
 
-
+    public function form8Submissions()
+    {
+        return $this->hasMany(Form8Submission::class);
+    }
     public function day()
     {
         return $this->belongsTo(Day::class, 'purchaseDay_id');

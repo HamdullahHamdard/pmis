@@ -20,7 +20,7 @@
 
                 <!-- Form8 Header Information -->
                 <div class="p-6 md:p-8">
-                    <div class="flex flex-col items-center justify-around gap-6 md:flex-row md:gap-10 md:items-center">
+                    <div class="flex flex-col items-start justify-around gap-6 md:flex-row md:gap-10 md:items-center">
                         <div class="flex flex-row items-center">
                             <span class="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400">شماره فورم ۸: </span>
                             <span class="text-xl font-bold text-gray-900 dark:text-white">{{ $form8->form8_number }}</span>
@@ -86,12 +86,12 @@
                                         <th scope="col" class="px-6 py-4 text-sm font-medium text-gray-500 dark:text-gray-400">کارمند</th>
                                         <th scope="col" class="px-6 py-4 text-sm font-medium text-gray-500 dark:text-gray-400">نام جنس</th>
                                         <th scope="col" class="px-6 py-4 text-sm font-medium text-gray-500 dark:text-gray-400">مقدار اعاده شده</th>
-                                        <th scope="col" class="px-6 py-4 text-sm font-medium text-gray-500 dark:text-gray-400">قیمت فی واحد</th>
+                                        {{-- <th scope="col" class="px-6 py-4 text-sm font-medium text-gray-500 dark:text-gray-400">قیمت فی واحد</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                                     @if($form8->form5 && $form8->form5->submissions)
-                                        @foreach($form8->form5->submissions as $index => $submission)
+                                        @foreach($form8->form8Submissions as $index => $submission)
                                             <tr class="transition-colors bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700">
                                                 <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">{{ $index + 1 }}</td>
                                                 <td class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">
@@ -101,11 +101,11 @@
                                                     {{ optional($submission->item)->name }}
                                                 </td>
                                                 <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
-                                                    {{  $submission->item->total - $submission->total }}
+                                                    {{ $submission->total }}
                                                 </td>
-                                                <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
+                                                {{-- <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
                                                     <span class="font-medium">{{ number_format(optional($submission->item)->purchase_price) }}</span> افغانی
-                                                </td>
+                                                </td> --}}
                                             </tr>
                                         @endforeach
                                     @else

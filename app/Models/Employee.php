@@ -43,6 +43,10 @@ class Employee extends Model
     {
         return $this->belongsTo(Province::class);
     }
+    public function form8Submissions()
+    {
+        return $this->hasMany(Form8Submission::class);
+    }
 
     // Employee relation with submissions
     public function submissions()

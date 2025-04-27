@@ -124,20 +124,7 @@ class UsableController extends Controller
         );
     }else{
         $totalFood = number_format(Usable::where("province_id", auth()->user()->province_id)->where("usable_type_id","=", "2")->count("id"), 0, " ", ",") - UsableSubmission::where("province_id", auth()->user()->province_id)->where("usable_type_id",'=', "2")->count("id");
-    }
-    //     $totalFood = 0;
-    //     if (auth()->user()->province_id == 13) {
 
-    //     $totalFood = number_format(
-    //         Usable::where(column: "usable_type_id", operator: "2")->count( "id") -
-    //             UsableSubmission::where("usable_type_id", "=",  value: "3")->count("id"),
-    //         0,
-    //         " ",
-    //         ","
-    //     );
-    // }else{
-    //     $totalFood = number_format(Usable::where("province_id", auth()->user()->province_id)->where("usable_type_id", "2")->count("id"), 0, " ", ",") - UsableSubmission::where("province_id", auth()->user()->province_id)->where("usable_type_id", 2)->sum("total");
-    // }
 
 
     $totalOil = 0;

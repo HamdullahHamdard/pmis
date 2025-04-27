@@ -101,14 +101,28 @@ class UsableController extends Controller
         if (auth()->user()->province_id == 13) {
 
             $totalStationaryItems = number_format(
-                Usable::where("usable_type_id", "=", "1")->count("id") -
-                    UsableSubmission::where("usable_type_id", "=",  value: "1")->count("id"),
+                Usable::where('usable_type_id', '=', 1)
+                    ->sum('total')
+                    -
+                    UsableSubmission::where('usable_type_id', '=', 1)
+                    ->sum('total'),
                 0,
-                " ",
-                ","
+                ' ',
+                ','
             );
         } else {
-            $totalStationaryItems = number_format(Usable::where("province_id", auth()->user()->province_id)->where("usable_type_id", "=", "1")->count("id"), 0, " ", ",") - UsableSubmission::where("province_id", auth()->user()->province_id)->where("usable_type_id", '=', "1")->count("id");
+            $totalStationaryItems = number_format(
+                Usable::where('province_id', auth()->user()->province_id)
+                    ->where('usable_type_id', '=', 1)
+                    ->sum('total')
+                    -
+                    UsableSubmission::where('province_id', auth()->user()->province_id)
+                    ->where('usable_type_id', '=', 1)
+                    ->sum('total'),
+                0,
+                ' ',
+                ','
+            );
         }
 
         // Total Food Items Available in Stock

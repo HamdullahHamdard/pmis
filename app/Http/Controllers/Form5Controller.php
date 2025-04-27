@@ -36,7 +36,7 @@ class Form5Controller extends Controller
 
 
 
-        $forms = Form5::with('submissions')->latest()->paginate(10);
+        $forms = Form5::with('submissions')->where('province_id', auth()->user()->province_id)->latest()->paginate(10);
         $items = DB::table('items')->select('id', 'name')->get();
         $employees = DB::table('employees')->select('id', 'name')->get();
         $form9s = DB::table('form9s')->select('id', 'employee_id')->get();

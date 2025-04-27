@@ -143,13 +143,14 @@ class UsableController extends Controller
     $totalOil = 0;
         if (auth()->user()->province_id == 13) {
 
-        $totalOil = number_format(
-            Usable::where("usable_type_id","=", "3")->count("id") -
-                UsableSubmission::where("usable_type_id","=",  value: "3")->count("id"),
-            0,
-            " ",
-            ","
-        );
+            $totalOil = number_format(
+                Usable::where('usable_type_id', '=', 3)
+                    ->sum('total')
+                -
+                UsableSubmission::where('usable_type_id', '=', 3)
+                    ->sum('total'),
+                0, ' ', ','
+            );
     }else{
         $totalOil = number_format(
             Usable::where('province_id', auth()->user()->province_id)

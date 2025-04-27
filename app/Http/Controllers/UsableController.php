@@ -70,8 +70,13 @@ class UsableController extends Controller
             });
         }
 
-        $usables = $usables_query->orderBy("id", "DESC")->paginate(20);
 
+
+        if (auth()->user()->province_id == 13) {
+            $usables = $usables_query->orderBy("id", "DESC")->paginate(20);
+        }else{
+            $usables = $usables_query->where("province_id", auth()->user()->province_id)->orderBy("id", "DESC")->paginate(20);
+        }
         $usableTypes = UsableType::all();
 
         // Total Stationary Items Available in Stock
@@ -146,7 +151,16 @@ class UsableController extends Controller
             ","
         );
     }else{
-        $totalOil = number_format(Usable::where("province_id", auth()->user()->province_id)->where("usable_type_id","=", "3")->count("id"), 0, " ", ",") - UsableSubmission::where("province_id", auth()->user()->province_id)->where("usable_type_id",'=', "3")->count("id");
+        $totalOil = number_format(
+            Usable::where('province_id', auth()->user()->province_id)
+                ->where('usable_type_id', '=', 3)
+                ->sum('total')
+            -
+            UsableSubmission::where('province_id', auth()->user()->province_id)
+                ->where('usable_type_id', '=', 3)
+                ->sum('total'),
+            0, ' ', ','
+        );
     }
 
         // Total Oil Available in Stock

@@ -70,8 +70,13 @@ class UsableController extends Controller
             });
         }
 
-        $usables = $usables_query->orderBy("id", "DESC")->paginate(20);
 
+
+        if (auth()->user()->province_id == 13) {
+            $usables = $usables_query->orderBy("id", "DESC")->paginate(20);
+        } else {
+            $usables = $usables_query->where("province_id", auth()->user()->province_id)->orderBy("id", "DESC")->paginate(20);
+        }
         $usableTypes = UsableType::all();
 
         // Total Stationary Items Available in Stock
@@ -82,72 +87,102 @@ class UsableController extends Controller
         if (auth()->user()->province_id == 13) {
 
             $totalStationary = number_format(
-                Usable::where("usable_type_id","=", "1")->count("id"),
+                Usable::where("usable_type_id", "=", "1")->count("id"),
                 0,
                 " ",
                 ","
             );
-        }else{
-            $totalStationary = number_format(Usable::where("province_id", auth()->user()->province_id)->where("usable_type_id","=", "1")->count("id"), 0, " ", ",");
+        } else {
+            $totalStationary = number_format(Usable::where("province_id", auth()->user()->province_id)->where("usable_type_id", "=", "1")->count("id"), 0, " ", ",");
         }
 
         $totalStationaryItems = 0;
 
         if (auth()->user()->province_id == 13) {
 
-        $totalStationaryItems = number_format(
-            Usable::where("usable_type_id","=", "1")->count("id") -
-                UsableSubmission::where("usable_type_id","=",  value: "1")->count("id"),
-            0,
-            " ",
-            ","
-        );
-    }else{
-        $totalStationaryItems = number_format(Usable::where("province_id", auth()->user()->province_id)->where("usable_type_id","=", "1")->count("id"), 0, " ", ",") - UsableSubmission::where("province_id", auth()->user()->province_id)->where("usable_type_id",'=', "1")->count("id");
-    }
+            $totalStationaryItems = number_format(
+                Usable::where('usable_type_id', '=', 1)
+                    ->sum('total')
+                    -
+                    UsableSubmission::where('usable_type_id', '=', 1)
+                    ->sum('total'),
+                0,
+                ' ',
+                ','
+            );
+        } else {
+            $totalStationaryItems = number_format(
+                Usable::where('province_id', auth()->user()->province_id)
+                    ->where('usable_type_id', '=', 1)
+                    ->sum('total')
+                    -
+                    UsableSubmission::where('province_id', auth()->user()->province_id)
+                    ->where('usable_type_id', '=', 1)
+                    ->sum('total'),
+                0,
+                ' ',
+                ','
+            );
+        }
 
         // Total Food Items Available in Stock
         $totalFood = 0;
         if (auth()->user()->province_id == 13) {
 
-        $totalFood = number_format(
-            Usable::where("usable_type_id","=", "2")->count("id") -
-                UsableSubmission::where("usable_type_id","=",  value: "2")->count("id"),
-            0,
-            " ",
-            ","
-        );
-    }else{
-        $totalFood = number_format(Usable::where("province_id", auth()->user()->province_id)->where("usable_type_id","=", "2")->count("id"), 0, " ", ",") - UsableSubmission::where("province_id", auth()->user()->province_id)->where("usable_type_id",'=', "2")->count("id");
-    }
-    //     $totalFood = 0;
-    //     if (auth()->user()->province_id == 13) {
+            $totalFood = number_format(
+                Usable::where('usable_type_id', '=', 2)
+                    ->sum('total')
+                    -
+                    UsableSubmission::where('usable_type_id', '=', 2)
+                    ->sum('total'),
+                0,
+                ' ',
+                ','
+            );
+        } else {
+            $totalFood = number_format(
+                Usable::where('province_id', auth()->user()->province_id)
+                    ->where('usable_type_id', '=', 2)
+                    ->sum('total')
+                    -
+                    UsableSubmission::where('province_id', auth()->user()->province_id)
+                    ->where('usable_type_id', '=', 2)
+                    ->sum('total'),
+                0,
+                ' ',
+                ','
+            );
+        }
 
-    //     $totalFood = number_format(
-    //         Usable::where(column: "usable_type_id", operator: "2")->count( "id") -
-    //             UsableSubmission::where("usable_type_id", "=",  value: "3")->count("id"),
-    //         0,
-    //         " ",
-    //         ","
-    //     );
-    // }else{
-    //     $totalFood = number_format(Usable::where("province_id", auth()->user()->province_id)->where("usable_type_id", "2")->count("id"), 0, " ", ",") - UsableSubmission::where("province_id", auth()->user()->province_id)->where("usable_type_id", 2)->sum("total");
-    // }
 
 
-    $totalOil = 0;
+        $totalOil = 0;
         if (auth()->user()->province_id == 13) {
 
-        $totalOil = number_format(
-            Usable::where("usable_type_id","=", "3")->count("id") -
-                UsableSubmission::where("usable_type_id","=",  value: "3")->count("id"),
-            0,
-            " ",
-            ","
-        );
-    }else{
-        $totalOil = number_format(Usable::where("province_id", auth()->user()->province_id)->where("usable_type_id","=", "3")->count("id"), 0, " ", ",") - UsableSubmission::where("province_id", auth()->user()->province_id)->where("usable_type_id",'=', "3")->count("id");
-    }
+            $totalOil = number_format(
+                Usable::where('usable_type_id', '=', 3)
+                    ->sum('total')
+                    -
+                    UsableSubmission::where('usable_type_id', '=', 3)
+                    ->sum('total'),
+                0,
+                ' ',
+                ','
+            );
+        } else {
+            $totalOil = number_format(
+                Usable::where('province_id', auth()->user()->province_id)
+                    ->where('usable_type_id', '=', 3)
+                    ->sum('total')
+                    -
+                    UsableSubmission::where('province_id', auth()->user()->province_id)
+                    ->where('usable_type_id', '=', 3)
+                    ->sum('total'),
+                0,
+                ' ',
+                ','
+            );
+        }
 
         // Total Oil Available in Stock
         // $totalOil = number_format(
@@ -171,14 +206,14 @@ class UsableController extends Controller
 
         // Total Price of All Usables
         $totalUsableValue = 0;
-        if(auth()->user()->province_id == 13){
+        if (auth()->user()->province_id == 13) {
             $totalUsableValue = number_format(
                 Usable::sum("total_price"),
                 2,
                 ".",
                 ","
             );
-        }else{
+        } else {
             $totalUsableValue = number_format(
                 Usable::where('province_id', '=', auth()->user()->province_id)->sum("total_price"),
                 2,
@@ -405,14 +440,20 @@ class UsableController extends Controller
 
         return view(
             "usables.edit",
-            compact("item", "usableTypes", "currencies", "units", "provinces",
-            "itemProvince",
-            "years",
-            "itemYear",
-            "months",
-            "itemMonth",
-            "days",
-            "itemDay")
+            compact(
+                "item",
+                "usableTypes",
+                "currencies",
+                "units",
+                "provinces",
+                "itemProvince",
+                "years",
+                "itemYear",
+                "months",
+                "itemMonth",
+                "days",
+                "itemDay"
+            )
         );
     }
 

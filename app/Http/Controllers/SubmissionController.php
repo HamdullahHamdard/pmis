@@ -40,7 +40,14 @@ class SubmissionController extends Controller
      */
     public function index(request $request)
     {
-        $submissions = Submission::orderBy("id", "DESC")->paginate(20);
+        if(auth()->user()->province_id == 13){
+            $forms = Submission::latest()->paginate(10);
+
+        }else{
+            $forms = Submission::where('province_id', auth()->user()->province_id)->latest()->paginate(10);
+
+        }
+        // $submissions = Submission::orderBy("id", "DESC")->paginate(20);
         $employees = Employee::all();
         $departments = Department::all();
         $items = Item::all();

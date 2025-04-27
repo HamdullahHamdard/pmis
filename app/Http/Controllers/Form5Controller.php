@@ -35,6 +35,13 @@ class Form5Controller extends Controller
 
 
 
+        if(auth()->user()->province_id == 13){
+            $forms = Form5::with('submissions')->latest()->paginate(10);
+
+        }else{
+            $forms = Form5::with('submissions')->where('province_id', auth()->user()->province_id)->latest()->paginate(10);
+
+        }
 
         $forms = Form5::with('submissions')->where('province_id', auth()->user()->province_id)->latest()->paginate(10);
         $items = DB::table('items')->select('id', 'name')->get();

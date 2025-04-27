@@ -41,10 +41,10 @@ class SubmissionController extends Controller
     public function index(request $request)
     {
         if(auth()->user()->province_id == 13){
-            $forms = Submission::latest()->paginate(10);
+            $submissions = Submission::latest()->paginate(10);
 
         }else{
-            $forms = Submission::where('province_id', auth()->user()->province_id)->latest()->paginate(10);
+            $submissions = Submission::where('province_id', auth()->user()->province_id)->latest()->paginate(10);
 
         }
         // $submissions = Submission::orderBy("id", "DESC")->paginate(20);
